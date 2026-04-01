@@ -26,6 +26,19 @@ export const Container = () => {
 	const location = useLocation();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 	let [sidebar, setSidebar] = useState(true);
+	const [guess, setGuess] = useState('');
+	const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
+
+	const submitGuess = async () => {
+		const response = await fetch('http://localhost:3001/validate', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ questionId: 'q1', guess }),
+		});
+
+		const data = await response.json();
+		setStatus(data.success ? 'correct' : 'incorrect');
+	};
 
 	// Set body class using custom hook
 	useBodyClass('home');
@@ -53,6 +66,14 @@ export const Container = () => {
 	return (
 		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
+				<div>
+					<input value={guess} onChange={(e) => setGuess(e.target.value)} placeholder="Enter your guess" />
+					<button onClick={submitGuess}>Submit</button>
+
+					{status === 'correct' && <p>🎉 You got it!</p>}
+					{status === 'incorrect' && <p>❌ Try again!</p>}
+				</div>
+
 				<IconMap />
 
 				<SlideoutOverlay options={slideoutOptions} />

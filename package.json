@@ -1,13 +1,13 @@
 {
-	"name": "burmecia",
-	"version": "3.4.0",
-	"description": "Custom react template build.",
+	"name": "pixelated",
+	"version": "1.0.0",
+	"description": "A pixel 'art' guessing game.",
 	"main": "bundle.js",
 	"type": "module",
 	"keywords": [],
 	"author": "displaycoffee",
 	"license": "ISC",
-	"homepage": "https://burmecia.display.coffee",
+	"homepage": "https://pixelated.display.coffee",
 	"scripts": {
 		"build": "vite build && node optimize-html.js && npx prettier --write dist/index.html --ignore-path /dev/null",
 		"dev": "vite --host",
@@ -36,16 +36,17 @@
 		"vite-plugin-sitemap": "^0.8.2"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "^5.90.21",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
 		"react-router-dom": "^7.13.0"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/displaycoffee/burmecia.git"
+		"url": "git+https://github.com/displaycoffee/pixelated.git"
 	},
 	"bugs": {
-		"url": "https://github.com/displaycoffee/burmecia/issues"
+		"url": "https://github.com/displaycoffee/pixelated/issues"
 	},
 	"browserslist": [
 		"last 2 versions"

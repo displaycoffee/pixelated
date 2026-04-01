@@ -1,6 +1,6 @@
 {
-	"short_name": "Burmecia",
-	"name": "Burmecia - A React/TypeScript Boilerplate",
+	"short_name": "Pixelated",
+	"name": "Pixelated - A pixel 'art' guessing game.",
 	"icons": [
 		{
 			"src": "/favicon.svg",
