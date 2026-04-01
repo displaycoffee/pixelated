@@ -1,6 +1,10 @@
 /* React */
 import { RefObject, useEffect, useId, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
+
+/* Local scripts */
+import { requests } from './requests';
 
 /* Set pageCache to get previous page */
 let pageCache = {
@@ -56,6 +60,26 @@ export const useFormattedId = () => {
 		.slice(1, -1)
 		.replace(/^\_|\_$/g, '')
 		.replace(/\_/g, '-');
+};
+
+export const useReactQuery = (content: string, key: string) => {
+	// Set initial variables
+	let requestData = !!content;
+	let queryKey = [key, content] as QueryKeyType;
+
+	// Create query request
+	const {
+		data: data,
+		isPending: isPending,
+		isSuccess: isSuccess,
+		isFetched: isFetched,
+	} = useQuery({
+		queryKey: queryKey,
+		queryFn: requests[key],
+		enabled: requestData,
+	});
+
+	return [data, { fetched: isFetched, pending: isPending, success: isSuccess }];
 };
 
 export const useRespond = (bp: number) => {

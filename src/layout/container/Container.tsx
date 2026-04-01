@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './styles/container.scss';
 
 /* Local scripts */
-import { useBodyClass, useRespond } from '../../_config/scripts/hooks';
+import { useBodyClass, useReactQuery, useRespond } from '../../_config/scripts/hooks';
 
 /* Local components */
 import { Context } from '../../context/Context';
@@ -26,19 +26,28 @@ export const Container = () => {
 	const location = useLocation();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 	let [sidebar, setSidebar] = useState(true);
-	const [guess, setGuess] = useState('');
-	const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
+	let [guess, setGuess] = useState('');
+	let [status, setStatus] = useState('idle');
 
-	const submitGuess = async () => {
-		const response = await fetch('http://localhost:3001/validate', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ questionId: 'q1', guess }),
-		});
+	// Use custom hook to get answers
+	const [answersData, answersStatus] = useReactQuery(guess, 'answers') as AnswersRequestType;
+	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
 
-		const data = await response.json();
-		setStatus(data.success ? 'correct' : 'incorrect');
+	// Submit guess and update state to trigger request
+	const submitGuess = async (e: EventsType) => {
+		e.preventDefault();
+		const formData = new FormData(e.target);
+		guess = formData.get('guess') as string;
+		setGuess(guess);
 	};
+
+	useEffect(() => {
+		// If an answer has been returned, update status
+		if (answersComplete && answersData) {
+			status = answersData.success ? 'correct' : 'incorrect';
+			setStatus(status);
+		}
+	}, [answersData]);
 
 	// Set body class using custom hook
 	useBodyClass('home');
@@ -66,13 +75,13 @@ export const Container = () => {
 	return (
 		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
-				<div>
-					<input value={guess} onChange={(e) => setGuess(e.target.value)} placeholder="Enter your guess" />
-					<button onClick={submitGuess}>Submit</button>
+				<form onSubmit={(e) => submitGuess(e)}>
+					<input name="guess" type="text" placeholder="Enter your guess" />
+					<button type="submit">Submit</button>
 
 					{status === 'correct' && <p>🎉 You got it!</p>}
 					{status === 'incorrect' && <p>❌ Try again!</p>}
-				</div>
+				</form>
 
 				<IconMap />
 
