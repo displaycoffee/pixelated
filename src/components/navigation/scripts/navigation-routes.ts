@@ -4,14 +4,14 @@ import { navigation } from './navigation';
 import { navigationUtils } from './navigation-utils';
 
 /* Local components */
-import { Home } from '../../../pages/home/Home';
+import { Play } from '../../../pages/play/Play';
 import { About } from '../../../pages/about/About';
 import { Rules } from '../../../pages/rules/Rules';
 
 /* Set up component mapping for routes */
 /* Note: this should match the navigation.url value in navigation.ts (without the '/') */
 const routeMap = {
-	home: Home,
+	play: Play,
 	about: About,
 	rules: Rules,
 } as NavigationMapType;

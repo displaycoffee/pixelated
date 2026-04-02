@@ -4,9 +4,9 @@ import { NavigationType } from './navigation-types';
 export const navigation = [
 	{
 		id: 0,
-		alt: 'Home',
+		alt: 'Play',
 		isRoute: true,
-		label: 'Home',
+		label: 'Play',
 		showInNav: true,
 		url: '/',
 	},

@@ -24,7 +24,7 @@ export const Container = () => {
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 
 	// Set body class using custom hook
-	useBodyClass('home');
+	useBodyClass('play');
 
 	// Slideout options
 	const slideoutOptions = {
