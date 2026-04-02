@@ -10,7 +10,7 @@
 
 	.navigation {
 		.navigation-list {
-			@include mixins.flex-layout((align-items: center));
+			@include mixins.flex-layout((align-items: center, justify-content: center));
 			@include mixins.gap(theme.$spacing-x4);
 			margin: 0 0 theme.$spacing-x4 0;
 			.navigation-list-item {

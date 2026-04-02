@@ -5,17 +5,15 @@ import { navigationUtils } from './navigation-utils';
 
 /* Local components */
 import { Home } from '../../../pages/home/Home';
-import { PageOne } from '../../../pages/page-one/PageOne';
-import { PageTwo } from '../../../pages/page-two/PageTwo';
+import { About } from '../../../pages/about/About';
+import { Rules } from '../../../pages/rules/Rules';
 
 /* Set up component mapping for routes */
 /* Note: this should match the navigation.url value in navigation.ts (without the '/') */
 const routeMap = {
 	home: Home,
-	'page-one': PageOne,
-	'page-two': PageTwo,
-	'child-page-one': PageTwo,
-	'child-page-two': PageTwo,
+	about: About,
+	rules: Rules,
 } as NavigationMapType;
 
 /* Create routes array */

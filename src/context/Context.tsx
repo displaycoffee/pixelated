@@ -48,7 +48,7 @@ export const ContextProvider = ({ children }: ContextProps) => {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Context.Provider value={values}>{children}</Context.Provider>;
+			<Context.Provider value={values}>{children}</Context.Provider>
 		</QueryClientProvider>
 	);
 };

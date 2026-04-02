@@ -1,12 +1,12 @@
 /* React */
-import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 /* Local styles */
 import './styles/container.scss';
 
 /* Local scripts */
-import { useBodyClass, useReactQuery, useRespond } from '../../_config/scripts/hooks';
+import { useBodyClass, useRespond } from '../../_config/scripts/hooks';
 
 /* Local components */
 import { Context } from '../../context/Context';
@@ -16,48 +16,15 @@ import { Navigation } from '../../components/navigation/Navigation';
 import { Slideout, SlideoutOverlay } from '../../components/slideout/Slideout';
 import { Header } from '../header/Header';
 import { Content } from '../content/Content';
-import { Sidebar } from '../sidebar/Sidebar';
 import { Footer } from '../footer/Footer';
-import { Portal } from '../../targets/portal/Portal';
 
 export const Container = () => {
 	const context = useContext(Context);
 	const { theme, utils } = context;
-	const location = useLocation();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
-	let [sidebar, setSidebar] = useState(true);
-	let [guess, setGuess] = useState('');
-	let [status, setStatus] = useState('idle');
-
-	// Use custom hook to get answers
-	const [answersData, answersStatus] = useReactQuery(guess, 'answers') as AnswersRequestType;
-	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
-
-	// Submit guess and update state to trigger request
-	const submitGuess = async (e: EventsType) => {
-		e.preventDefault();
-		const formData = new FormData(e.target);
-		guess = formData.get('guess') as string;
-		setGuess(guess);
-	};
-
-	useEffect(() => {
-		// If an answer has been returned, update status
-		if (answersComplete && answersData) {
-			status = answersData.success ? 'correct' : 'incorrect';
-			setStatus(status);
-		}
-	}, [answersData]);
 
 	// Set body class using custom hook
 	useBodyClass('home');
-
-	// Determine if layout should have sidebar or not
-	const excludeSidebar: string[] = ['/page-two'];
-	useEffect(() => {
-		sidebar = excludeSidebar.includes(location.pathname) ? false : true;
-		setSidebar(sidebar);
-	}, [location.pathname]);
 
 	// Slideout options
 	const slideoutOptions = {
@@ -75,14 +42,6 @@ export const Container = () => {
 	return (
 		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
-				<form onSubmit={(e) => submitGuess(e)}>
-					<input name="guess" type="text" placeholder="Enter your guess" />
-					<button type="submit">Submit</button>
-
-					{status === 'correct' && <p>🎉 You got it!</p>}
-					{status === 'incorrect' && <p>❌ Try again!</p>}
-				</form>
-
 				<IconMap />
 
 				<SlideoutOverlay options={slideoutOptions} />
@@ -91,20 +50,9 @@ export const Container = () => {
 
 				{isDesktop ? <Navigation /> : <Slideout options={slideoutOptions} />}
 
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra imperdiet nisl sed mattis. Orci varius natoque
-					penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris pharetra enim non nunc pharetra condimentum ac nec nisi.
-					Nunc ac tortor leo. Vestibulum dui diam, ultricies vel tempor quis, cursus eget arcu. Donec sagittis urna volutpat, accumsan odio
-					in, porta ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in
-					faucibus. Mauris a vulputate tellus, at varius mi. Donec vitae purus faucibus, feugiat ipsum eget, semper diam. Pellentesque
-					pretium vulputate accumsan.
-				</p>
-
 				<main className="main">
 					<div className="main-layout flex-wrap">
 						<Content />
-
-						<Sidebar show={sidebar && isDesktop} />
 					</div>
 				</main>
 
@@ -113,13 +61,6 @@ export const Container = () => {
 				<button className="pointer unstyled a" type="button" aria-label="Scroll to top button" onClick={(e) => utils.scrollTo(e, '#index')}>
 					Scroll to top
 				</button>
-
-				<Portal element={'#portal'}>
-					<p>
-						This is an example of a portal from index.html. It could also be added inside other components to access details of that
-						component.
-					</p>
-				</Portal>
 			</ErrorBoundary>
 		</div>
 	);

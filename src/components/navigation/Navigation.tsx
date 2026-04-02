@@ -12,7 +12,6 @@ import { navigationRoutes } from './scripts/navigation-routes';
 
 /* Local components */
 import { Context } from '../../context/Context';
-import { Dropdown } from '../dropdown/Dropdown';
 
 /* Get navigation menu */
 const navigationList = navigationUtils.get.list();
@@ -34,19 +33,7 @@ export const Navigation = () => {
 				{navigationList.map((nav) => {
 					return (
 						<Fragment key={nav.id}>
-							{nav?.children && nav.children.length !== 0 ? (
-								<li className="navigation-list-item">
-									<Dropdown buttonLabel={nav.label} buttonLinkClass={navigationLinkClass} buttonUrl={nav.url} closeOnClick={true}>
-										<ul className="navigation-list-submenu unstyled">
-											{nav.children.map((child) => {
-												return <NavigationListItem nav={child} navigationLinkClass={navigationLinkClass} key={child.id} />;
-											})}
-										</ul>
-									</Dropdown>
-								</li>
-							) : (
-								<NavigationListItem navigationLinkClass={navigationLinkClass} nav={nav} />
-							)}
+							<NavigationListItem navigationLinkClass={navigationLinkClass} nav={nav} />
 						</Fragment>
 					);
 				})}
