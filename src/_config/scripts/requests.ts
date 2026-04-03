@@ -23,6 +23,7 @@ const throwError = (json: ResponseErrorType) => {
 export const requests: RequestsType = {
 	answers: async ({ queryKey }: AnswersQueryKeyType) => {
 		const guess = queryKey[1];
+		const questionId = queryKey[2];
 
 		// Storage for answers data
 		let answers = {} as AnswersType;
@@ -30,7 +31,7 @@ export const requests: RequestsType = {
 		// Set options
 		const options = {
 			...parameters.options(),
-			body: JSON.stringify({ questionId: 'q1', guess }),
+			body: JSON.stringify({ questionId: questionId, guess }),
 		};
 
 		// Fetch answers

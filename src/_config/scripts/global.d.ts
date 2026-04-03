@@ -5,7 +5,7 @@ type Answers = {
 };
 
 type AnswersQueryKey = {
-	queryKey: [string, string];
+	queryKey: [string, string, string];
 };
 
 type AnswersRequest = [Answers, Statuses];
@@ -33,7 +33,7 @@ type Fetched = {
 	fetched: boolean;
 };
 
-type QueryKey = [string, string];
+type QueryKey = [string, string, string];
 
 type Requests = {
 	[key: string]: ({ queryKey }: AnswersQueryKey) => Promise<Answers>;

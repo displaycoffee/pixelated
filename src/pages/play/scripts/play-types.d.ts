@@ -1,12 +1,13 @@
 /* Type definitions */
 type Category = {
 	id: string;
-	question: string;
+	values: string[][];
 };
 
 type Categories = {
 	name: string;
 	value: string;
+	values: Category[];
 };
 
 type Difficulty = {

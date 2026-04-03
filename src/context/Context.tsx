@@ -41,10 +41,12 @@ export const Context = createContext({} as ContextValuesType);
 export const ContextProvider = ({ children }: ContextProps) => {
 	// Create config for each round
 	const round: RoundType = {
+		id: false,
 		status: 'pending',
 		guesses: 0,
 		hints: 0,
 		points: 0,
+		values: [],
 	};
 
 	// Create game config
@@ -53,7 +55,7 @@ export const ContextProvider = ({ children }: ContextProps) => {
 			category: false,
 			difficulty: false,
 			totalPoints: 0,
-			currentRound: false,
+			currentRound: 'round1',
 		},
 		rounds: {
 			round1: round,

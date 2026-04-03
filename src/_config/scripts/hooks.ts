@@ -62,10 +62,10 @@ export const useFormattedId = () => {
 		.replace(/\_/g, '-');
 };
 
-export const useReactQuery = (content: string, key: string) => {
+export const useReactQuery = (content: string, id: string, key: string) => {
 	// Set initial variables
 	let requestData = !!content;
-	let queryKey = [key, content] as QueryKeyType;
+	let queryKey = [key, content, id] as QueryKeyType;
 
 	// Create query request
 	const {
