@@ -1,5 +1,5 @@
 /* React */
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { produce, Draft } from 'immer';
 
 /* Local styles */
@@ -23,11 +23,11 @@ export const Play = () => {
 
 export const Round = () => {
 	const context = useContext(Context);
-	console.log('in round', context);
+	console.log('in round', context.game);
 	let game = context.game;
-	let { settings, rounds } = game;
+	let { current, rounds, settings } = game;
 	const setGame = context.setGame;
-	const currentRound = rounds[`${settings.currentRound}`];
+	const currentRound = rounds[`${current.round}`];
 	const questionId = currentRound.id as string;
 
 	// Set up pixel includes (default difficulty is "medium")
@@ -38,40 +38,15 @@ export const Round = () => {
 		includePixels = [0, 1, 2, 3, 4];
 	}
 
-	// Create guess and status
-	let [guess, setGuess] = useState('');
-	let [status, setStatus] = useState('idle');
-
 	// Use custom hook to get answers
-	const [answersData, answersStatus] = useReactQuery(guess, questionId, 'answers') as AnswersRequestType;
+	const [answersData, answersStatus] = useReactQuery(current.guess as string, questionId, 'answers') as AnswersRequestType;
 	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
 
-	// Submit guess
-	const submitGuess = async (e: EventsType) => {
-		e.preventDefault();
-
-		// Get form data
-		const formData = new FormData(e.target);
-		guess = formData.get('guess') as string;
-
-		if (guess) {
-			// Update state to trigger request
-			setGuess(guess);
-
-			// Update number of guesses
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.rounds[`${settings.currentRound}`].guesses = currentRound.guesses + 1;
-				}),
-			);
-		}
-	};
-
 	useEffect(() => {
-		// If an answer has been returned, update status
+		// If an answer has been returned, update data
 		if (answersComplete && answersData) {
-			status = answersData.success ? 'correct' : 'incorrect';
-			setStatus(status);
+			// Set status
+			const status = answersData.success ? 'correct' : 'incorrect';
 
 			// Update round status
 			let roundStatus: RoundType['status'] = 'pending';
@@ -81,10 +56,24 @@ export const Round = () => {
 				roundStatus = 'complete';
 			}
 
-			// Update game with new round status
+			// Update point value
+			let points = currentRound.points;
+			if (roundStatus == 'pending' && currentRound.guesses < 3) {
+				points = currentRound.points - 10;
+			} else if (roundStatus == 'failed') {
+				points = 0;
+			}
+
+			// Update total points
+			const pointsTotal = roundStatus != 'pending' ? current.points + points : current.points;
+
+			// Update game
 			setGame(
 				produce((draft: Draft<GameType>) => {
-					draft.rounds[`${settings.currentRound}`].status = roundStatus;
+					draft.current.points = pointsTotal;
+					draft.current.status = status;
+					draft.rounds[`${current.round}`].status = roundStatus;
+					draft.rounds[`${current.round}`].points = points;
 				}),
 			);
 		}
@@ -92,7 +81,7 @@ export const Round = () => {
 
 	return (
 		<>
-			<h2>Round {settings.currentRound.replace('round', '')}</h2>
+			<h2>Round {current.round.replace('round', '')}</h2>
 
 			{currentRound && currentRound.values.length !== 0 ? (
 				<>
@@ -112,23 +101,62 @@ export const Round = () => {
 						</div>
 					</div>
 
-					{currentRound.status == 'pending' ? (
-						<form onSubmit={(e) => submitGuess(e)}>
-							<input id={questionId} name="guess" type="text" placeholder="Enter your guess" />
-							<button type="submit">Submit</button>
-
-							{status === 'correct' && <p>🎉 You got it!</p>}
-							{status === 'incorrect' && <p>❌ Try again!</p>}
-						</form>
-					) : currentRound.status == 'complete' ? (
-						<p>You got it!</p>
-					) : (
-						<p>Out of guesses!</p>
-					)}
+					{{
+						complete: <RoundComplete />,
+						failed: <RoundFailed />,
+					}[currentRound.status as string] || <RoundPending />}
 				</>
 			) : null}
 		</>
 	);
+};
+
+export const RoundPending = () => {
+	const context = useContext(Context);
+	let game = context.game;
+	let { current, rounds } = game;
+	const setGame = context.setGame;
+	const currentRound = rounds[`${current.round}`];
+	const questionId = currentRound.id as string;
+
+	// Submit guess
+	const submitGuess = async (e: EventsType) => {
+		e.preventDefault();
+
+		// Get form data
+		const formData = new FormData(e.target);
+		const guess = formData.get('guess') as string;
+
+		// Update game (only if there is a guess and it's not the previous guess)
+		if (guess && guess != current.guess) {
+			setGame(
+				produce((draft: Draft<GameType>) => {
+					draft.current.guess = guess;
+					draft.rounds[`${current.round}`].guesses = currentRound.guesses + 1;
+				}),
+			);
+		}
+	};
+
+	return (
+		<>
+			<form onSubmit={(e) => submitGuess(e)}>
+				<input id={questionId} name="guess" type="text" placeholder="Enter your guess" />
+				<button type="submit">Submit</button>
+
+				{current.status === 'correct' && <p>🎉 You got it!</p>}
+				{current.status === 'incorrect' && <p>❌ Try again!</p>}
+			</form>
+		</>
+	);
+};
+
+export const RoundComplete = () => {
+	return <p>🎉 You got it!</p>;
+};
+
+export const RoundFailed = () => {
+	return <p>❌ Out of guesses!</p>;
 };
 
 export const Settings = () => {
@@ -172,7 +200,7 @@ export const Settings = () => {
 				};
 			};
 
-			// Update state
+			// Update game
 			setGame(
 				produce((draft: Draft<GameType>) => {
 					draft.settings.category = categoryValue;

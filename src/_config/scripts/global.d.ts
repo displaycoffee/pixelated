@@ -44,11 +44,16 @@ type Difficulty = {
 type DifficultyList = Difficulty[];
 
 type Game = {
+	current: {
+		guess: boolean | string;
+		hint: boolean | string;
+		points: number;
+		round: 'round1' | 'round2' | 'round3' | 'round4' | 'round5';
+		status: 'pending' | 'correct' | 'incorrect';
+	};
 	settings: {
 		category: boolean | string;
 		difficulty: boolean | string;
-		totalPoints: number;
-		currentRound: 'round1' | 'round2' | 'round3' | 'round4' | 'round5';
 	};
 	rounds: {
 		round1: Round;

@@ -45,17 +45,22 @@ export const ContextProvider = ({ children }: ContextProps) => {
 		status: 'pending',
 		guesses: 0,
 		hints: 0,
-		points: 0,
+		points: 100,
 		values: [],
 	};
 
 	// Create game config
 	const gameConfig: GameType = {
+		current: {
+			guess: false,
+			hint: false,
+			points: 0,
+			round: 'round1',
+			status: 'pending',
+		},
 		settings: {
 			category: false,
 			difficulty: false,
-			totalPoints: 0,
-			currentRound: 'round1',
 		},
 		rounds: {
 			round1: round,
