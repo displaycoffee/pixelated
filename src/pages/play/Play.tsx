@@ -1,12 +1,12 @@
 /* React */
 import { useContext, useEffect, useState } from 'react';
+import { produce, Draft } from 'immer';
 
 /* Local styles */
 import './styles/play.scss';
 
 /* Local scripts */
 import { useReactQuery } from '../../_config/scripts/hooks';
-import { CategoryType } from './scripts/play-types';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
@@ -50,23 +50,21 @@ export const Round = () => {
 	const submitGuess = async (e: EventsType) => {
 		e.preventDefault();
 
-		// Update state to trigger request
+		// Get form data
 		const formData = new FormData(e.target);
 		guess = formData.get('guess') as string;
-		setGuess(guess);
 
-		// Update number of guesses
-		game = {
-			...game,
-			rounds: {
-				...rounds,
-				[`${settings.currentRound}`]: {
-					...currentRound,
-					guesses: currentRound.guesses + 1,
-				},
-			},
-		};
-		setGame(game);
+		if (guess) {
+			// Update state to trigger request
+			setGuess(guess);
+
+			// Update number of guesses
+			setGame(
+				produce((draft: Draft<GameType>) => {
+					draft.rounds[`${settings.currentRound}`].guesses = currentRound.guesses + 1;
+				}),
+			);
+		}
 	};
 
 	useEffect(() => {
@@ -76,7 +74,7 @@ export const Round = () => {
 			setStatus(status);
 
 			// Update round status
-			let roundStatus = 'pending';
+			let roundStatus: RoundType['status'] = 'pending';
 			if (status == 'incorrect' && currentRound.guesses > 2) {
 				roundStatus = 'failed';
 			} else if (status == 'correct') {
@@ -84,17 +82,11 @@ export const Round = () => {
 			}
 
 			// Update game with new round status
-			game = {
-				...game,
-				rounds: {
-					...rounds,
-					[`${settings.currentRound}`]: {
-						...currentRound,
-						status: roundStatus,
-					},
-				},
-			};
-			setGame(game);
+			setGame(
+				produce((draft: Draft<GameType>) => {
+					draft.rounds[`${settings.currentRound}`].status = roundStatus;
+				}),
+			);
 		}
 	}, [answersData]);
 
@@ -141,72 +133,58 @@ export const Round = () => {
 
 export const Settings = () => {
 	let context = useContext(Context);
-	let game = context.game;
 	const setGame = context.setGame;
 
 	// Submit guess and update state to trigger request
 	const submitSettings = async (e: EventsType) => {
 		e.preventDefault();
+
+		// Get form data
 		const formData = new FormData(e.target);
-		const difficultyValue = formData.get('difficulty');
-		const categoryValue = formData.get('category');
+		const difficultyValue = formData.get('difficulty') as string;
+		const categoryValue = formData.get('category') as string;
 
-		// Set new game settings
-		const settings = {
-			...game.settings,
-			difficulty: difficultyValue as string,
-			category: categoryValue as string,
-		};
+		if (difficultyValue && categoryValue) {
+			// Get questions for round from matching categories
+			const roundQuestions = categories.filter((category) => category.value === categoryValue).flatMap((category) => category.values);
 
-		// Get questions for round from matching categories
-		const roundQuestions = categories.filter((category) => category.value === categoryValue).flatMap((category) => category.values);
+			// Shuffle questions (using the Fisher-Yates algorithm)
+			const shuffleQuestions = (array: CategoryListType) => {
+				for (let i = array.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[array[i], array[j]] = [array[j], array[i]];
+				}
+				return array;
+			};
 
-		// Shuffle questions (using the Fisher-Yates algorithm)
-		const shuffleQuestions = (array: CategoryType) => {
-			for (let i = array.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1));
-				[array[i], array[j]] = [array[j], array[i]];
-			}
-			return array;
-		};
+			// Use function to shuffle questions
+			const shuffledQuestions = shuffleQuestions([...roundQuestions]);
 
-		// Use function to shuffle questions
-		const shuffledQuestions = shuffleQuestions([...roundQuestions]);
+			// Select five questions
+			const selectedQuestions = shuffledQuestions.slice(0, 5);
 
-		// Select five questions
-		const selectedQuestions = shuffledQuestions.slice(0, 5);
+			// Update round
+			const updateRound = (draft: Draft<GameType>, round: number) => {
+				const roundKey = `round${round}` as keyof GameType['rounds'];
+				draft.rounds[roundKey] = {
+					...draft.rounds[roundKey],
+					...selectedQuestions[round - 1],
+				};
+			};
 
-		// Create game rounds
-		const rounds = {
-			round1: {
-				...game.rounds.round1,
-				...selectedQuestions[0],
-			},
-			round2: {
-				...game.rounds.round2,
-				...selectedQuestions[1],
-			},
-			round3: {
-				...game.rounds.round3,
-				...selectedQuestions[2],
-			},
-			round4: {
-				...game.rounds.round4,
-				...selectedQuestions[3],
-			},
-			round5: {
-				...game.rounds.round5,
-				...selectedQuestions[4],
-			},
-		};
-
-		// Update state
-		game = {
-			...game,
-			settings: settings,
-			rounds: rounds,
-		};
-		setGame(game);
+			// Update state
+			setGame(
+				produce((draft: Draft<GameType>) => {
+					draft.settings.category = categoryValue;
+					draft.settings.difficulty = difficultyValue;
+					updateRound(draft, 1);
+					updateRound(draft, 2);
+					updateRound(draft, 3);
+					updateRound(draft, 4);
+					updateRound(draft, 5);
+				}),
+			);
+		}
 	};
 
 	return (

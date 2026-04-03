@@ -1,7 +1,4 @@
-/* Local scripts */
-import { DifficultyType } from './play-types';
-
-export const difficulty: DifficultyType = [
+export const difficulty: DifficultyListType = [
 	{
 		name: 'Easy',
 		value: 'easy',

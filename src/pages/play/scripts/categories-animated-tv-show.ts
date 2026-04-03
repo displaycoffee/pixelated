@@ -1,10 +1,7 @@
-/* Local scripts */
-import { CategoryType } from './play-types';
-
 /* Category variables */
 const categoryPrefix = 'animated-tv-shows';
 
-export const category: CategoryType = [
+export const category: CategoryListType = [
 	{
 		id: `${categoryPrefix}-q1`,
 		values: [

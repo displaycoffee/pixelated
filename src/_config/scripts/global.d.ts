@@ -1,4 +1,15 @@
-/* Type definitions */
+/* Generic type definitions */
+type Events = SyntheticEvent | Event;
+
+type ObjectString = {
+	[key: string]: string;
+};
+
+type ObjectPrimitive = {
+	[key: string]: string | number | boolean;
+};
+
+/* Content type definitions */
 type Answers = {
 	message: string;
 	success: string;
@@ -10,22 +21,51 @@ type AnswersQueryKey = {
 
 type AnswersRequest = [Answers, Statuses];
 
-type Events = SyntheticEvent | Event;
-
-type ObjectString = {
-	[key: string]: string;
+type Category = {
+	id: string;
+	values: string[][];
 };
 
-type ObjectPrimitive = {
-	[key: string]: string | number | boolean;
+type CategoryList = Category[];
+
+type Categories = {
+	name: string;
+	value: string;
+	values: Category[];
 };
 
-type RequestError = Error & {
-	status?: number;
+type CategoriesList = Categories[];
+
+type Difficulty = {
+	name: string;
+	value: string;
 };
 
-type ResponseError = Response & {
-	error?: RequestError;
+type DifficultyList = Difficulty[];
+
+type Game = {
+	settings: {
+		category: boolean | string;
+		difficulty: boolean | string;
+		totalPoints: number;
+		currentRound: 'round1' | 'round2' | 'round3' | 'round4' | 'round5';
+	};
+	rounds: {
+		round1: Round;
+		round2: Round;
+		round3: Round;
+		round4: Round;
+		round5: Round;
+	};
+};
+
+type Round = {
+	id: boolean | string;
+	status: 'pending' | 'complete' | 'failed';
+	guesses: number;
+	hints: number;
+	points: number;
+	values: string[][];
 };
 
 /* Request type definitions */
@@ -35,8 +75,16 @@ type Fetched = {
 
 type QueryKey = [string, string, string];
 
+type RequestError = Error & {
+	status?: number;
+};
+
 type Requests = {
 	[key: string]: ({ queryKey }: AnswersQueryKey) => Promise<Answers>;
+};
+
+type ResponseError = Response & {
+	error?: RequestError;
 };
 
 type Statuses = {
@@ -53,10 +101,6 @@ declare global {
 
 	type ObjectPrimitiveType = ObjectPrimitive;
 
-	type RequestErrorType = RequestError;
-
-	type ResponseErrorType = ResponseError;
-
 	/* Declare global content types */
 	type AnswersType = Answers;
 
@@ -64,10 +108,24 @@ declare global {
 
 	type AnswersRequestType = AnswersRequest;
 
+	type CategoryListType = CategoryList;
+
+	type CategoriesListType = CategoriesList;
+
+	type DifficultyListType = DifficultyList;
+
+	type GameType = Game;
+
+	type RoundType = Round;
+
 	/* Declare global request types */
 	type QueryKeyType = QueryKey;
 
+	type RequestErrorType = RequestError;
+
 	type RequestsType = Requests;
+
+	type ResponseErrorType = ResponseError;
 
 	/* Declare global prop types */
 	type ObjectPrimitiveProps = ObjectPrimitive;

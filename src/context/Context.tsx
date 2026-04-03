@@ -3,7 +3,7 @@ import { createContext, useState } from 'react';
 import { DefaultOptions, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /* Local scripts */
-import { ContextProps, ContextValuesType, GameType, RoundType } from './scripts/context-types';
+import { ContextProps, ContextValuesType } from './scripts/context-types';
 import { theme } from '../_config/scripts/theme';
 import { utils } from '../_config/scripts/utils';
 import { variables } from '../_config/scripts/variables';
