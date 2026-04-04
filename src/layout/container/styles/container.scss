@@ -19,10 +19,12 @@
 		margin: 0 auto;
 		padding: 0 theme.$spacing-x4;
 		text-align: center;
+		& > * {
+			margin: 0 0 theme.$spacing-x8 0;
+		}
 	}
 	.main {
-		min-height: 50vh;
-		margin: 0 0 theme.$spacing-x8 0;
+		min-height: 30vh;
 		.main-layout {
 			@include mixins.gap($container-main-spacing);
 			.content, .sidebar {

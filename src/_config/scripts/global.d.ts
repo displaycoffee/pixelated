@@ -31,6 +31,7 @@ type Categories = {
 	name: string;
 	value: string;
 	values: Category[];
+	description: string;
 };
 
 type CategoriesList = Categories[];
@@ -38,6 +39,7 @@ type CategoriesList = Categories[];
 type Difficulty = {
 	name: string;
 	value: string;
+	description: string;
 };
 
 type DifficultyList = Difficulty[];

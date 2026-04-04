@@ -40,7 +40,7 @@ export const Container = () => {
 	};
 
 	return (
-		<div className="container">
+		<div className="container spacing-reset">
 			<ErrorBoundary message={<ContainerError />}>
 				<IconMap />
 

@@ -1,5 +1,5 @@
 /* React */
-import { useContext, useEffect } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { produce, Draft } from 'immer';
 
 /* Local styles */
@@ -19,41 +19,6 @@ export const Play = () => {
 	const showSettings = !settings.category && !settings.difficulty ? true : false;
 
 	return <div className="play spacing-reset">{showSettings ? <Settings /> : <Round />}</div>;
-};
-
-export const Points = () => {
-	const context = useContext(Context);
-	const { game } = context;
-	const { current, rounds } = game;
-	const currentRound = rounds[`${current.round}`];
-
-	return (
-		<div className="points">
-			{current.round != 'round6' ? (
-				<p>
-					<strong>Current round:</strong> {currentRound.points}
-				</p>
-			) : null}
-
-			<p>
-				<strong>Game total:</strong> {current.points}
-			</p>
-		</div>
-	);
-};
-
-export const Status = (props: ObjectPrimitiveProps) => {
-	const status = props.status;
-
-	// Determine status message
-	let message = '🎉 You got it!';
-	if (status == 'incorrect') {
-		message = '❌ Try again!';
-	} else if (status == 'failed') {
-		message = '❌ Out of guesses!';
-	}
-
-	return <div className="status">{message}</div>;
 };
 
 export const Round = () => {
@@ -85,7 +50,7 @@ export const Round = () => {
 			{currentRound.status == 'game end' ? (
 				<>
 					<button className="new-game" type="button" onClick={() => resetGame()}>
-						New Game?
+						<span>New Game?</span>
 					</button>
 				</>
 			) : (
@@ -119,6 +84,141 @@ export const Round = () => {
 				</>
 			)}
 		</div>
+	);
+};
+
+export const Settings = () => {
+	const context = useContext(Context);
+	const setGame = context.setGame;
+	const [descriptions, setDescriptions] = useState({
+		difficulty: difficulty[1].description,
+		categories: categories[0].description,
+	});
+
+	// Update descriptions on select change
+	const updateDescriptions = (e: ChangeEvent<HTMLSelectElement>, key: string) => {
+		// Get array for descriptions
+		let descriptionsList = [] as DifficultyListType | CategoriesListType;
+		if (key == 'difficulty') {
+			descriptionsList = difficulty;
+		} else if (key == 'categories') {
+			descriptionsList = categories;
+		}
+
+		// Set description
+		setDescriptions({
+			...descriptions,
+			[key]: descriptionsList[e.target.selectedIndex].description,
+		});
+	};
+
+	// Submit guess and update state to trigger request
+	const submitSettings = async (e: EventsType) => {
+		e.preventDefault();
+
+		// Get form data
+		const formData = new FormData(e.target);
+		const difficultyValue = formData.get('difficulty') as string;
+		const categoryValue = formData.get('category') as string;
+
+		if (difficultyValue && categoryValue) {
+			// Get questions for round from matching categories
+			const roundQuestions = categories.filter((category) => category.value === categoryValue).flatMap((category) => category.values);
+
+			// Shuffle questions (using the Fisher-Yates algorithm)
+			const shuffleQuestions = (array: CategoryListType) => {
+				for (let i = array.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[array[i], array[j]] = [array[j], array[i]];
+				}
+				return array;
+			};
+
+			// Use function to shuffle questions
+			const shuffledQuestions = shuffleQuestions([...roundQuestions]);
+
+			// Select five questions
+			const selectedQuestions = shuffledQuestions.slice(0, 5);
+
+			// Update round
+			const updateRound = (draft: Draft<GameType>, round: number) => {
+				const roundKey = `round${round}` as keyof GameType['rounds'];
+				draft.rounds[roundKey] = {
+					...draft.rounds[roundKey],
+					...selectedQuestions[round - 1],
+				};
+			};
+
+			// Update game
+			setGame(
+				produce((draft: Draft<GameType>) => {
+					draft.settings.category = categoryValue;
+					draft.settings.difficulty = difficultyValue;
+					updateRound(draft, 1);
+					updateRound(draft, 2);
+					updateRound(draft, 3);
+					updateRound(draft, 4);
+					updateRound(draft, 5);
+				}),
+			);
+		}
+	};
+
+	return (
+		<>
+			<h2>Choose settings</h2>
+
+			<form className="settings form spacing-reset" onSubmit={(e) => submitSettings(e)}>
+				<div className="settings-select form-field flex-wrap flex-align-items-center">
+					<label htmlFor="settings-difficulty">Difficulty:</label>
+
+					<div className="form-field-wrapper">
+						<select
+							id="settings-difficulty"
+							name="difficulty"
+							defaultValue={difficulty[1].value}
+							onChange={(e) => updateDescriptions(e, 'difficulty')}
+						>
+							{difficulty.map((diff) => {
+								return (
+									<option value={diff.value} key={diff.value}>
+										{diff.name}
+									</option>
+								);
+							})}
+						</select>
+						<span className="form-field-arrow">^</span>
+					</div>
+
+					<p className="form-field-description">{descriptions.difficulty}</p>
+				</div>
+
+				<div className="settings-select form-field flex-wrap flex-align-items-center">
+					<label htmlFor="settings-category">Category:</label>
+
+					<div className="form-field-wrapper">
+						<select id="settings-category" name="category" defaultValue={categories[0].value}>
+							{categories.map((category) => {
+								return (
+									<option value={category.value} key={category.value}>
+										{category.name}
+									</option>
+								);
+							})}
+						</select>
+						<span className="form-field-arrow">^</span>
+					</div>
+
+					<p className="form-field-description">{descriptions.categories}</p>
+				</div>
+
+				<div className="settings-actions form-actions">
+					<button type="submit">
+						<span>Submit</span>
+					</button>
+				</div>
+			</form>
+		</>
 	);
 };
 
@@ -217,18 +317,20 @@ export const Guess = () => {
 		<>
 			{current.status == 'incorrect' ? <Status status={'incorrect'} /> : null}
 
-			<form className="guess form" onSubmit={(e) => submitGuess(e)}>
-				<div className="guess-field form-field">
-					<input id={questionId} name="guess" type="text" placeholder="Enter your guess" />
+			<form className="guess form spacing-reset" onSubmit={(e) => submitGuess(e)}>
+				<div className="guess-field form-field flex-wrap flex-align-items-center">
+					<div className="form-field-wrapper">
+						<input id={questionId} name="guess" type="text" placeholder="Enter your guess" />
+					</div>
 				</div>
 
 				<div className="guess-actions form-actions">
 					<button className="guess-submit" type="submit">
-						Submit
+						<span>Submit</span>
 					</button>
 
 					<button className="guess-hint" type="button" onClick={() => getHint()} disabled={!hasHints}>
-						Get Hint
+						<span>Get Hint</span>
 					</button>
 				</div>
 			</form>
@@ -242,6 +344,41 @@ export const Guess = () => {
 			) : null}
 		</>
 	);
+};
+
+export const Points = () => {
+	const context = useContext(Context);
+	const { game } = context;
+	const { current, rounds } = game;
+	const currentRound = rounds[`${current.round}`];
+
+	return (
+		<div className="points">
+			{current.round != 'round6' ? (
+				<p>
+					<strong>Current round:</strong> {currentRound.points}
+				</p>
+			) : null}
+
+			<p>
+				<strong>Game total:</strong> {current.points}
+			</p>
+		</div>
+	);
+};
+
+export const Status = (props: ObjectPrimitiveProps) => {
+	const status = props.status;
+
+	// Determine status message
+	let message = '🎉 You got it!';
+	if (status == 'incorrect') {
+		message = '❌ Try again!';
+	} else if (status == 'failed') {
+		message = '❌ Out of guesses!';
+	}
+
+	return <div className="status">{message}</div>;
 };
 
 export const Pagination = () => {
@@ -286,109 +423,12 @@ export const Pagination = () => {
 	return (
 		<div className="pagination">
 			<button className="pagination-previous" type="button" onClick={() => goToRound('previous')} disabled={!hasPrevious}>
-				Previous
+				<span>Previous</span>
 			</button>
 
 			<button className="pagination-next" type="button" onClick={() => goToRound('next')} disabled={!hasNext}>
-				Next
+				<span>Next</span>
 			</button>
 		</div>
-	);
-};
-
-export const Settings = () => {
-	const context = useContext(Context);
-	const setGame = context.setGame;
-
-	// Submit guess and update state to trigger request
-	const submitSettings = async (e: EventsType) => {
-		e.preventDefault();
-
-		// Get form data
-		const formData = new FormData(e.target);
-		const difficultyValue = formData.get('difficulty') as string;
-		const categoryValue = formData.get('category') as string;
-
-		if (difficultyValue && categoryValue) {
-			// Get questions for round from matching categories
-			const roundQuestions = categories.filter((category) => category.value === categoryValue).flatMap((category) => category.values);
-
-			// Shuffle questions (using the Fisher-Yates algorithm)
-			const shuffleQuestions = (array: CategoryListType) => {
-				for (let i = array.length - 1; i > 0; i--) {
-					const j = Math.floor(Math.random() * (i + 1));
-					[array[i], array[j]] = [array[j], array[i]];
-				}
-				return array;
-			};
-
-			// Use function to shuffle questions
-			const shuffledQuestions = shuffleQuestions([...roundQuestions]);
-
-			// Select five questions
-			const selectedQuestions = shuffledQuestions.slice(0, 5);
-
-			// Update round
-			const updateRound = (draft: Draft<GameType>, round: number) => {
-				const roundKey = `round${round}` as keyof GameType['rounds'];
-				draft.rounds[roundKey] = {
-					...draft.rounds[roundKey],
-					...selectedQuestions[round - 1],
-				};
-			};
-
-			// Update game
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.settings.category = categoryValue;
-					draft.settings.difficulty = difficultyValue;
-					updateRound(draft, 1);
-					updateRound(draft, 2);
-					updateRound(draft, 3);
-					updateRound(draft, 4);
-					updateRound(draft, 5);
-				}),
-			);
-		}
-	};
-
-	return (
-		<>
-			<h2>Choose settings</h2>
-
-			<form className="settings form" onSubmit={(e) => submitSettings(e)}>
-				<div className="settings-select form-field">
-					<label htmlFor="settings-difficulty">Difficuly:</label>
-
-					<select id="settings-difficulty" name="difficulty" defaultValue="medium">
-						{difficulty.map((diff) => {
-							return (
-								<option value={diff.value} key={diff.value}>
-									{diff.name}
-								</option>
-							);
-						})}
-					</select>
-				</div>
-
-				<div className="settings-select form-field">
-					<label htmlFor="settings-category">Category:</label>
-
-					<select id="settings-category" name="category" defaultValue={categories[0].value}>
-						{categories.map((category) => {
-							return (
-								<option value={category.value} key={category.value}>
-									{category.name}
-								</option>
-							);
-						})}
-					</select>
-				</div>
-
-				<div className="settings-actions form-actions">
-					<button type="submit">Submit</button>
-				</div>
-			</form>
-		</>
 	);
 };

@@ -9,9 +9,10 @@
 	// Style block
 
 	.play {
+		max-width: 400px;
+		margin: 0 auto;
 		.pixels {
-			max-width: 200px;
-			margin: 0 auto theme.$spacing-x4 auto;
+			//margin: 0 auto theme.$spacing-x4 auto;
 			.pixel-block {
 				height: 0;
 				line-height: 0;

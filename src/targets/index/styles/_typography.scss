@@ -34,6 +34,7 @@
 	a, .a {
 		color: theme.$color-03;
 		@include mixins.transition(color 0.3s ease-in-out);
+		@include mixins.text-decoration($thickness: 1px, $offset: 5px, $color: inherit);
 		&:active, &:hover {
 			color: theme.$color-02;
 		}
@@ -69,6 +70,7 @@
 			font-style: theme.$font-style,
 			text-transform: theme.$font-transform
 		));
+		line-height: 1.2;
 		color: theme.$color-02;
 		a {
 			color: inherit;
@@ -81,16 +83,16 @@
 		font-size: functions.em(34px, rem);
 	}
 	h2, .h2 {
-		font-size: functions.em(30px, rem);
+		font-size: functions.em(28px, rem);
 	}
 	h3, .h3 {
-		font-size: functions.em(26px, rem);
+		font-size: functions.em(24px, rem);
 	}
 	h4, .h4 {
-		font-size: functions.em(22px, rem);
+		font-size: functions.em(20px, rem);
 	}
 	h5, h6, .h5, .h6 {
-		font-size: functions.em(20px, rem);
+		font-size: functions.em(18px, rem);
 	}
 
 //// CONTENT BLOCKS

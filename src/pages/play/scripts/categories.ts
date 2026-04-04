@@ -1,10 +1,11 @@
 /* Local scripts */
-import { category as categoryAnimatedTVShow } from './categories-animated-tv-show';
+import { category as categoryAnimatedTVShows } from './categories-animated-tv-shows';
 
 export const categories: CategoriesListType = [
 	{
-		name: 'Animated TV Show',
-		value: 'animated-tv-show',
-		values: categoryAnimatedTVShow,
+		name: 'Animated TV Shows',
+		value: 'animated-tv-shows',
+		values: categoryAnimatedTVShows,
+		description: 'Contains characters based on animated television shows.',
 	},
 ];

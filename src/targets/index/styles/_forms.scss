@@ -6,15 +6,120 @@
 //// FORMS
 //// --------------------------------------------------------------------------
 
+	// Configuration
+
+	$fields-height: 34px;
+	$pixel-size: 3px;
+
 	// Style block
 
+	label {
+		margin: 0;
+	}
+	select, input, label {
+		text-align: left;
+	}
+	select, input, button:not(.unstyled) {
+		height: $fields-height;
+		line-height: $fields-height;
+		padding: 0 theme.$spacing-x4;
+	}
+	select, input {
+		border: 1px solid theme.$color-02;
+		background-color: theme.$color-04;
+		color: theme.$color-02;
+		outline: 0;
+	}
+	select {
+		appearance: none;
+		cursor: pointer;
+	}
+	input {
+		@include mixins.placeholder {
+			color: theme.$color-05;
+		}
+	}
+	button:not(.unstyled), .form-field .form-field-wrapper {
+		position: relative;
+		border: 0;
+		margin: $pixel-size 0;
+		&:before, &:after {
+			content: '';
+			display: block;
+			@include mixins.position($type: absolute, $left: 0, $right: 0);
+			margin: auto;
+			height: $pixel-size;
+		}
+		&:before {
+			top: -#{$pixel-size};
+		}
+		&:after {
+			bottom: -#{$pixel-size};
+		}
+	}
 	button:not(.unstyled) {
-		height: 40px;
-		line-height: 40px;
-		@include mixins.ellipsis;
+		display: inline-block;
+		border-left: $pixel-size solid theme.$color-03;
+		border-right: $pixel-size solid theme.$color-03;
+		color: theme.$color-01;
+		cursor: pointer;
+		&, &:before, &:after {
+			background-color: theme.$color-03;
+		}
+		span {
+			display: block;
+			@include mixins.ellipsis();
+		}
 	}
 	button.unstyled {
 		padding: 0;
 		background-color: transparent;
 		border: 0;
+	}
+	.form {
+		& > * {
+			margin: 0 0 theme.$spacing-x2;
+		}
+	}
+	.form-field {
+		@include mixins.gap(theme.$spacing-x2);
+		text-align: left;
+		* {
+			min-width: 1px;
+		}
+		label {
+			min-width: 120px;
+		}
+		.form-field-wrapper {
+			@include mixins.flex;
+			background-color: theme.$color-04;			
+			border-left: $pixel-size solid theme.$color-02;
+			border-right: $pixel-size solid theme.$color-02;
+			&:before, &:after {
+				background-color: theme.$color-02;
+			}
+			select, input {
+				width: 100%;
+				border: 0;
+				background-color: transparent;
+			}
+		}
+		.form-field-arrow {
+			display: block;
+			@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: theme.$spacing-x4);
+			@include mixins.transform(rotate(180deg));
+			font-size: functions.em(24px, rem);
+			line-height: 24px;
+			height: 24px;
+			margin: 0 auto;
+		}
+		.form-field-description {
+			@include mixins.flex(1 1 100%);
+			margin: 0;
+			padding: 0 0 0 120px + theme.$spacing-x2;
+			font-size: functions.em(12px, rem);
+		}
+	}
+	.form-actions {
+		text-align: right;
 	}
