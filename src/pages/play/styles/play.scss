@@ -22,12 +22,6 @@
 					margin-bottom: 0;
 				}
 			}
-			.points, .hints {
-				// &:has(.block.pixelated) {
-				// 	display: inline-block;
-				// 	width: 100%;
-				// }
-			}
 			.pixels {
 				.row {
 					.column {
@@ -46,7 +40,7 @@
 				}
 			}
 		}
-		.pagination {
+		.round .game-end, .pagination {
 			@include mixins.gap(theme.$spacing-x2);
 		}
 	}

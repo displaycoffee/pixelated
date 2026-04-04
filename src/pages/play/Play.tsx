@@ -1,5 +1,6 @@
 /* React */
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { produce, Draft } from 'immer';
 
 /* Local styles */
@@ -28,6 +29,7 @@ export const Round = () => {
 	const { current, rounds, settings } = game;
 	const currentRound = rounds[`${current.round}`];
 	const title = currentRound.status == 'game end' ? `Game Over` : `Round ${current.round.replace('round', '')}`;
+	const [cookies, setCookie] = useCookies(['score']);
 
 	// Set up pixel includes (default difficulty is "medium")
 	let includePixels = [0, 2, 4];
@@ -42,6 +44,14 @@ export const Round = () => {
 		setGame(context.gameDefault);
 	};
 
+	// Set score
+	const setScore = () => {
+		const today = new Date().toISOString().split('T')[0];
+		const score = current.points;
+		const category = categories.filter((cat) => cat.value == settings.category).pop();
+		setCookie(`score`, `${score};${today};${category ? category.name : 'None.'}`);
+	};
+
 	return (
 		<div className={`round ${current.round}`}>
 			<h2>{title}</h2>
@@ -49,8 +59,10 @@ export const Round = () => {
 			<Points />
 
 			{currentRound.status == 'game end' ? (
-				<div className="new-game">
+				<div className="game-end flex-nowrap flex-align-items-center flex-justify-content-center">
 					<Button onClick={() => resetGame()}>New Game?</Button>
+
+					<Button onClick={() => setScore()}>Log Score</Button>
 				</div>
 			) : (
 				<>

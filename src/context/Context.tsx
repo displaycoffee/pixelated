@@ -1,5 +1,6 @@
 /* React */
 import { createContext, useState } from 'react';
+import { CookiesProvider } from 'react-cookie';
 import { DefaultOptions, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /* Local scripts */
@@ -89,7 +90,9 @@ export const ContextProvider = ({ children }: ContextProps) => {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Context.Provider value={values}>{children}</Context.Provider>
+			<CookiesProvider>
+				<Context.Provider value={values}>{children}</Context.Provider>
+			</CookiesProvider>
 		</QueryClientProvider>
 	);
 };

@@ -26,4 +26,12 @@ export const navigation = [
 		showInNav: true,
 		url: '/rules',
 	},
+	{
+		id: 3,
+		alt: 'Scores',
+		isRoute: true,
+		label: 'Scores',
+		showInNav: true,
+		url: '/scores',
+	},
 ] as NavigationType[];

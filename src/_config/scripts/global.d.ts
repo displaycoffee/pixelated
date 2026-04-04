@@ -119,6 +119,8 @@ declare global {
 
 	type AnswersRequestType = AnswersRequest;
 
+	type CategoriesType = Categories;
+
 	type CategoryListType = CategoryList;
 
 	type CategoriesListType = CategoriesList;
