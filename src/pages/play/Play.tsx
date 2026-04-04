@@ -12,6 +12,7 @@ import { categories } from './scripts/categories';
 
 /* Local components */
 import { Context } from '../../context/Context';
+import { Block, Button, Form, FormActions, FormField, FormFieldWrapper } from '../../components/blocks/Blocks';
 
 export const Play = () => {
 	const context = useContext(Context);
@@ -48,17 +49,15 @@ export const Round = () => {
 			<Points />
 
 			{currentRound.status == 'game end' ? (
-				<>
-					<button className="new-game" type="button" onClick={() => resetGame()}>
-						<span>New Game?</span>
-					</button>
-				</>
+				<div className="new-game">
+					<Button onClick={() => resetGame()}>New Game?</Button>
+				</div>
 			) : (
 				<>
 					{currentRound && currentRound.values.length !== 0 ? (
 						<>
 							<div className="pixels">
-								<div className="row row-fit row-nowrap row-align-items-center row-spacing-10">
+								<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
 									{currentRound.values.map((value, index) => {
 										return (
 											<div className="column" key={`${currentRound}-${index}`}>
@@ -168,11 +167,9 @@ export const Settings = () => {
 		<>
 			<h2>Choose settings</h2>
 
-			<form className="settings form spacing-reset" onSubmit={(e) => submitSettings(e)}>
-				<div className="settings-select form-field flex-wrap flex-align-items-center">
-					<label htmlFor="settings-difficulty">Difficulty:</label>
-
-					<div className="form-field-wrapper">
+			<Form className={'settings'} onSubmit={(e) => submitSettings(e)}>
+				<FormField className={'settings-select'} id={'settings-difficulty'} label={'Difficulty'} description={descriptions.difficulty}>
+					<FormFieldWrapper hasSelect={true}>
 						<select
 							id="settings-difficulty"
 							name="difficulty"
@@ -187,16 +184,11 @@ export const Settings = () => {
 								);
 							})}
 						</select>
-						<span className="form-field-arrow">^</span>
-					</div>
+					</FormFieldWrapper>
+				</FormField>
 
-					<p className="form-field-description">{descriptions.difficulty}</p>
-				</div>
-
-				<div className="settings-select form-field flex-wrap flex-align-items-center">
-					<label htmlFor="settings-category">Category:</label>
-
-					<div className="form-field-wrapper">
+				<FormField className={'settings-select'} id={'settings-category'} label={'Category'} description={descriptions.categories}>
+					<FormFieldWrapper hasSelect={true}>
 						<select id="settings-category" name="category" defaultValue={categories[0].value}>
 							{categories.map((category) => {
 								return (
@@ -206,18 +198,13 @@ export const Settings = () => {
 								);
 							})}
 						</select>
-						<span className="form-field-arrow">^</span>
-					</div>
+					</FormFieldWrapper>
+				</FormField>
 
-					<p className="form-field-description">{descriptions.categories}</p>
-				</div>
-
-				<div className="settings-actions form-actions">
-					<button type="submit">
-						<span>Submit</span>
-					</button>
-				</div>
-			</form>
+				<FormActions className={'settings-actions'}>
+					<Button>Submit</Button>
+				</FormActions>
+			</Form>
 		</>
 	);
 };
@@ -317,29 +304,27 @@ export const Guess = () => {
 		<>
 			{current.status == 'incorrect' ? <Status status={'incorrect'} /> : null}
 
-			<form className="guess form spacing-reset" onSubmit={(e) => submitGuess(e)}>
-				<div className="guess-field form-field flex-wrap flex-align-items-center">
-					<div className="form-field-wrapper">
+			<Form className={'guess'} onSubmit={(e) => submitGuess(e)}>
+				<FormField className={'guess-field'}>
+					<FormFieldWrapper hasSelect={false}>
 						<input id={questionId} name="guess" type="text" placeholder="Enter your guess" />
-					</div>
-				</div>
+					</FormFieldWrapper>
 
-				<div className="guess-actions form-actions">
-					<button className="guess-submit" type="submit">
-						<span>Submit</span>
-					</button>
+					<Button className="guess-submit">Submit</Button>
 
-					<button className="guess-hint" type="button" onClick={() => getHint()} disabled={!hasHints}>
-						<span>Get Hint</span>
-					</button>
-				</div>
-			</form>
+					<Button className="guess-hint" onClick={() => getHint()} disabled={!hasHints}>
+						Get Hint
+					</Button>
+				</FormField>
+			</Form>
 
 			{currentRound.hints.length !== 0 ? (
 				<div className="hints">
-					{currentRound.hints.map((hint) => (
-						<p key={hint}>{hint}</p>
-					))}
+					<Block>
+						{currentRound.hints.map((hint) => (
+							<p key={hint}>{hint}</p>
+						))}
+					</Block>
 				</div>
 			) : null}
 		</>
@@ -354,15 +339,17 @@ export const Points = () => {
 
 	return (
 		<div className="points">
-			{current.round != 'round6' ? (
-				<p>
-					<strong>Current round:</strong> {currentRound.points}
-				</p>
-			) : null}
+			<Block>
+				{current.round != 'round6' ? (
+					<p>
+						<strong>Current round:</strong> {currentRound.points}
+					</p>
+				) : null}
 
-			<p>
-				<strong>Game total:</strong> {current.points}
-			</p>
+				<p>
+					<strong>Game total:</strong> {current.points}
+				</p>
+			</Block>
 		</div>
 	);
 };
@@ -373,9 +360,9 @@ export const Status = (props: ObjectPrimitiveProps) => {
 	// Determine status message
 	let message = '🎉 You got it!';
 	if (status == 'incorrect') {
-		message = '❌ Try again!';
+		message = '😠 Try again!';
 	} else if (status == 'failed') {
-		message = '❌ Out of guesses!';
+		message = '😠 Out of guesses!';
 	}
 
 	return <div className="status">{message}</div>;
@@ -421,14 +408,14 @@ export const Pagination = () => {
 	};
 
 	return (
-		<div className="pagination">
-			<button className="pagination-previous" type="button" onClick={() => goToRound('previous')} disabled={!hasPrevious}>
-				<span>Previous</span>
-			</button>
+		<div className="pagination flex-nowrap flex-align-items-center flex-justify-content-center">
+			<Button className="pagination-previous" onClick={() => goToRound('previous')} disabled={!hasPrevious}>
+				Previous
+			</Button>
 
-			<button className="pagination-next" type="button" onClick={() => goToRound('next')} disabled={!hasNext}>
-				<span>Next</span>
-			</button>
+			<Button className="pagination-next" onClick={() => goToRound('next')} disabled={!hasNext}>
+				Next
+			</Button>
 		</div>
 	);
 };

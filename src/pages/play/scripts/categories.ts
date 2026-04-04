@@ -6,6 +6,6 @@ export const categories: CategoriesListType = [
 		name: 'Animated TV Shows',
 		value: 'animated-tv-shows',
 		values: categoryAnimatedTVShows,
-		description: 'Contains characters based on animated television shows.',
+		description: 'Characters based on animated television shows (not anime).',
 	},
 ];

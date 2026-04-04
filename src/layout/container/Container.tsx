@@ -1,54 +1,29 @@
 /* React */
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 /* Local styles */
 import './styles/container.scss';
 
 /* Local scripts */
-import { useBodyClass, useRespond } from '../../_config/scripts/hooks';
+import { useBodyClass } from '../../_config/scripts/hooks';
 
 /* Local components */
-import { Context } from '../../context/Context';
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';
-import { IconMap } from '../../components/icons/Icons';
 import { Navigation } from '../../components/navigation/Navigation';
-import { Slideout, SlideoutOverlay } from '../../components/slideout/Slideout';
 import { Header } from '../header/Header';
 import { Content } from '../content/Content';
 import { Footer } from '../footer/Footer';
 
 export const Container = () => {
-	const context = useContext(Context);
-	const { theme, utils } = context;
-	const isDesktop = useRespond(theme.bps.bp02 as number);
-
 	// Set body class using custom hook
 	useBodyClass('play');
-
-	// Slideout options
-	const slideoutOptions = {
-		id: 'menu',
-		isDesktop: isDesktop,
-		label: 'Menu',
-		content: <Navigation />,
-		closeOnClick: true,
-		button: {
-			outside: false,
-			show: true,
-		},
-	};
 
 	return (
 		<div className="container spacing-reset">
 			<ErrorBoundary message={<ContainerError />}>
-				<IconMap />
-
-				<SlideoutOverlay options={slideoutOptions} />
-
 				<Header />
 
-				{isDesktop ? <Navigation /> : <Slideout options={slideoutOptions} />}
+				<Navigation />
 
 				<main className="main">
 					<div className="main-layout flex-wrap">
@@ -57,10 +32,6 @@ export const Container = () => {
 				</main>
 
 				<Footer />
-
-				<button className="pointer unstyled a" type="button" aria-label="Scroll to top button" onClick={(e) => utils.scrollTo(e, '#index')}>
-					Scroll to top
-				</button>
 			</ErrorBoundary>
 		</div>
 	);
