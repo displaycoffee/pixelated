@@ -7,6 +7,7 @@ type Context = {
 };
 
 type ContextValues = {
+	gameDefault: GameType;
 	game: GameType;
 	setGame: React.Dispatch;
 	queryClient: QueryClient;

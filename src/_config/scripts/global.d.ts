@@ -45,9 +45,8 @@ type DifficultyList = Difficulty[];
 type Game = {
 	current: {
 		guess: boolean | string;
-		hint: boolean | string;
 		points: number;
-		round: 'round1' | 'round2' | 'round3' | 'round4' | 'round5';
+		round: 'round1' | 'round2' | 'round3' | 'round4' | 'round5' | 'round6';
 		status: 'pending' | 'correct' | 'incorrect';
 	};
 	settings: {
@@ -60,6 +59,7 @@ type Game = {
 		round3: Round;
 		round4: Round;
 		round5: Round;
+		round6: Round;
 	};
 };
 
@@ -71,7 +71,7 @@ type HintsRequest = [Hints, Function, Statuses];
 
 type Round = {
 	id: boolean | string;
-	status: 'pending' | 'complete' | 'failed';
+	status: 'pending' | 'complete' | 'failed' | 'game end';
 	guesses: number;
 	hints: string[];
 	points: number;

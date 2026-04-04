@@ -53,7 +53,6 @@ export const ContextProvider = ({ children }: ContextProps) => {
 	const gameConfig: GameType = {
 		current: {
 			guess: false,
-			hint: false,
 			points: 0,
 			round: 'round1',
 			status: 'pending',
@@ -68,6 +67,10 @@ export const ContextProvider = ({ children }: ContextProps) => {
 			round3: round,
 			round4: round,
 			round5: round,
+			round6: {
+				...round,
+				status: 'game end',
+			},
 		},
 	};
 
@@ -75,6 +78,7 @@ export const ContextProvider = ({ children }: ContextProps) => {
 	const [game, setGame] = useState(gameConfig);
 
 	const values: ContextValuesType = {
+		gameDefault: gameConfig,
 		game,
 		setGame,
 		queryClient,
