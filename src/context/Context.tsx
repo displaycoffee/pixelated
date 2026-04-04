@@ -44,7 +44,7 @@ export const ContextProvider = ({ children }: ContextProps) => {
 		id: false,
 		status: 'pending',
 		guesses: 0,
-		hints: 0,
+		hints: [],
 		points: 100,
 		values: [],
 	};

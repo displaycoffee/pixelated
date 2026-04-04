@@ -1,3 +1,6 @@
+/* React */
+import { QueryFunctionContext } from '@tanstack/react-query';
+
 /* Local scripts */
 import { variables } from './variables';
 
@@ -21,9 +24,9 @@ const throwError = (json: ResponseErrorType) => {
 };
 
 export const requests: RequestsType = {
-	answers: async ({ queryKey }: AnswersQueryKeyType) => {
-		const guess = queryKey[1];
-		const questionId = queryKey[2];
+	answers: async ({ queryKey }: QueryFunctionContext) => {
+		const questionId = queryKey[1];
+		const guess = queryKey[2];
 
 		// Storage for answers data
 		let answers = {} as AnswersType;
@@ -47,5 +50,31 @@ export const requests: RequestsType = {
 		}
 
 		return answers;
+	},
+	hints: async ({ queryKey }: QueryFunctionContext) => {
+		const hintId = queryKey[1];
+
+		// Storage for hints data
+		let hints = {} as HintsType;
+
+		// Set options
+		const options = {
+			...parameters.options(),
+			body: JSON.stringify({ hintId: hintId }),
+		};
+
+		// Fetch answers
+		const response = await fetch(`${variables.paths.api}/hints`, options);
+		const json = await response.json();
+
+		// Check for API errors
+		throwError(json);
+
+		// Set answer
+		if (typeof json?.message == 'string') {
+			hints = json;
+		}
+
+		return hints;
 	},
 };

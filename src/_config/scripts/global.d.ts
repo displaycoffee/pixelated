@@ -1,3 +1,6 @@
+/* React */
+import { QueryFunctionContext } from '@tanstack/react-query';
+
 /* Generic type definitions */
 type Events = SyntheticEvent | Event;
 
@@ -15,11 +18,7 @@ type Answers = {
 	success: string;
 };
 
-type AnswersQueryKey = {
-	queryKey: [string, string, string];
-};
-
-type AnswersRequest = [Answers, Statuses];
+type AnswersRequest = [Answers, Function, Statuses];
 
 type Category = {
 	id: string;
@@ -64,11 +63,17 @@ type Game = {
 	};
 };
 
+type Hints = {
+	message: string;
+};
+
+type HintsRequest = [Hints, Function, Statuses];
+
 type Round = {
 	id: boolean | string;
 	status: 'pending' | 'complete' | 'failed';
 	guesses: number;
-	hints: number;
+	hints: string[];
 	points: number;
 	values: string[][];
 };
@@ -78,14 +83,15 @@ type Fetched = {
 	fetched: boolean;
 };
 
-type QueryKey = [string, string, string];
+type QueryKey = [string, string] | [string, string, string];
 
 type RequestError = Error & {
 	status?: number;
 };
 
 type Requests = {
-	[key: string]: ({ queryKey }: AnswersQueryKey) => Promise<Answers>;
+	answers: (context: QueryFunctionContext) => Promise<Answers>;
+	hints: (context: QueryFunctionContext) => Promise<Hints>;
 };
 
 type ResponseError = Response & {
@@ -109,8 +115,6 @@ declare global {
 	/* Declare global content types */
 	type AnswersType = Answers;
 
-	type AnswersQueryKeyType = AnswersQueryKey;
-
 	type AnswersRequestType = AnswersRequest;
 
 	type CategoryListType = CategoryList;
@@ -120,6 +124,10 @@ declare global {
 	type DifficultyListType = DifficultyList;
 
 	type GameType = Game;
+
+	type HintsType = Hints;
+
+	type HintsRequestType = HintsRequest;
 
 	type RoundType = Round;
 

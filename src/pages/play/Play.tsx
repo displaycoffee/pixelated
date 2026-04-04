@@ -1,5 +1,5 @@
 /* React */
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { produce, Draft } from 'immer';
 
 /* Local styles */
@@ -38,46 +38,46 @@ export const Round = () => {
 		includePixels = [0, 1, 2, 3, 4];
 	}
 
-	// Use custom hook to get answers
-	const [answersData, answersStatus] = useReactQuery(current.guess as string, questionId, 'answers') as AnswersRequestType;
-	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
+	// // Use custom hook to get answers
+	// const [answersData, answersRefetch, answersStatus] = useReactQuery('answers', questionId, current.guess as string) as AnswersRequestType;
+	// const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
 
-	useEffect(() => {
-		// If an answer has been returned, update data
-		if (answersComplete && answersData) {
-			// Set status
-			const status = answersData.success ? 'correct' : 'incorrect';
+	// useEffect(() => {
+	// 	// If an answer has been returned, update data
+	// 	if (answersComplete && answersData) {
+	// 		// Set status
+	// 		const status = answersData.success ? 'correct' : 'incorrect';
 
-			// Update round status
-			let roundStatus: RoundType['status'] = 'pending';
-			if (status == 'incorrect' && currentRound.guesses > 2) {
-				roundStatus = 'failed';
-			} else if (status == 'correct') {
-				roundStatus = 'complete';
-			}
+	// 		// Update round status
+	// 		let roundStatus: RoundType['status'] = 'pending';
+	// 		if (status == 'incorrect' && currentRound.guesses > 2) {
+	// 			roundStatus = 'failed';
+	// 		} else if (status == 'correct') {
+	// 			roundStatus = 'complete';
+	// 		}
 
-			// Update point value
-			let points = currentRound.points;
-			if (roundStatus == 'pending' && currentRound.guesses < 3) {
-				points = currentRound.points - 10;
-			} else if (roundStatus == 'failed') {
-				points = 0;
-			}
+	// 		// Update point value
+	// 		let points = currentRound.points;
+	// 		if (roundStatus == 'pending' && currentRound.guesses < 3) {
+	// 			points = currentRound.points - 10;
+	// 		} else if (roundStatus == 'failed') {
+	// 			points = 0;
+	// 		}
 
-			// Update total points
-			const pointsTotal = roundStatus != 'pending' ? current.points + points : current.points;
+	// 		// Update total points
+	// 		const pointsTotal = roundStatus != 'pending' ? current.points + points : current.points;
 
-			// Update game
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.current.points = pointsTotal;
-					draft.current.status = status;
-					draft.rounds[`${current.round}`].status = roundStatus;
-					draft.rounds[`${current.round}`].points = points;
-				}),
-			);
-		}
-	}, [answersData]);
+	// 		// Update game
+	// 		setGame(
+	// 			produce((draft: Draft<GameType>) => {
+	// 				draft.current.points = pointsTotal;
+	// 				draft.current.status = status;
+	// 				draft.rounds[`${current.round}`].status = roundStatus;
+	// 				draft.rounds[`${current.round}`].points = points;
+	// 			}),
+	// 		);
+	// 	}
+	// }, [answersData]);
 
 	return (
 		<>
@@ -118,31 +118,103 @@ export const RoundPending = () => {
 	const setGame = context.setGame;
 	const currentRound = rounds[`${current.round}`];
 	const questionId = currentRound.id as string;
+	const hintsLength = currentRound.hints.length;
+	const hintId = `${questionId}-h${hintsLength + 1}`;
+	//let guess
+	let [guess2, setGuess2] = useState('');
+
+	// Use custom hook to get answers
+	const [hintsData, hintsRefetch, hintsStatus] = useReactQuery('hints', hintId) as HintsRequestType;
+	const hintsComplete = (!hintsStatus.pending && hintsStatus.success) || hintsStatus.fetched ? true : false;
+
+	if (hintsComplete && hintsData && hintsStatus) {
+		// Add hints to array
+		let hints = currentRound.hints.concat([hintsData.message]);
+
+		// Update game
+		setGame(
+			produce((draft: Draft<GameType>) => {
+				draft.rounds[`${current.round}`].hints = hints;
+			}),
+		);
+	}
+
+	// Get hint by using refetch
+	const getHint = () => {
+		hintsRefetch();
+	};
+
+	// Use custom hook to get answers
+	const [answersData, answersRefetch, answersStatus] = useReactQuery('answers', questionId, guess2) as AnswersRequestType;
+	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
 
 	// Submit guess
-	const submitGuess = async (e: EventsType) => {
+	const submitGuess = (e: EventsType) => {
 		e.preventDefault();
 
 		// Get form data
 		const formData = new FormData(e.target);
-		const guess = formData.get('guess') as string;
+		const guessData = formData.get('guess') as string;
 
 		// Update game (only if there is a guess and it's not the previous guess)
-		if (guess && guess != current.guess) {
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.current.guess = guess;
-					draft.rounds[`${current.round}`].guesses = currentRound.guesses + 1;
-				}),
-			);
+		if (guessData && guessData != current.guess) {
+			guess2 = guessData;
+			setGuess2(guess2);
 		}
 	};
+
+	if (answersComplete && answersData && answersStatus) {
+		console.log('checking');
+		// Set status
+		const status = answersData.success ? 'correct' : 'incorrect';
+
+		// Update round status
+		let roundStatus: RoundType['status'] = 'pending';
+		if (status == 'incorrect' && currentRound.guesses > 2) {
+			roundStatus = 'failed';
+		} else if (status == 'correct') {
+			roundStatus = 'complete';
+		}
+
+		// Update point value
+		let points = currentRound.points;
+		if (roundStatus == 'pending' && currentRound.guesses < 3) {
+			points = currentRound.points - 10;
+		} else if (roundStatus == 'failed') {
+			points = 0;
+		}
+
+		// Update total points
+		const pointsTotal = roundStatus != 'pending' ? current.points + points : current.points;
+
+		// Update game
+		setGame(
+			produce((draft: Draft<GameType>) => {
+				draft.current.guess = guess2;
+				draft.current.points = pointsTotal;
+				draft.current.status = status;
+				//draft.rounds[`${current.round}`].guesses = currentRound.guesses + 1;
+				draft.rounds[`${current.round}`].status = roundStatus;
+				//draft.rounds[`${current.round}`].points = points;
+			}),
+		);
+	}
 
 	return (
 		<>
 			<form onSubmit={(e) => submitGuess(e)}>
 				<input id={questionId} name="guess" type="text" placeholder="Enter your guess" />
 				<button type="submit">Submit</button>
+
+				{hintsLength < 3 ? (
+					<button type="button" onClick={() => getHint()}>
+						Get hint
+					</button>
+				) : (
+					<p>No more hints!</p>
+				)}
+
+				{currentRound.hints.length !== 0 ? currentRound.hints.map((hint) => <p key={hint}>{hint}</p>) : null}
 
 				{current.status === 'correct' && <p>🎉 You got it!</p>}
 				{current.status === 'incorrect' && <p>❌ Try again!</p>}

@@ -62,10 +62,16 @@ export const useFormattedId = () => {
 		.replace(/\_/g, '-');
 };
 
-export const useReactQuery = (content: string, id: string, key: string) => {
+export const useReactQuery = (key: string, id: string, content?: string) => {
 	// Set initial variables
-	let requestData = !!content;
-	let queryKey = [key, content, id] as QueryKeyType;
+	let requestData = false;
+	let queryKey = [key, id] as QueryKeyType;
+
+	// If content, add to queryKey
+	if (content) {
+		requestData = !!content;
+		queryKey = [key, id, content] as QueryKeyType;
+	}
 
 	// Create query request
 	const {
@@ -73,13 +79,14 @@ export const useReactQuery = (content: string, id: string, key: string) => {
 		isPending: isPending,
 		isSuccess: isSuccess,
 		isFetched: isFetched,
+		refetch: refetch,
 	} = useQuery({
 		queryKey: queryKey,
-		queryFn: requests[key],
+		queryFn: requests[key as keyof RequestsType],
 		enabled: requestData,
 	});
 
-	return [data, { fetched: isFetched, pending: isPending, success: isSuccess }];
+	return [data, refetch, { fetched: isFetched, pending: isPending, success: isSuccess }];
 };
 
 export const useRespond = (bp: number) => {
