@@ -28,10 +28,10 @@ export const navigation = [
 	},
 	{
 		id: 3,
-		alt: 'Scores',
+		alt: 'Scoreboard',
 		isRoute: true,
-		label: 'Scores',
+		label: 'Scoreboard',
 		showInNav: true,
-		url: '/scores',
+		url: '/scoreboard',
 	},
 ] as NavigationType[];

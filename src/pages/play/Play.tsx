@@ -29,7 +29,7 @@ export const Round = () => {
 	const { current, rounds, settings } = game;
 	const currentRound = rounds[`${current.round}`];
 	const title = currentRound.status == 'game end' ? `Game Over` : `Round ${current.round.replace('round', '')}`;
-	const [cookies, setCookie] = useCookies(['score']);
+	let [cookies, setCookie] = useCookies(['scoreboard']);
 
 	// Set up pixel includes (default difficulty is "medium")
 	let includePixels = [0, 2, 4];
@@ -46,10 +46,26 @@ export const Round = () => {
 
 	// Set score
 	const setScore = () => {
-		const today = new Date().toISOString().split('T')[0];
-		const score = current.points;
-		const category = categories.filter((cat) => cat.value == settings.category).pop();
-		setCookie(`score`, `${score};${today};${category ? category.name : 'None.'}`);
+		if (!current.scoreLogged) {
+			// Get details for score
+			const today = new Date().toISOString().split('T')[0];
+			const category = categories.filter((cat) => cat.value == settings.category).pop();
+
+			// Check current and new score cookie
+			const currentScoreboard = cookies?.scoreboard ? cookies.scoreboard : '';
+			const newScore = `${current.points};${today};${category ? category.name : 'None.'}`;
+
+			// Update scoreboard cookie
+			const updatedScoreboard = currentScoreboard ? `${currentScoreboard}|${newScore}` : newScore;
+			setCookie('scoreboard', updatedScoreboard);
+
+			// Update score logged
+			setGame(
+				produce((draft: Draft<GameType>) => {
+					draft.current.scoreLogged = true;
+				}),
+			);
+		}
 	};
 
 	return (
@@ -62,7 +78,9 @@ export const Round = () => {
 				<div className="game-end flex-nowrap flex-align-items-center flex-justify-content-center">
 					<Button onClick={() => resetGame()}>New Game?</Button>
 
-					<Button onClick={() => setScore()}>Log Score</Button>
+					<Button onClick={() => setScore()} disabled={current.scoreLogged}>
+						Log Score
+					</Button>
 				</div>
 			) : (
 				<>

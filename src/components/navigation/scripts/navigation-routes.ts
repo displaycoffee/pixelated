@@ -7,7 +7,7 @@ import { navigationUtils } from './navigation-utils';
 import { Play } from '../../../pages/play/Play';
 import { About } from '../../../pages/about/About';
 import { Rules } from '../../../pages/rules/Rules';
-import { Scores } from '../../../pages/scores/Scores';
+import { Scoreboard } from '../../../pages/scoreboard/Scoreboard';
 
 /* Set up component mapping for routes */
 /* Note: this should match the navigation.url value in navigation.ts (without the '/') */
@@ -15,7 +15,7 @@ const routeMap = {
 	play: Play,
 	about: About,
 	rules: Rules,
-	scores: Scores,
+	scoreboard: Scoreboard,
 } as NavigationMapType;
 
 /* Create routes array */

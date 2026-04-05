@@ -57,6 +57,7 @@ export const ContextProvider = ({ children }: ContextProps) => {
 			points: 0,
 			round: 'round1',
 			status: 'pending',
+			scoreLogged: false,
 		},
 		settings: {
 			category: false,

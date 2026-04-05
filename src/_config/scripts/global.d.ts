@@ -50,6 +50,7 @@ type Game = {
 		points: number;
 		round: 'round1' | 'round2' | 'round3' | 'round4' | 'round5' | 'round6';
 		status: 'pending' | 'correct' | 'incorrect';
+		scoreLogged: boolean;
 	};
 	settings: {
 		category: boolean | string;
