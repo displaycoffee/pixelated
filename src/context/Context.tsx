@@ -18,11 +18,9 @@ const queryConfig: DefaultOptions = {
 		retry: (failureCount: number, error: RequestErrorType) => {
 			const status = error?.status ? error.status : 9999;
 
-			// This will now log correctly!
-			console.warn(`Retry attempt ${failureCount + 1} for status: ${status}`);
-
 			// Only retry for 401s (the intermittent issue)
 			if (status === 401 && failureCount < 2) {
+				console.warn(`Retry attempt ${failureCount + 1} for status: ${status}`);
 				return true;
 			}
 

@@ -2,7 +2,7 @@
 const directory = '/pixelated';
 export const variables = {
 	paths: {
-		api: window.location.host.includes('localhost') ? 'http://localhost:3001' : 'https://pixelated-api.display.coffee',
+		api: import.meta.env.VITE_API_URL as string,
 		basename: window.location.pathname.includes(directory) ? directory : '',
 	},
 };

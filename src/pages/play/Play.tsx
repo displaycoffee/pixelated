@@ -93,7 +93,11 @@ export const Round = () => {
 											<div className="column" key={`${currentRound}-${index}`}>
 												{value.map((color, colorIndex) => {
 													return includePixels.includes(colorIndex) ? (
-														<div className="pixel-block" style={{ backgroundColor: color }} key={color}></div>
+														<div
+															className="pixel-block"
+															style={{ backgroundColor: color }}
+															key={`${color}-${colorIndex}`}
+														></div>
 													) : null;
 												})}
 											</div>
@@ -275,7 +279,7 @@ export const Guess = () => {
 	};
 
 	// Use custom hook to get answers
-	const [answersData, answersRefetch, answersStatus] = useReactQuery('answers', questionId, current.guess as string) as AnswersRequestType;
+	const [answersData, _answersRefetch, answersStatus] = useReactQuery('answers', questionId, current.guess as string) as AnswersRequestType;
 	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
 
 	// Submit guess

@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 /* React */
 import { QueryFunctionContext } from '@tanstack/react-query';
 
@@ -97,8 +99,8 @@ type Requests = {
 	hints: (context: QueryFunctionContext) => Promise<Hints>;
 };
 
-type ResponseError = Response & {
-	error?: RequestError;
+type ResponseError = {
+	error?: string;
 };
 
 type Statuses = {

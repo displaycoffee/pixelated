@@ -17,9 +17,7 @@ const parameters = {
 /* If the API returns an error (401, 404, etc.), throw an error to trigger retry logic in QueryClientProvider */
 const throwError = (json: ResponseErrorType) => {
 	if (json?.error) {
-		const error = new Error(json.error.message || 'API Error');
-		(error as RequestErrorType).status = json.error.status;
-		throw error;
+		throw new Error(json.error);
 	}
 };
 

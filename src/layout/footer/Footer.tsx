@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import './styles/footer.scss';
 
 export const Footer = () => {
-	const [cookies, setCookie, removeCookie] = useCookies(['scoreboard']);
+	const [cookies, _setCookie, removeCookie] = useCookies(['scoreboard']);
 	const hasScoreboard = cookies?.scoreboard ? true : false;
 	const date = new Date().getFullYear();
 

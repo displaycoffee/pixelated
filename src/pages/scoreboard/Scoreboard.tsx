@@ -16,7 +16,7 @@ import { Block } from '../../components/blocks/Blocks';
 export const Scoreboard = () => {
 	const context = useContext(Context);
 	const isDesktop = useRespond(context.theme.bps.bp02 as number);
-	const [cookies, setCookie] = useCookies(['scoreboard']);
+	const [cookies] = useCookies(['scoreboard']);
 	const scoreboardCookie = cookies?.scoreboard ? cookies.scoreboard.split('|') : [];
 
 	// Format scoreboard cookie

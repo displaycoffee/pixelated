@@ -17,19 +17,19 @@ export const useBodyClass = (defaultPrefix: string) => {
 	const bodyPrefix = 'page-';
 	const bodyDefault = defaultPrefix;
 
-	if (bodySelector) {
-		useEffect(() => {
-			// Remove any previous body class
-			bodySelector.classList.remove(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
+	useEffect(() => {
+		if (!bodySelector) return;
 
-			// Update previous location path
-			// Replace any body prefix, remove first slash, and replace any other slash with hyphen
-			pageCache.previous = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
+		// Remove any previous body class
+		bodySelector.classList.remove(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
 
-			// Add new body class
-			bodySelector.classList.add(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
-		}, [location]);
-	}
+		// Update previous location path
+		// Replace any body prefix, remove first slash, and replace any other slash with hyphen
+		pageCache.previous = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
+
+		// Add new body class
+		bodySelector.classList.add(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
+	}, [location]);
 
 	return null;
 };
