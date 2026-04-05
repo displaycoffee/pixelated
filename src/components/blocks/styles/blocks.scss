@@ -37,11 +37,25 @@
 		padding: theme.$spacing-x4;
 		border-left: $pixel-size solid theme.$color-02;
 		border-right: $pixel-size solid theme.$color-02;
+		&.block-columns {
+			@include mixins.flex-layout((display: inline-flex));
+			@include mixins.gap(theme.$spacing-x1 theme.$spacing-x2);
+			* {
+				@include mixins.flex;
+				min-width: 1px;
+			}
+			p {
+				margin: 0;
+			}
+		}
 		&:before, &:after {
 			background-color: theme.$color-02;
 		}
 		p {
-			margin: 0;
+			margin: 0 0 theme.$spacing-x1 0;
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 	.button {
@@ -49,7 +63,6 @@
 		border-left: $pixel-size solid theme.$color-03;
 		border-right: $pixel-size solid theme.$color-03;
 		color: theme.$color-01;
-		cursor: pointer;
 		&, &:before, &:after {
 			background-color: theme.$color-03;
 		}
@@ -79,7 +92,6 @@
 		}
 	}
 	.form-field-wrapper {
-		background-color: theme.$color-04;
 		border-left: $pixel-size solid theme.$color-02;
 		border-right: $pixel-size solid theme.$color-02;
 		&:has(.form-field-arrow) select {
@@ -92,6 +104,11 @@
 			width: 100%;
 			border: 0;
 			background-color: transparent;
+		}
+		input {
+			@include mixins.placeholder {
+				color: theme.$color-06;
+			}
 		}
 		.form-field-arrow {
 			display: block;

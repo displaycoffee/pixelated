@@ -337,7 +337,7 @@ export const Guess = () => {
 			<Form className={'guess'} onSubmit={(e) => submitGuess(e)}>
 				<FormField className={'guess-field'}>
 					<FormFieldWrapper hasSelect={false}>
-						<input id={questionId} name="guess" type="text" placeholder="Enter your guess" />
+						<input id={questionId} name="guess" type="text" placeholder="Guess the pixels." />
 					</FormFieldWrapper>
 
 					<Button className="guess-submit">Submit</Button>
@@ -369,7 +369,7 @@ export const Points = () => {
 
 	return (
 		<div className="points">
-			<Block>
+			<Block columns={current.round != 'round6' ? true : false}>
 				{current.round != 'round6' ? (
 					<p>
 						<strong>Current round:</strong> {currentRound.points}
@@ -379,6 +379,8 @@ export const Points = () => {
 				<p>
 					<strong>Game total:</strong> {current.points}
 				</p>
+
+				{current.round == 'round5' && current.points == 500 ? <p className="flawless-victory">Flawless Victory</p> : null}
 			</Block>
 		</div>
 	);
@@ -444,7 +446,7 @@ export const Pagination = () => {
 			</Button>
 
 			<Button className="pagination-next" onClick={() => goToRound('next')} disabled={!hasNext}>
-				Next
+				{current.round == 'round5' ? 'Game End' : 'Next'}
 			</Button>
 		</div>
 	);

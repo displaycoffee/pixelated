@@ -8,4 +8,40 @@
 
 	// Style block
 
-	.page-scoreboard {}
+	.scoreboard .scores {
+		.block {
+			p {
+				margin: 0;
+			}
+			.row {
+				border-bottom: 1px solid theme.$color-02;
+				padding: 0 0 theme.$spacing-x2 0;
+				margin: 0 0 theme.$spacing-x2 0;
+				&:last-child {
+					border-bottom: 0;
+					padding-bottom: 0;
+					margin-bottom: 0;
+				}
+				.column {
+					@include mixins.flex(1 1 100%);
+				}
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-02) {
+		.scoreboard .scores .block {
+			text-align: left;
+			.row {
+				.column {
+					@include mixins.flex(0 1 auto);
+				}
+				.points, .date {
+					width: 125px;
+				}
+				.category {
+					@include mixins.flex;
+					@include mixins.ellipsis();
+				}
+			}
+		}
+	}

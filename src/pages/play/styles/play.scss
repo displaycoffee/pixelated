@@ -34,6 +34,13 @@
 					padding-bottom: 100%;
 				}
 			}
+			.points {
+				.flawless-victory {
+					font-weight: theme.$font-weight-01;
+					text-transform: uppercase;
+					@include mixins.flex(1 1 100%);
+				}
+			}
 			.guess {
 				.form-field {
 					@include mixins.gap(theme.$spacing-x4 theme.$spacing-x2);

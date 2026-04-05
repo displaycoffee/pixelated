@@ -8,4 +8,15 @@
 
 	// Style block
 
-	.page-rules {}
+	.rules {
+		ol:not(.unstyled) > li {
+			text-align: left;
+			margin-bottom: theme.$spacing-x4;
+			&:last-child {
+				margin-bottom: 0;
+			}
+			ul {
+				margin-top: theme.$spacing-x2;
+			}
+		}
+	}

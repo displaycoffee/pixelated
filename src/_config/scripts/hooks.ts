@@ -1,5 +1,5 @@
 /* React */
-import { RefObject, useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 
@@ -32,34 +32,6 @@ export const useBodyClass = (defaultPrefix: string) => {
 	}
 
 	return null;
-};
-
-export const useClickOutside = (callback: Function) => {
-	const clickRef: RefObject<HTMLDivElement | null> = useRef(null);
-
-	// Determine if a click has been performed outside an element
-	useEffect(() => {
-		const handleClickOutside = (e: Event) => {
-			if (clickRef.current && !clickRef.current.contains(e.target as Node)) {
-				callback();
-			}
-		};
-
-		document.addEventListener('mousedown', handleClickOutside);
-
-		return () => document.removeEventListener('mousedown', handleClickOutside);
-	}, [clickRef, callback]);
-
-	return clickRef;
-};
-
-export const useFormattedId = () => {
-	// Updates the format of useId hook
-	const id = useId();
-	return id
-		.slice(1, -1)
-		.replace(/^\_|\_$/g, '')
-		.replace(/\_/g, '-');
 };
 
 export const useReactQuery = (key: string, id: string, content?: string) => {

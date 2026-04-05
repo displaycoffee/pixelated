@@ -7,7 +7,9 @@ type BlockShared = {
 	className?: string;
 };
 
-type Block = BlockShared;
+type Block = BlockShared & {
+	columns?: boolean;
+};
 
 type Button = BlockShared & {
 	disabled?: boolean;

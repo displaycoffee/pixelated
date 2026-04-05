@@ -13,10 +13,10 @@ import {
 } from './scripts/blocks-types';
 
 export const Block = (props: BlockProps) => {
-	let { children, className } = props;
+	let { children, className, columns } = props;
 	const blockClass = className ? `${className} ` : '';
 
-	return <div className={`${blockClass}block pixelated`}>{children}</div>;
+	return <div className={`${blockClass}block${columns ? ' block-columns' : ''} pixelated`}>{children}</div>;
 };
 
 export const Button = (props: ButtonProps) => {

@@ -22,7 +22,7 @@
 	// Configuration
 
 	$base-elements-spacing: theme.$spacing-x4; // overall spacing of theme
-	$base-elements-body-spacing-vertical: theme.$spacing-x8; // top / bottom spacing for body
+	$base-elements-body-spacing-vertical: theme.$spacing-x12; // top / bottom spacing for body
 	$base-elements-body-spacing-horizontal: 0; // left / right spacing for body
 
 	// Style block
@@ -54,7 +54,7 @@
 		& > li {
 			position: relative;
 			margin: 0 0 theme.$spacing-x1 0;
-			padding: 0 0 0 theme.$spacing-x4;
+			padding: 0 0 0 theme.$spacing-x6;
 			&:before {
 				display: block;
 				@include mixins.position($type: absolute, $left: 0);
