@@ -23,24 +23,27 @@ type Answers = {
 type AnswersRequest = [Answers, Function, Statuses];
 
 type Category = {
-	id: string;
-	values: string[][];
-};
-
-type CategoryList = Category[];
-
-type Categories = {
 	name: string;
-	value: string;
-	values: Category[];
+	id: string;
+	category: string;
+	subCategory: string;
 	description: string;
 };
 
-type CategoriesList = Categories[];
+type CategoryQuestions = {
+	id: string;
+	values: string[][];
+}[];
+
+type CategoryValues = Category & {
+	values: CategoryQuestions;
+};
+
+type CategoriesList = CategoryValues[];
 
 type Difficulty = {
+	id: string;
 	name: string;
-	value: string;
 	description: string;
 };
 
@@ -55,8 +58,8 @@ type Game = {
 		scoreLogged: boolean;
 	};
 	settings: {
-		category: boolean | string;
-		difficulty: boolean | string;
+		category: boolean | Category;
+		difficulty: boolean | Difficulty;
 	};
 	rounds: {
 		round1: Round;
@@ -88,7 +91,7 @@ type Fetched = {
 	fetched: boolean;
 };
 
-type QueryKey = [string, string] | [string, string, string];
+type QueryKey = string[];
 
 type RequestError = Error & {
 	status?: number;
@@ -122,11 +125,15 @@ declare global {
 
 	type AnswersRequestType = AnswersRequest;
 
-	type CategoriesType = Categories;
+	type CategoryType = Category;
 
-	type CategoryListType = CategoryList;
+	type CategoryQuestionsType = CategoryQuestions;
+
+	type CategoryValuesType = CategoryValues;
 
 	type CategoriesListType = CategoriesList;
+
+	type DifficultyType = Difficulty;
 
 	type DifficultyListType = DifficultyList;
 

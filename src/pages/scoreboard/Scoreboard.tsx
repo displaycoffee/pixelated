@@ -23,8 +23,9 @@ export const Scoreboard = () => {
 	const scoreboard = scoreboardCookie.map((score: string) => {
 		const splitScore = score.split(';');
 		return {
-			category: splitScore[2],
+			category: splitScore[3],
 			date: splitScore[1],
+			difficulty: splitScore[2],
 			key: score,
 			points: splitScore[0],
 		};
@@ -44,6 +45,9 @@ export const Scoreboard = () => {
 								</p>
 								<p className="date column">
 									<strong>Date</strong>
+								</p>
+								<p className="difficulty column">
+									<strong>Difficulty</strong>
 								</p>
 								<p className="category column">
 									<strong>Category</strong>
@@ -69,6 +73,14 @@ export const Scoreboard = () => {
 											</>
 										) : null}
 										{score.date}
+									</p>
+									<p className="difficulty column">
+										{!isDesktop ? (
+											<>
+												<strong>Difficulty:</strong>{' '}
+											</>
+										) : null}
+										{score.difficulty}
 									</p>
 									<p className="category column">
 										{!isDesktop ? (

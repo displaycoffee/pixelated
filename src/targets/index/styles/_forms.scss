@@ -4,7 +4,11 @@
 @use '../../../_config/styles/theme/_theme';
 
 //// FORMS
-//// --------------------------------------------------------------------------
+//// --------------------------------------------------------------------------\
+
+	// Configuration
+	
+	$input-transition: background-color 600000s 0s, color 600000s 0s;
 
 	// Style block
 
@@ -31,7 +35,17 @@
 	select {
 		appearance: none;
 	}
-	input {
+	input {	
+		&:-webkit-autofill,
+		&:-webkit-autofill:hover,
+		&:-webkit-autofill:focus,
+		&:-webkit-autofill:active {
+			-webkit-transition: $input-transition;
+			-o-transition: $input-transition;
+			-ms-transition: $input-transition;
+			-moz-transition: $input-transition;
+			transition: $input-transition;
+		}
 		@include mixins.placeholder {
 			color: theme.$color-05;
 		}

@@ -25,22 +25,25 @@ export const Play = () => {
 
 export const Round = () => {
 	const context = useContext(Context);
-	const { game, setGame } = context;
+	const { game, setGame, queryClient } = context;
 	const { current, rounds, settings } = game;
+	const settingsDifficulty = settings.difficulty as DifficultyType;
 	const currentRound = rounds[`${current.round}`];
 	const title = currentRound.status == 'game end' ? `Game Over` : `Round ${current.round.replace('round', '')}`;
 	let [cookies, setCookie] = useCookies(['scoreboard']);
 
 	// Set up pixel includes (default difficulty is "medium")
 	let includePixels = [0, 2, 4];
-	if (settings.difficulty == 'hard') {
+	if (settingsDifficulty.id == 'hard') {
 		includePixels = [0];
-	} else if (settings.difficulty == 'easy') {
+	} else if (settingsDifficulty.id == 'easy') {
 		includePixels = [0, 1, 2, 3, 4];
 	}
 
 	// Reset game
 	const resetGame = () => {
+		void queryClient.resetQueries({ queryKey: ['hints'] });
+		void queryClient.resetQueries({ queryKey: ['answers'] });
 		setGame(context.gameDefault);
 	};
 
@@ -49,11 +52,14 @@ export const Round = () => {
 		if (!current.scoreLogged) {
 			// Get details for score
 			const today = new Date().toISOString().split('T')[0];
-			const category = categories.filter((cat) => cat.value == settings.category).pop();
+			const settingsDifficulty = settings.difficulty as DifficultyType;
+			const settingsCategory = settings.category as CategoryType;
+			const difficultyDetails = difficulty.filter((diff) => diff.id === settingsDifficulty.id).pop();
+			const categoryDetails = categories.filter((category) => category.id === settingsCategory.id).pop();
 
 			// Check current and new score cookie
 			const currentScoreboard = cookies?.scoreboard ? cookies.scoreboard : '';
-			const newScore = `${current.points};${today};${category ? category.name : 'None.'}`;
+			const newScore = `${current.points};${today};${difficultyDetails?.name};${categoryDetails?.name}`;
 
 			// Update scoreboard cookie
 			const updatedScoreboard = currentScoreboard ? `${currentScoreboard}|${newScore}` : newScore;
@@ -80,6 +86,16 @@ export const Round = () => {
 
 					<Button onClick={() => setScore()} disabled={current.scoreLogged}>
 						Log Score
+					</Button>
+
+					<Button
+						onClick={() => {
+							setScore();
+							resetGame();
+						}}
+						disabled={current.scoreLogged}
+					>
+						Why Not Both?
 					</Button>
 				</div>
 			) : (
@@ -155,11 +171,26 @@ export const Settings = () => {
 		const categoryValue = formData.get('category') as string;
 
 		if (difficultyValue && categoryValue) {
+			// Find difficulty
+			const difficultyDetails = difficulty.filter((diff) => diff.id === difficultyValue).pop() as DifficultyType;
+
+			// Find category
+			const categoryMatch = categories.filter((category) => category.id === categoryValue).pop() as CategoryValuesType;
+
+			// Set up category details
+			const categoryDetails: CategoryType = {
+				name: categoryMatch.name,
+				id: categoryMatch.id,
+				category: categoryMatch.category,
+				subCategory: categoryMatch.subCategory,
+				description: categoryMatch.description,
+			};
+
 			// Get questions for round from matching categories
-			const roundQuestions = categories.filter((category) => category.value === categoryValue).flatMap((category) => category.values);
+			const roundQuestions = categoryMatch.values;
 
 			// Shuffle questions (using the Fisher-Yates algorithm)
-			const shuffleQuestions = (array: CategoryListType) => {
+			const shuffleQuestions = (array: CategoryQuestionsType) => {
 				for (let i = array.length - 1; i > 0; i--) {
 					const j = Math.floor(Math.random() * (i + 1));
 					[array[i], array[j]] = [array[j], array[i]];
@@ -185,8 +216,8 @@ export const Settings = () => {
 			// Update game
 			setGame(
 				produce((draft: Draft<GameType>) => {
-					draft.settings.category = categoryValue;
-					draft.settings.difficulty = difficultyValue;
+					draft.settings.category = categoryDetails;
+					draft.settings.difficulty = difficultyDetails;
 					updateRound(draft, 1);
 					updateRound(draft, 2);
 					updateRound(draft, 3);
@@ -207,12 +238,12 @@ export const Settings = () => {
 						<select
 							id="settings-difficulty"
 							name="difficulty"
-							defaultValue={difficulty[1].value}
+							defaultValue={difficulty[1].id}
 							onChange={(e) => updateDescriptions(e, 'difficulty')}
 						>
 							{difficulty.map((diff) => {
 								return (
-									<option value={diff.value} key={diff.value}>
+									<option value={diff.id} key={diff.id}>
 										{diff.name}
 									</option>
 								);
@@ -223,10 +254,10 @@ export const Settings = () => {
 
 				<FormField className={'settings-select'} id={'settings-category'} label={'Category'} description={descriptions.categories}>
 					<FormFieldWrapper hasSelect={true}>
-						<select id="settings-category" name="category" defaultValue={categories[0].value}>
+						<select id="settings-category" name="category" defaultValue={categories[0].id}>
 							{categories.map((category) => {
 								return (
-									<option value={category.value} key={category.value}>
+									<option value={category.id} key={category.id}>
 										{category.name}
 									</option>
 								);
@@ -246,15 +277,16 @@ export const Settings = () => {
 export const Guess = () => {
 	const context = useContext(Context);
 	const { game, setGame } = context;
-	const { current, rounds } = game;
+	const { current, rounds, settings } = game;
 	const currentRound = rounds[`${current.round}`];
+	const settingsCategory = settings.category as CategoryType;
 	const questionId = currentRound.id as string;
 	const hintsLength = currentRound.hints.length;
-	const hintId = `${questionId}-h${hintsLength + 1}`;
+	const hintId = `h${hintsLength + 1}`;
 	const hasHints = hintsLength < 3 ? true : false;
 
 	// Use custom hook to get hints
-	const [hintsData, hintsRefetch, hintsStatus] = useReactQuery('hints', hintId) as HintsRequestType;
+	const [hintsData, hintsRefetch, hintsStatus] = useReactQuery('hints', settingsCategory, questionId, hintId) as HintsRequestType;
 	const hintsComplete = (!hintsStatus.pending && hintsStatus.success) || hintsStatus.fetched ? true : false;
 
 	useEffect(() => {
@@ -279,7 +311,12 @@ export const Guess = () => {
 	};
 
 	// Use custom hook to get answers
-	const [answersData, _answersRefetch, answersStatus] = useReactQuery('answers', questionId, current.guess as string) as AnswersRequestType;
+	const [answersData, _answersRefetch, answersStatus] = useReactQuery(
+		'answers',
+		settingsCategory,
+		questionId,
+		current.guess as string,
+	) as AnswersRequestType;
 	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
 
 	// Submit guess

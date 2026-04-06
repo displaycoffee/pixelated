@@ -34,15 +34,16 @@ export const useBodyClass = (defaultPrefix: string) => {
 	return null;
 };
 
-export const useReactQuery = (key: string, id: string, content?: string) => {
+export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string) => {
+	// Note: Content is either the hintId or the user's guess
+
 	// Set initial variables
 	let requestData = false;
-	let queryKey = [key, id] as QueryKeyType;
+	let queryKey = [key, JSON.stringify(category), questionId, content] as QueryKeyType;
 
 	// If content, add to queryKey
-	if (content) {
+	if (key == 'answers') {
 		requestData = !!content;
-		queryKey = [key, id, content] as QueryKeyType;
 	}
 
 	// Create query request

@@ -9,14 +9,16 @@
 	// Style block
 
 	.rules {
-		ol:not(.unstyled) > li {
-			text-align: left;
-			margin-bottom: theme.$spacing-x4;
-			&:last-child {
-				margin-bottom: 0;
-			}
-			ul {
-				margin-top: theme.$spacing-x2;
+		ol:not(.unstyled), ul:not(.unstyled) {
+			& > li {
+				text-align: left;
+				margin-bottom: theme.$spacing-x4;
+				&:last-child {
+					margin-bottom: 0;
+				}
+				ol, ul {
+					margin-top: theme.$spacing-x2;
+				}
 			}
 		}
 	}

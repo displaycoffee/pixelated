@@ -2,6 +2,7 @@
 type Scoreboard = {
 	category: string;
 	date: string;
+	difficulty: string;
 	key: string;
 	points: number;
 };

@@ -35,8 +35,11 @@
 				.column {
 					@include mixins.flex(0 1 auto);
 				}
-				.points, .date {
-					width: 125px;
+				.points {
+					width: 80px;
+				}
+				.date, .difficulty {
+					width: 120px;
 				}
 				.category {
 					@include mixins.flex;

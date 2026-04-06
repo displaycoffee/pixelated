@@ -1,17 +1,17 @@
 export const difficulty: DifficultyListType = [
 	{
+		id: 'easy',
 		name: 'Easy',
-		value: 'easy',
 		description: 'Includes five pixels.',
 	},
 	{
+		id: 'medium',
 		name: 'Medium',
-		value: 'medium',
 		description: 'Includes three pixels.',
 	},
 	{
+		id: 'hard',
 		name: 'Hard',
-		value: 'hard',
 		description: 'Only one pixel.',
 	},
 ];

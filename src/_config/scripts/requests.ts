@@ -23,8 +23,10 @@ const throwError = (json: ResponseErrorType) => {
 
 export const requests: RequestsType = {
 	answers: async ({ queryKey }: QueryFunctionContext) => {
-		const questionId = queryKey[1];
-		const guess = queryKey[2];
+		// queryKey: ['answers', categoryType (JSON), questionId, guess]
+		const { category, subCategory } = JSON.parse(queryKey[1] as string) as CategoryType;
+		const questionId = queryKey[2] as string;
+		const guess = queryKey[3] as string;
 
 		// Storage for answers data
 		let answers = {} as AnswersType;
@@ -32,7 +34,7 @@ export const requests: RequestsType = {
 		// Set options
 		const options = {
 			...parameters.options(),
-			body: JSON.stringify({ questionId: questionId, guess }),
+			body: JSON.stringify({ category, subCategory, questionId, guess }),
 		};
 
 		// Fetch answers
@@ -50,7 +52,10 @@ export const requests: RequestsType = {
 		return answers;
 	},
 	hints: async ({ queryKey }: QueryFunctionContext) => {
-		const hintId = queryKey[1];
+		// queryKey: ['hints', categoryType (JSON), questionId, hintId]
+		const { category, subCategory } = JSON.parse(queryKey[1] as string) as CategoryType;
+		const questionId = queryKey[2] as string;
+		const hintId = queryKey[3] as string;
 
 		// Storage for hints data
 		let hints = {} as HintsType;
@@ -58,7 +63,7 @@ export const requests: RequestsType = {
 		// Set options
 		const options = {
 			...parameters.options(),
-			body: JSON.stringify({ hintId: hintId }),
+			body: JSON.stringify({ category, subCategory, questionId, hintId }),
 		};
 
 		// Fetch answers
