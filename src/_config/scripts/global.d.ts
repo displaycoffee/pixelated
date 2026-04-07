@@ -16,6 +16,7 @@ type ObjectPrimitive = {
 
 /* Content type definitions */
 type Answers = {
+	close: string;
 	message: string;
 	success: string;
 };
@@ -32,6 +33,7 @@ type Category = {
 
 type CategoryQuestions = {
 	id: string;
+	difficulty: DifficultyMap;
 	values: string[][];
 }[];
 
@@ -49,12 +51,18 @@ type Difficulty = {
 
 type DifficultyList = Difficulty[];
 
+type DifficultyMap = {
+	easy: number[];
+	medium: number[];
+	hard: number[];
+};
+
 type Game = {
 	current: {
 		guess: boolean | string;
 		points: number;
 		round: 'round1' | 'round2' | 'round3' | 'round4' | 'round5' | 'round6';
-		status: 'pending' | 'correct' | 'incorrect';
+		status: 'pending' | 'correct' | 'incorrect' | 'close';
 		scoreLogged: boolean;
 	};
 	settings: {
@@ -79,7 +87,8 @@ type HintsRequest = [Hints, Function, Statuses];
 
 type Round = {
 	id: boolean | string;
-	status: 'pending' | 'complete' | 'failed' | 'game end';
+	status: 'pending' | 'complete' | 'failed' | 'close' | 'game end';
+	difficulty: DifficultyMap;
 	guesses: number;
 	hints: string[];
 	points: number;

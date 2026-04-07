@@ -33,12 +33,7 @@ export const Round = () => {
 	let [cookies, setCookie] = useCookies(['scoreboard']);
 
 	// Set up pixel includes (default difficulty is "medium")
-	let includePixels = [0, 2, 4];
-	if (settingsDifficulty.id == 'hard') {
-		includePixels = [0];
-	} else if (settingsDifficulty.id == 'easy') {
-		includePixels = [0, 1, 2, 3, 4];
-	}
+	const includePixels = currentRound.difficulty[settingsDifficulty.id as keyof typeof currentRound.difficulty];
 
 	// Reset game
 	const resetGame = () => {
@@ -58,11 +53,12 @@ export const Round = () => {
 			const categoryDetails = categories.filter((category) => category.id === settingsCategory.id).pop();
 
 			// Check current and new score cookie
-			const currentScoreboard = cookies?.scoreboard ? cookies.scoreboard : '';
+			const scoreLimit = 10;
+			const currentScoreboard: string[] = cookies?.scoreboard ? cookies.scoreboard.split('|') : [];
 			const newScore = `${current.points};${today};${difficultyDetails?.name};${categoryDetails?.name}`;
 
-			// Update scoreboard cookie
-			const updatedScoreboard = currentScoreboard ? `${currentScoreboard}|${newScore}` : newScore;
+			// Prepend new score and trim to limit
+			const updatedScoreboard = [newScore, ...currentScoreboard].slice(0, scoreLimit).join('|');
 			setCookie('scoreboard', updatedScoreboard);
 
 			// Update score logged
@@ -341,7 +337,10 @@ export const Guess = () => {
 	useEffect(() => {
 		if (answersComplete && answersData) {
 			// Set status
-			const status = answersData.success ? 'correct' : 'incorrect';
+			let status = answersData.success ? 'correct' : 'incorrect';
+			if (answersData.close) {
+				status = 'close';
+			}
 
 			// Update round status
 			let roundStatus: RoundType['status'] = 'pending';
@@ -355,14 +354,14 @@ export const Guess = () => {
 			let points = currentRound.points;
 			if (roundStatus == 'failed') {
 				points = 0;
-			} else if (status == 'incorrect') {
+			} else if (status == 'incorrect' || status == 'close') {
 				points = currentRound.points - 10;
 			}
 
 			// Update game settings when guess is submitted
 			setGame(
 				produce((draft: Draft<GameType>) => {
-					draft.current.status = status;
+					draft.current.status = status as GameType['current']['status'];
 					draft.current.points = roundStatus != 'pending' ? current.points + points : current.points;
 					draft.rounds[`${current.round}`].points = points;
 					draft.rounds[`${current.round}`].status = roundStatus;
@@ -373,7 +372,7 @@ export const Guess = () => {
 
 	return (
 		<>
-			{current.status == 'incorrect' ? <Status status={'incorrect'} /> : null}
+			{current.status == 'incorrect' || current.status == 'close' ? <Status status={current.status} /> : null}
 
 			<Form className={'guess'} onSubmit={(e) => submitGuess(e)}>
 				<FormField className={'guess-field'}>
@@ -392,9 +391,11 @@ export const Guess = () => {
 			{currentRound.hints.length !== 0 ? (
 				<div className="hints">
 					<Block>
-						{currentRound.hints.map((hint) => (
-							<p key={hint}>{hint}</p>
-						))}
+						<ul>
+							{currentRound.hints.map((hint) => (
+								<li key={hint}>{hint}</li>
+							))}
+						</ul>
 					</Block>
 				</div>
 			) : null}
@@ -431,11 +432,13 @@ export const Status = (props: ObjectPrimitiveProps) => {
 	const status = props.status;
 
 	// Determine status message
-	let message = '🎉 You got it!';
-	if (status == 'incorrect') {
+	let message = '😍 You got it!';
+	if (status == 'close') {
+		message = '🤔 Close! Try again!';
+	} else if (status == 'incorrect') {
 		message = '😠 Try again!';
 	} else if (status == 'failed') {
-		message = '😠 Out of guesses!';
+		message = '😩 Out of guesses!';
 	}
 
 	return <div className="status">{message}</div>;

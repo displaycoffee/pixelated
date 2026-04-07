@@ -17,7 +17,7 @@ export const Rules = () => {
 					<ul>
 						{difficulty.map((diff) => {
 							return (
-								<li key={diff.value}>
+								<li key={diff.id}>
 									<strong>{diff.name}:</strong> {diff.description}
 								</li>
 							);
@@ -60,8 +60,16 @@ export const Rules = () => {
 					characters if there are not five main characters.
 				</li>
 				<li>
-					The formatting of the answer is pulled from sources like IMDB and Wikipedia, so if there is a special character in the title (e.g.
-					"The Coolest Show: Ever"), you might want to look it up as it should be included in your submission. Casing doesn't matter.
+					The formatting of the answers are pulled from sources like{' '}
+					<a href="//www.imdb.com" target="_blank" rel="noreferrer">
+						IMDB
+					</a>{' '}
+					and{' '}
+					<a href="//en.wikipedia.org" target="_blank" rel="noreferrer">
+						Wikipedia
+					</a>
+					, so if there is a special character in the title (e.g. "The Coolest Show: Ever"), look up formatting as it should match your
+					guess. Casing doesn't matter.
 				</li>
 			</ol>
 		</div>

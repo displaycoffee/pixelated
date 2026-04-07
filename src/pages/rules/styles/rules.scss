@@ -18,6 +18,9 @@
 				}
 				ol, ul {
 					margin-top: theme.$spacing-x2;
+					& > li {
+						margin-bottom: theme.$spacing-x2;
+					}
 				}
 			}
 		}

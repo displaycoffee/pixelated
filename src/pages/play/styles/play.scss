@@ -46,6 +46,12 @@
 					@include mixins.gap(theme.$spacing-x4 theme.$spacing-x2);
 				}
 			}
+			.hints {
+				ul {
+					margin: 0;
+					text-align: left;
+				}
+			}
 		}
 		.round .game-end, .pagination {
 			@include mixins.gap(theme.$spacing-x2);

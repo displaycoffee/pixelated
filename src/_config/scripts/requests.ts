@@ -38,7 +38,7 @@ export const requests: RequestsType = {
 		};
 
 		// Fetch answers
-		const response = await fetch(`${variables.paths.api}/validate`, options);
+		const response = await fetch(`${variables.paths.api}/answers`, options);
 		const json = await response.json();
 
 		// Check for API errors

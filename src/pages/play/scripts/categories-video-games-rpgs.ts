@@ -1,6 +1,6 @@
 /* Category variables */
-const mainCategory = 'animation';
-const subCategory = 'tv-shows';
+const mainCategory = 'video-games';
+const subCategory = 'rpgs';
 const id = `${mainCategory}-${subCategory}`;
 const difficulty = {
 	easy: [0, 1, 2, 3, 4],
@@ -9,11 +9,11 @@ const difficulty = {
 };
 
 export const category: CategoryValuesType = {
-	name: 'Animation - TV Shows',
+	name: 'Video Games - RPGs',
 	id: id,
 	category: mainCategory,
 	subCategory: subCategory,
-	description: 'Characters based on animated television shows (not anime).',
+	description: 'Characters from video game RPGS.',
 	values: [
 		{
 			id: 'q1',
