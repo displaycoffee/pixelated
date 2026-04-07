@@ -250,7 +250,12 @@ export const Settings = () => {
 
 				<FormField className={'settings-select'} id={'settings-category'} label={'Category'} description={descriptions.categories}>
 					<FormFieldWrapper hasSelect={true}>
-						<select id="settings-category" name="category" defaultValue={categories[0].id}>
+						<select
+							id="settings-category"
+							name="category"
+							defaultValue={categories[0].id}
+							onChange={(e) => updateDescriptions(e, 'categories')}
+						>
 							{categories.map((category) => {
 								return (
 									<option value={category.id} key={category.id}>
