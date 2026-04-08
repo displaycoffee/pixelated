@@ -419,12 +419,12 @@ export const Points = () => {
 			<Block columns={current.round != 'round6' ? true : false}>
 				{current.round != 'round6' ? (
 					<p>
-						<strong>Current round:</strong> {currentRound.points}
+						<strong>Current:</strong> {currentRound.points}
 					</p>
 				) : null}
 
 				<p>
-					<strong>Game total:</strong> {current.points}
+					<strong>Total:</strong> {current.points}
 				</p>
 
 				{current.round == 'round5' && current.points == 500 ? <p className="flawless-victory">Flawless Victory</p> : null}

@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 //// BREAKPOINTS
 //// --------------------------------------------------------------------------
 //// Note: set without unit
@@ -32,7 +34,7 @@
 	$color-01: #b99976; // main
 	$color-02: #333333; // light text
 	$color-03: #664229; // links
-	$color-04: #fdfdfd; // form field backgrounds
+	$color-04: lighten(#b99976, 8%); // form field backgrounds
 	$color-05: #666666; // placeholder
 	$color-06: #555555;
 	$color-07: rgba(#000000, 0.75); // overlay

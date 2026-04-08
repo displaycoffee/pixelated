@@ -35,6 +35,7 @@
 	.block {
 		width: 100%;
 		padding: theme.$spacing-x4;
+		background-color: theme.$color-04;
 		border-left: $pixel-size solid theme.$color-02;
 		border-right: $pixel-size solid theme.$color-02;
 		&.block-columns {
@@ -92,6 +93,7 @@
 		}
 	}
 	.form-field-wrapper {
+		background-color: theme.$color-04;
 		border-left: $pixel-size solid theme.$color-02;
 		border-right: $pixel-size solid theme.$color-02;
 		&:has(.form-field-arrow) select {
