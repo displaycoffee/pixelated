@@ -75,7 +75,7 @@ export const navigationUtils = {
 			key: (url: string) => {
 				// Build map key for routes
 				const last = utils.getLast(url, '/');
-				return last ? last : 'home';
+				return last ? last : 'play';
 			},
 		},
 	},

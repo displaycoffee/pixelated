@@ -1,6 +1,10 @@
 /* React */
-import { RefObject, useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
+
+/* Local scripts */
+import { requests } from './requests';
 
 /* Set pageCache to get previous page */
 let pageCache = {
@@ -13,49 +17,49 @@ export const useBodyClass = (defaultPrefix: string) => {
 	const bodyPrefix = 'page-';
 	const bodyDefault = defaultPrefix;
 
-	if (bodySelector) {
-		useEffect(() => {
-			// Remove any previous body class
-			bodySelector.classList.remove(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
+	useEffect(() => {
+		if (!bodySelector) return;
 
-			// Update previous location path
-			// Replace any body prefix, remove first slash, and replace any other slash with hyphen
-			pageCache.previous = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
+		// Remove any previous body class
+		bodySelector.classList.remove(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
 
-			// Add new body class
-			bodySelector.classList.add(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
-		}, [location]);
-	}
+		// Update previous location path
+		// Replace any body prefix, remove first slash, and replace any other slash with hyphen
+		pageCache.previous = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
+
+		// Add new body class
+		bodySelector.classList.add(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
+	}, [location]);
 
 	return null;
 };
 
-export const useClickOutside = (callback: Function) => {
-	const clickRef: RefObject<HTMLDivElement | null> = useRef(null);
+export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string) => {
+	// Note: Content is either the hintId or the user's guess
 
-	// Determine if a click has been performed outside an element
-	useEffect(() => {
-		const handleClickOutside = (e: Event) => {
-			if (clickRef.current && !clickRef.current.contains(e.target as Node)) {
-				callback();
-			}
-		};
+	// Set initial variables
+	let requestData = false;
+	let queryKey = [key, JSON.stringify(category), questionId, content] as QueryKeyType;
 
-		document.addEventListener('mousedown', handleClickOutside);
+	// If content, add to queryKey
+	if (key == 'answers') {
+		requestData = !!content;
+	}
 
-		return () => document.removeEventListener('mousedown', handleClickOutside);
-	}, [clickRef, callback]);
+	// Create query request
+	const {
+		data: data,
+		isPending: isPending,
+		isSuccess: isSuccess,
+		isFetched: isFetched,
+		refetch: refetch,
+	} = useQuery({
+		queryKey: queryKey,
+		queryFn: requests[key as keyof RequestsType],
+		enabled: requestData,
+	});
 
-	return clickRef;
-};
-
-export const useFormattedId = () => {
-	// Updates the format of useId hook
-	const id = useId();
-	return id
-		.slice(1, -1)
-		.replace(/^\_|\_$/g, '')
-		.replace(/\_/g, '-');
+	return [data, refetch, { fetched: isFetched, pending: isPending, success: isSuccess }];
 };
 
 export const useRespond = (bp: number) => {

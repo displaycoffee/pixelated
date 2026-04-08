@@ -1,0 +1,50 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// SCOREBOARD
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.scoreboard .scores {
+		.block {
+			p {
+				margin: 0;
+			}
+			.row {
+				border-bottom: 1px solid theme.$color-02;
+				padding: 0 0 theme.$spacing-x2 0;
+				margin: 0 0 theme.$spacing-x2 0;
+				&:last-child {
+					border-bottom: 0;
+					padding-bottom: 0;
+					margin-bottom: 0;
+				}
+				.column {
+					@include mixins.flex(1 1 100%);
+				}
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-02) {
+		.scoreboard .scores .block {
+			text-align: left;
+			.row {
+				.column {
+					@include mixins.flex(0 1 auto);
+				}
+				.points {
+					width: 80px;
+				}
+				.date, .difficulty {
+					width: 120px;
+				}
+				.category {
+					@include mixins.flex;
+					@include mixins.ellipsis();
+				}
+			}
+		}
+	}

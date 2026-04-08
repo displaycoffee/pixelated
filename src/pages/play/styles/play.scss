@@ -1,0 +1,68 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// PLAY
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.play {
+		margin: 0 auto;
+		.settings {			
+			.form-actions {
+				text-align: left;
+			}
+		}
+		.round {
+			& > * {
+				margin: 0 0 theme.$spacing-x4 0;
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+			.pixels {
+				.row {
+					.column {
+						max-width: 75px;
+					}
+				}
+				.pixel-block {
+					height: 0;
+					line-height: 0;
+					padding-bottom: 100%;
+				}
+			}
+			.points {
+				.flawless-victory {
+					font-weight: theme.$font-weight-01;
+					text-transform: uppercase;
+					@include mixins.flex(1 1 100%);
+				}
+			}
+			.guess {
+				.form-field {
+					@include mixins.gap(theme.$spacing-x4 theme.$spacing-x2);
+				}
+			}
+			.hints {
+				ul {
+					margin: 0;
+					text-align: left;
+				}
+			}
+		}
+		.round .game-end, .pagination {
+			@include mixins.gap(theme.$spacing-x2);
+		}
+	}
+	@include mixins.respond-min(theme.$bp-01) {
+		.play {
+			.settings {
+				.form-actions {
+					text-align: right;
+				}
+			}
+		}
+	}

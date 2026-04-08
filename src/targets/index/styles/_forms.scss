@@ -4,14 +4,51 @@
 @use '../../../_config/styles/theme/_theme';
 
 //// FORMS
-//// --------------------------------------------------------------------------
+//// --------------------------------------------------------------------------\
+
+	// Configuration
+	
+	$input-transition: background-color 600000s 0s, color 600000s 0s;
 
 	// Style block
 
-	button:not(.unstyled) {
-		height: 40px;
-		line-height: 40px;
-		@include mixins.ellipsis;
+	label {
+		margin: 0;
+	}
+	select, input, label {
+		text-align: left;
+	}
+	select, button {
+		cursor: pointer;
+	}
+	select, input, button:not(.unstyled) {
+		height: 34px;
+		line-height: 34px;
+		padding: 0 theme.$spacing-x4;
+	}
+	select, input {
+		border: 1px solid theme.$color-02;
+		background-color: theme.$color-04;
+		color: theme.$color-02;
+		outline: 0;
+	}
+	select {
+		appearance: none;
+	}
+	input {	
+		&:-webkit-autofill,
+		&:-webkit-autofill:hover,
+		&:-webkit-autofill:focus,
+		&:-webkit-autofill:active {
+			-webkit-transition: $input-transition;
+			-o-transition: $input-transition;
+			-ms-transition: $input-transition;
+			-moz-transition: $input-transition;
+			transition: $input-transition;
+		}
+		@include mixins.placeholder {
+			color: theme.$color-05;
+		}
 	}
 	button.unstyled {
 		padding: 0;

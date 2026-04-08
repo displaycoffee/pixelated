@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 //// BREAKPOINTS
 //// --------------------------------------------------------------------------
 //// Note: set without unit
@@ -10,7 +12,7 @@
 //// CONTAINERS
 //// --------------------------------------------------------------------------
 
-	$container-base: 1600px;
+	$container-base: 650px;
 
 //// SPACING
 //// --------------------------------------------------------------------------
@@ -29,12 +31,12 @@
 //// COLORS
 //// --------------------------------------------------------------------------
 
-	$color-01: #fdfdfd; // main
+	$color-01: #b99976; // main
 	$color-02: #333333; // light text
-	$color-03: #6a5acd; // links
-	$color-04: false;
-	$color-05: false;
-	$color-06: false;
+	$color-03: #664229; // links
+	$color-04: lighten(#b99976, 8%); // form field backgrounds
+	$color-05: #666666; // placeholder
+	$color-06: #555555;
 	$color-07: rgba(#000000, 0.75); // overlay
 	$color-08: false;
 	$color-09: false;
@@ -44,13 +46,13 @@
 //// --------------------------------------------------------------------------
 
 	$font-path: '/assets/fonts/';
-	$font-family-01: 'Open Sans', 'Fallback', san-serif; // main font family: used for most text elements
-	$font-family-02: 'Montserrat', 'Fallback Bold', san-serif; // header font family: used in header elements
+	$font-family-01: 'Pixelated', monospace; // main font family: used for most text elements
+	$font-family-02: 'Pixelated Bold', monospace; // header font family: used in header elements
 	$font-weight-01: 700; // main font weight: used for things like bold text and active selections
 	$font-weight-02: 700; // header font weight: used in header elements
 	$font-style: false;
-	$font-transform: uppercase;
-	$font-size-global: 14px;
+	$font-transform: false;
+	$font-size-global: 16px;
 	$font-size-base: 16px;	
 
 //// ICONS

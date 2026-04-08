@@ -3,6 +3,7 @@ import { viteUtils } from './vite.utils';
 
 export default defineConfig({
 	root: 'src',
+	envDir: '../',
 	publicDir: '../public',
 	plugins: viteUtils.plugins,
 	server: {
@@ -18,8 +19,8 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					vendor: ['react', 'react-dom', 'react-router-dom'],
 					tanstack: ['@tanstack/react-query'],
+					vendor: ['react', 'react-cookie', 'react-dom', 'react-router-dom'],
 				},
 				assetFileNames: (file) => {
 					return viteUtils.assetFileNames(file);

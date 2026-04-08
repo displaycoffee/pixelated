@@ -1,0 +1,27 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// RULES
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.rules {
+		ol:not(.unstyled), ul:not(.unstyled) {
+			& > li {
+				text-align: left;
+				margin-bottom: theme.$spacing-x4;
+				&:last-child {
+					margin-bottom: 0;
+				}
+				ol, ul {
+					margin-top: theme.$spacing-x2;
+					& > li {
+						margin-bottom: theme.$spacing-x2;
+					}
+				}
+			}
+		}
+	}

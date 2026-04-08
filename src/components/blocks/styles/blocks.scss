@@ -1,0 +1,138 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// BLOCKS
+//// --------------------------------------------------------------------------\
+
+	// Configuration
+
+	$set-width: 130px;
+	$pixel-size: 4px;
+
+	// Style block
+
+	.pixelated {
+		position: relative;
+		display: inline-block;
+		border: 0;
+		margin: $pixel-size 0;
+		&:before, &:after {
+			content: '';
+			display: block;
+			@include mixins.position($type: absolute, $left: 0, $right: 0);
+			margin: auto;
+			height: $pixel-size;
+		}
+		&:before {
+			top: -#{$pixel-size};
+		}
+		&:after {
+			bottom: -#{$pixel-size};
+		}
+	}
+	.block {
+		width: 100%;
+		padding: theme.$spacing-x4;
+		background-color: theme.$color-04;
+		border-left: $pixel-size solid theme.$color-02;
+		border-right: $pixel-size solid theme.$color-02;
+		&.block-columns {
+			@include mixins.flex-layout((display: inline-flex));
+			@include mixins.gap(theme.$spacing-x1 theme.$spacing-x2);
+			* {
+				@include mixins.flex;
+				min-width: 1px;
+			}
+			p {
+				margin: 0;
+			}
+		}
+		&:before, &:after {
+			background-color: theme.$color-02;
+		}
+		p {
+			margin: 0 0 theme.$spacing-x1 0;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+	.button {
+		min-width: $set-width;
+		border-left: $pixel-size solid theme.$color-03;
+		border-right: $pixel-size solid theme.$color-03;
+		color: theme.$color-01;
+		&, &:before, &:after {
+			background-color: theme.$color-03;
+		}
+		span {
+			display: block;
+			@include mixins.ellipsis();
+		}
+		&[disabled] {
+			opacity: 0.65;
+			cursor: not-allowed;
+		}
+	}
+	.form {
+		& > * {
+			margin: 0 0 theme.$spacing-x2;
+		}
+	}
+	.form-field {
+		@include mixins.gap(theme.$spacing-x2);
+		text-align: left;
+		label, .form-field-wrapper, .form-field-description {
+			@include mixins.flex(1 1 100%);
+		}
+		.form-field-description {
+			margin: 0;
+			font-size: functions.em(12px, rem);
+		}
+	}
+	.form-field-wrapper {
+		background-color: theme.$color-04;
+		border-left: $pixel-size solid theme.$color-02;
+		border-right: $pixel-size solid theme.$color-02;
+		&:has(.form-field-arrow) select {
+			padding-right: theme.$spacing-x8;
+		}
+		&:before, &:after {
+			background-color: theme.$color-02;
+		}
+		select, input {
+			width: 100%;
+			border: 0;
+			background-color: transparent;
+		}
+		input {
+			@include mixins.placeholder {
+				color: theme.$color-06;
+			}
+		}
+		.form-field-arrow {
+			display: block;
+			@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: theme.$spacing-x4);
+			@include mixins.transform(rotate(180deg));
+			font-size: functions.em(24px, rem);
+			line-height: 24px;
+			height: 24px;
+			margin: 0 auto;
+		}
+	}
+	@include mixins.respond-min(theme.$bp-01) {
+		.form-field {
+			label {
+				@include mixins.flex(0 1 auto);
+				min-width: $set-width;
+			}
+			.form-field-wrapper {
+				@include mixins.flex;
+			}
+			.form-field-description {
+				padding: 0 0 0 $set-width + theme.$spacing-x2;
+			}
+		}
+	}

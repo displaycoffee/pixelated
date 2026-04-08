@@ -6,9 +6,9 @@ import { Component, ErrorInfo } from 'react';
 import './styles/error-boundary.scss';
 
 /* Local scripts */
-import { ErrorBoundaryProps, ErrorBoundaryState } from './scripts/error-boundary-types';
+import { ErrorBoundaryProps, ErrorBoundaryStateProps } from './scripts/error-boundary-types';
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryStateProps> {
 	constructor(props: ErrorBoundaryProps) {
 		super(props);
 		this.state = { hasError: false };

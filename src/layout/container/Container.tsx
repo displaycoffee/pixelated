@@ -1,116 +1,37 @@
 /* React */
-import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /* Local styles */
 import './styles/container.scss';
 
 /* Local scripts */
-import { useBodyClass, useRespond } from '../../_config/scripts/hooks';
+import { useBodyClass } from '../../_config/scripts/hooks';
 
 /* Local components */
-import { Context } from '../../context/Context';
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';
-import { IconMap } from '../../components/icons/Icons';
 import { Navigation } from '../../components/navigation/Navigation';
-import { Slideout, SlideoutOverlay } from '../../components/slideout/Slideout';
 import { Header } from '../header/Header';
 import { Content } from '../content/Content';
-import { Sidebar } from '../sidebar/Sidebar';
 import { Footer } from '../footer/Footer';
-import { Portal } from '../../targets/portal/Portal';
 
 export const Container = () => {
-	const context = useContext(Context);
-	const { theme, utils } = context;
-	const location = useLocation();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
-	let [sidebar, setSidebar] = useState(true);
-	const [guess, setGuess] = useState('');
-	const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
-
-	const submitGuess = async () => {
-		const response = await fetch('http://localhost:3001/validate', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ questionId: 'q1', guess }),
-		});
-
-		const data = await response.json();
-		setStatus(data.success ? 'correct' : 'incorrect');
-	};
-
 	// Set body class using custom hook
-	useBodyClass('home');
-
-	// Determine if layout should have sidebar or not
-	const excludeSidebar: string[] = ['/page-two'];
-	useEffect(() => {
-		sidebar = excludeSidebar.includes(location.pathname) ? false : true;
-		setSidebar(sidebar);
-	}, [location.pathname]);
-
-	// Slideout options
-	const slideoutOptions = {
-		id: 'menu',
-		isDesktop: isDesktop,
-		label: 'Menu',
-		content: <Navigation />,
-		closeOnClick: true,
-		button: {
-			outside: false,
-			show: true,
-		},
-	};
+	useBodyClass('play');
 
 	return (
-		<div className="container">
+		<div className="container spacing-reset">
 			<ErrorBoundary message={<ContainerError />}>
-				<div>
-					<input value={guess} onChange={(e) => setGuess(e.target.value)} placeholder="Enter your guess" />
-					<button onClick={submitGuess}>Submit</button>
-
-					{status === 'correct' && <p>🎉 You got it!</p>}
-					{status === 'incorrect' && <p>❌ Try again!</p>}
-				</div>
-
-				<IconMap />
-
-				<SlideoutOverlay options={slideoutOptions} />
-
 				<Header />
 
-				{isDesktop ? <Navigation /> : <Slideout options={slideoutOptions} />}
-
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pharetra imperdiet nisl sed mattis. Orci varius natoque
-					penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris pharetra enim non nunc pharetra condimentum ac nec nisi.
-					Nunc ac tortor leo. Vestibulum dui diam, ultricies vel tempor quis, cursus eget arcu. Donec sagittis urna volutpat, accumsan odio
-					in, porta ex. Interdum et malesuada fames ac ante ipsum primis in faucibus. Interdum et malesuada fames ac ante ipsum primis in
-					faucibus. Mauris a vulputate tellus, at varius mi. Donec vitae purus faucibus, feugiat ipsum eget, semper diam. Pellentesque
-					pretium vulputate accumsan.
-				</p>
+				<Navigation />
 
 				<main className="main">
 					<div className="main-layout flex-wrap">
 						<Content />
-
-						<Sidebar show={sidebar && isDesktop} />
 					</div>
 				</main>
 
 				<Footer />
-
-				<button className="pointer unstyled a" type="button" aria-label="Scroll to top button" onClick={(e) => utils.scrollTo(e, '#index')}>
-					Scroll to top
-				</button>
-
-				<Portal element={'#portal'}>
-					<p>
-						This is an example of a portal from index.html. It could also be added inside other components to access details of that
-						component.
-					</p>
-				</Portal>
 			</ErrorBoundary>
 		</div>
 	);

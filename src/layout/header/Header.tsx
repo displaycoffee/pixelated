@@ -8,8 +8,8 @@ export const Header = () => {
 	return (
 		<header className="header">
 			<h1>
-				<Link to="/" title="Pixelated - Home">
-					Pixelated
+				<Link to="/" title="Pixelated - Play game">
+					Pixelated.
 				</Link>
 			</h1>
 		</header>
