@@ -1,5 +1,5 @@
 /* React */
-import { Fragment, useContext, useEffect } from 'react';
+import { Fragment, Suspense, useContext, useEffect } from 'react';
 import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 /* Local styles */
@@ -69,6 +69,7 @@ export const NavigationListItem = (props: NavigationListItemProps) => {
 
 export const NavigationRoutes = () => {
 	return navigationRoutes && navigationRoutes.length != 0 ? (
+		<Suspense fallback={null}>
 		<Routes>
 			{navigationRoutes.map((nav: NavigationRoutesProps) => {
 				const navProps = nav?.props ? nav.props : false;
@@ -93,5 +94,6 @@ export const NavigationRoutes = () => {
 
 			<Route path="*" element={<Navigate to="/" />} />
 		</Routes>
+		</Suspense>
 	) : null;
 };

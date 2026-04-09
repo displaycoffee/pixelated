@@ -1,13 +1,16 @@
+/* React */
+import { lazy } from 'react';
+
 /* Local scripts */
 import { NavigationMapType, NavigationRoutesType } from './navigation-types';
 import { navigation } from './navigation';
 import { navigationUtils } from './navigation-utils';
 
 /* Local components */
-import { Play } from '../../../pages/play/Play';
-import { About } from '../../../pages/about/About';
-import { Rules } from '../../../pages/rules/Rules';
-import { Scoreboard } from '../../../pages/scoreboard/Scoreboard';
+const Play = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.Play })));
+const About = lazy(() => import('../../../pages/about/About').then((m) => ({ default: m.About })));
+const Rules = lazy(() => import('../../../pages/rules/Rules').then((m) => ({ default: m.Rules })));
+const Scoreboard = lazy(() => import('../../../pages/scoreboard/Scoreboard').then((m) => ({ default: m.Scoreboard })));
 
 /* Set up component mapping for routes */
 /* Note: this should match the navigation.url value in navigation.ts (without the '/') */
