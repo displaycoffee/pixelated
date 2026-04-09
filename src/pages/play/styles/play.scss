@@ -41,11 +41,6 @@
 					@include mixins.flex(1 1 100%);
 				}
 			}
-			.guess {
-				.form-field {
-					@include mixins.gap(theme.$spacing-x4 theme.$spacing-x2);
-				}
-			}
 			.hints {
 				ul {
 					margin: 0;

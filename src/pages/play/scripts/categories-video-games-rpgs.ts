@@ -52,8 +52,8 @@ export const category: CategoryValuesType = {
 			id: 'q4',
 			difficulty,
 			values: [
-				['#dcb188', '#ffeeda', '#0e4e58', '#6aa8d7', '#767851'],
-				['#f7d273', '#000002', '#93caf9', '#88ded1', '#b64717'],
+				['#f7d273', '#ffeeda', '#0e4e58', '#6aa8d7', '#767851'],
+				['#c18f46', '#000002', '#93caf9', '#88ded1', '#b64717'],
 				['#0f0810', '#fedbc5', '#f0841d', '#f0841d', '#be3334'],
 				['#6385a9', '#f6ddbc', '#f0fbff', '#c2cbba', '#6b88b4'],
 				['#c32e39', '#ebe4d2', '#d8fbf7', '#df3b41', '#81392b'],

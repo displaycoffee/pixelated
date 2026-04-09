@@ -77,7 +77,7 @@ export const Round = () => {
 			<Points />
 
 			{currentRound.status == 'game end' ? (
-				<div className="game-end flex-nowrap flex-align-items-center flex-justify-content-center">
+				<div className="game-end flex-wrap flex-align-items-center flex-justify-content-center">
 					<Button onClick={() => resetGame()}>New Game?</Button>
 
 					<Button onClick={() => setScore()} disabled={current.scoreLogged}>
