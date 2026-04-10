@@ -47,7 +47,7 @@ export default tseslint.config(
 	eslintConfigPrettier,
 	{
 		rules: {
-			'prefer-const': 'off',
+			'prefer-const': 'error',
 			'@typescript-eslint/no-base-to-string': 'off',
 			'@typescript-eslint/no-empty-function': 'off',
 			'@typescript-eslint/no-misused-promises': 'off',
@@ -59,6 +59,7 @@ export default tseslint.config(
 			'@typescript-eslint/no-unsafe-function-type': 'off',
 			'@typescript-eslint/no-unsafe-member-access': 'off',
 			'@typescript-eslint/no-unsafe-return': 'off',
+			'@typescript-eslint/no-explicit-any': 'error',
 			'@typescript-eslint/no-unused-vars': 'off',
 			'@typescript-eslint/require-await': 'off',
 			'@typescript-eslint/restrict-template-expressions': 'off',

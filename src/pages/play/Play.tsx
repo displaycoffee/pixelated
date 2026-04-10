@@ -30,7 +30,7 @@ export const Round = () => {
 	const settingsDifficulty = settings.difficulty as DifficultyType;
 	const currentRound = rounds[`${current.round}`];
 	const title = currentRound.status == 'game end' ? `Game Over` : `Round ${current.round.replace('round', '')}`;
-	let [cookies, setCookie] = useCookies(['scoreboard']);
+	const [cookies, setCookie] = useCookies(['scoreboard']);
 
 	// Set up pixel includes (default difficulty is "medium")
 	const includePixels = currentRound.difficulty[settingsDifficulty.id as keyof typeof currentRound.difficulty];

@@ -13,14 +13,14 @@ import {
 } from './scripts/blocks-types';
 
 export const Block = (props: BlockProps) => {
-	let { children, className, columns } = props;
+	const { children, className, columns } = props;
 	const blockClass = className ? `${className} ` : '';
 
 	return <div className={`${blockClass}block${columns ? ' block-columns' : ''} pixelated`}>{children}</div>;
 };
 
 export const Button = (props: ButtonProps) => {
-	let { children, className, disabled, onClick } = props;
+	const { children, className, disabled, onClick } = props;
 	const buttonClass = className ? `${className} ` : '';
 
 	// Set up button attributes
@@ -51,7 +51,7 @@ export const Button = (props: ButtonProps) => {
 };
 
 export const Form = (props: FormProps) => {
-	let { children, className, onSubmit } = props;
+	const { children, className, onSubmit } = props;
 	const formClass = className ? `${className} ` : '';
 
 	return (
@@ -62,14 +62,14 @@ export const Form = (props: FormProps) => {
 };
 
 export const FormActions = (props: FormActionsProps) => {
-	let { children, className } = props;
+	const { children, className } = props;
 	const formActionsClass = className ? `${className} ` : '';
 
 	return <div className={`${formActionsClass}form-actions`}>{children}</div>;
 };
 
 export const FormField = (props: FormFieldProps) => {
-	let { children, className, description, id, label } = props;
+	const { children, className, description, id, label } = props;
 	const formFieldClass = className ? `${className} ` : '';
 
 	return (
@@ -84,7 +84,7 @@ export const FormField = (props: FormFieldProps) => {
 };
 
 export const FormFieldWrapper = (props: FormFieldWrapperProps) => {
-	let { children, hasSelect } = props;
+	const { children, hasSelect } = props;
 
 	return (
 		<div className="form-field-wrapper pixelated">

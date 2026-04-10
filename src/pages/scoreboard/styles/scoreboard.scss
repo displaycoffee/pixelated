@@ -43,7 +43,7 @@
 				}
 				.category {
 					@include mixins.flex;
-					@include mixins.ellipsis();
+					@include mixins.ellipsis;
 				}
 			}
 		}

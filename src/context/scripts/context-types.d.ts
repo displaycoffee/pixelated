@@ -15,7 +15,8 @@ type ContextValues = {
 		[key: string]: ObjectPrimitiveType;
 	};
 	utils: {
-		[key: string]: Function;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		[key: string]: (...args: any[]) => any;
 	};
 	variables: {
 		[key: string]: ObjectPrimitiveType;

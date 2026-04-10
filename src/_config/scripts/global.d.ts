@@ -96,10 +96,6 @@ type Round = {
 };
 
 /* Request type definitions */
-type Fetched = {
-	fetched: boolean;
-};
-
 type QueryKey = string[];
 
 type RequestError = Error & {
