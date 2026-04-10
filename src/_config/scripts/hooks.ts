@@ -6,30 +6,27 @@ import { useLocation } from 'react-router-dom';
 /* Local scripts */
 import { requests } from './requests';
 
-/* Set pageCache to get previous page */
-let pageCache = {
-	previous: '',
-};
+/* Variables for useBodyClass */
+const bodyPrefix = 'page-';
+const bodySelector = document.querySelector('body');
+let previousPage = '';
 
 export const useBodyClass = (defaultPrefix: string) => {
 	const location = useLocation();
-	const bodySelector = document.querySelector('body');
-	const bodyPrefix = 'page-';
-	const bodyDefault = defaultPrefix;
 
 	useEffect(() => {
 		if (!bodySelector) return;
 
 		// Remove any previous body class
-		bodySelector.classList.remove(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
+		bodySelector.classList.remove(`${bodyPrefix}${previousPage || defaultPrefix}`);
 
 		// Update previous location path
 		// Replace any body prefix, remove first slash, and replace any other slash with hyphen
-		pageCache.previous = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
+		previousPage = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
 
 		// Add new body class
-		bodySelector.classList.add(`${bodyPrefix}${pageCache.previous || bodyDefault}`);
-	}, [location]);
+		bodySelector.classList.add(`${bodyPrefix}${previousPage || defaultPrefix}`);
+	}, [location, defaultPrefix]);
 
 	return null;
 };
@@ -39,7 +36,7 @@ export const useReactQuery = (key: string, category: CategoryType, questionId: s
 
 	// Set initial variables
 	let requestData = false;
-	let queryKey = [key, JSON.stringify(category), questionId, content] as QueryKeyType;
+	const queryKey = [key, JSON.stringify(category), questionId, content] as QueryKeyType;
 
 	// If content, add to queryKey
 	if (key == 'answers') {
@@ -63,18 +60,15 @@ export const useReactQuery = (key: string, category: CategoryType, questionId: s
 };
 
 export const useRespond = (bp: number) => {
-	const rule = window.matchMedia(`(min-width: ${bp}px)`);
-	let [match, setMatch] = useState(rule.matches);
+	const [match, setMatch] = useState(() => window.matchMedia(`(min-width: ${bp}px)`).matches);
 
 	// Update match state on media change
-	rule.onchange = (e) => {
-		if (e.matches) {
-			match = true;
-		} else {
-			match = false;
-		}
-		setMatch(match);
-	};
+	useEffect(() => {
+		const mediaQuery = window.matchMedia(`(min-width: ${bp}px)`);
+		const handler = (e: MediaQueryListEvent) => setMatch(e.matches);
+		mediaQuery.addEventListener('change', handler);
+		return () => mediaQuery.removeEventListener('change', handler);
+	}, [bp]);
 
 	return match;
 };

@@ -25,7 +25,7 @@ export const Navigation = () => {
 	// Scroll to top when navigation link is clicked on
 	useEffect(() => {
 		utils.scrollTo();
-	}, [pathname]);
+	}, [pathname, utils]);
 
 	return navigationList && navigationList.length != 0 ? (
 		<nav className="navigation">
@@ -70,30 +70,30 @@ export const NavigationListItem = (props: NavigationListItemProps) => {
 export const NavigationRoutes = () => {
 	return navigationRoutes && navigationRoutes.length != 0 ? (
 		<Suspense fallback={null}>
-		<Routes>
-			{navigationRoutes.map((nav: NavigationRoutesProps) => {
-				const navProps = nav?.props ? nav.props : false;
+			<Routes>
+				{navigationRoutes.map((nav: NavigationRoutesProps) => {
+					const navProps = nav?.props ? nav.props : false;
 
-				return (
-					<Fragment key={nav.id}>
-						{nav?.children && nav.children.length !== 0 ? (
-							<>
-								<Route path={`${nav.path}/*`} element={<nav.element {...navProps} />} />
+					return (
+						<Fragment key={nav.id}>
+							{nav?.children && nav.children.length !== 0 ? (
+								<>
+									<Route path={`${nav.path}/*`} element={<nav.element {...navProps} />} />
 
-								{nav.children.map((child: NavigationRoutesProps) => {
-									const childProps = child?.props ? child.props : false;
-									return <Route path={child.path} element={<child.element {...childProps} />} key={child.id} />;
-								})}
-							</>
-						) : (
-							<Route path={nav.path} element={<nav.element {...navProps} />} />
-						)}
-					</Fragment>
-				);
-			})}
+									{nav.children.map((child: NavigationRoutesProps) => {
+										const childProps = child?.props ? child.props : false;
+										return <Route path={child.path} element={<child.element {...childProps} />} key={child.id} />;
+									})}
+								</>
+							) : (
+								<Route path={nav.path} element={<nav.element {...navProps} />} />
+							)}
+						</Fragment>
+					);
+				})}
 
-			<Route path="*" element={<Navigate to="/" />} />
-		</Routes>
+				<Route path="*" element={<Navigate to="/" />} />
+			</Routes>
 		</Suspense>
 	) : null;
 };

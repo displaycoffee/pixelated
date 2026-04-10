@@ -69,7 +69,7 @@
 		}
 		span {
 			display: block;
-			@include mixins.ellipsis();
+			@include mixins.ellipsis;
 		}
 		&[disabled] {
 			opacity: 0.65;
