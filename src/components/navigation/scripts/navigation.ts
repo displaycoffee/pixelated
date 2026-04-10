@@ -1,10 +1,20 @@
+/* React */
+import { lazy } from 'react';
+
 /* Local scripts */
 import { NavigationType } from './navigation-types';
+
+/* Local components */
+const Play = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.Play })));
+const About = lazy(() => import('../../../pages/about/About').then((m) => ({ default: m.About })));
+const Rules = lazy(() => import('../../../pages/rules/Rules').then((m) => ({ default: m.Rules })));
+const Scoreboard = lazy(() => import('../../../pages/scoreboard/Scoreboard').then((m) => ({ default: m.Scoreboard })));
 
 export const navigation = [
 	{
 		id: 0,
 		alt: 'Play',
+		element: Play,
 		isRoute: true,
 		label: 'Play',
 		showInNav: true,
@@ -13,6 +23,7 @@ export const navigation = [
 	{
 		id: 1,
 		alt: 'About',
+		element: About,
 		isRoute: true,
 		label: 'About',
 		showInNav: true,
@@ -21,6 +32,7 @@ export const navigation = [
 	{
 		id: 2,
 		alt: 'Rules',
+		element: Rules,
 		isRoute: true,
 		label: 'Rules',
 		showInNav: true,
@@ -29,6 +41,7 @@ export const navigation = [
 	{
 		id: 3,
 		alt: 'Scoreboard',
+		element: Scoreboard,
 		isRoute: true,
 		label: 'Scoreboard',
 		showInNav: true,

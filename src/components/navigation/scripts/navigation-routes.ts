@@ -1,46 +1,24 @@
-/* React */
-import { lazy } from 'react';
-
 /* Local scripts */
-import { NavigationMapType, NavigationRoutesType } from './navigation-types';
+import { NavigationRoutesType } from './navigation-types';
 import { navigation } from './navigation';
 import { navigationUtils } from './navigation-utils';
-
-/* Local components */
-const Play = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.Play })));
-const About = lazy(() => import('../../../pages/about/About').then((m) => ({ default: m.About })));
-const Rules = lazy(() => import('../../../pages/rules/Rules').then((m) => ({ default: m.Rules })));
-const Scoreboard = lazy(() => import('../../../pages/scoreboard/Scoreboard').then((m) => ({ default: m.Scoreboard })));
-
-/* Set up component mapping for routes */
-/* Note: this should match the navigation.url value in navigation.ts (without the '/') */
-const routeMap = {
-	play: Play,
-	about: About,
-	rules: Rules,
-	scoreboard: Scoreboard,
-} as NavigationMapType;
 
 /* Create routes array */
 const routes = [] as NavigationRoutesType[];
 
 navigation.forEach((nav) => {
-	const navKey = navigationUtils.routes.build.key(nav.url);
-
-	if (nav.isRoute && routeMap[navKey]) {
+	if (nav.isRoute) {
 		// Build parent nav config
 		const navConfig = {
-			...navigationUtils.routes.build.config(nav, routeMap),
+			...navigationUtils.routes.build.config(nav),
 			children: [] as NavigationRoutesType[],
 		};
 
 		// Build child config
 		if (nav?.children && nav.children.length !== 0) {
 			nav.children.forEach((child) => {
-				const childKey = navigationUtils.routes.build.key(child.url);
-
-				if (child.isRoute && routeMap[childKey]) {
-					const childConfig = navigationUtils.routes.build.config(child, routeMap);
+				if (child.isRoute) {
+					const childConfig = navigationUtils.routes.build.config(child);
 					navConfig.children.push(childConfig);
 				}
 			});

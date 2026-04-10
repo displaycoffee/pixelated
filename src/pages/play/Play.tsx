@@ -287,20 +287,19 @@ export const Guess = () => {
 	const hasHints = hintsLength < 3 ? true : false;
 
 	// Use custom hook to get hints
-	const [hintsData, hintsRefetch, hintsStatus] = useReactQuery('hints', settingsCategory, questionId, hintId) as HintsRequestType;
-	const hintsComplete = (!hintsStatus.pending && hintsStatus.success) || hintsStatus.fetched ? true : false;
-
+	const [hintsData, hintsRefetch] = useReactQuery('hints', settingsCategory, questionId, hintId) as HintsRequestType;
 	useEffect(() => {
-		if (hintsComplete && hintsData) {
+		if (hintsData) {
 			// Update game when hints are fetched
 			setGame(
 				produce((draft: Draft<GameType>) => {
-					draft.rounds[`${current.round}`].hints = currentRound.hints.concat([hintsData.message]);
-					draft.rounds[`${current.round}`].points = currentRound.points - 10;
+					const round = draft.current.round;
+					draft.rounds[round].hints = draft.rounds[round].hints.concat([hintsData.message]);
+					draft.rounds[round].points = draft.rounds[round].points - 10;
 				}),
 			);
 		}
-	}, [hintsData]);
+	}, [hintsData, setGame]);
 
 	// Get hint by using refetch
 	const getHint = () => {
@@ -312,13 +311,7 @@ export const Guess = () => {
 	};
 
 	// Use custom hook to get answers
-	const [answersData, _answersRefetch, answersStatus] = useReactQuery(
-		'answers',
-		settingsCategory,
-		questionId,
-		current.guess as string,
-	) as AnswersRequestType;
-	const answersComplete = (!answersStatus.pending && answersStatus.success) || answersStatus.fetched ? true : false;
+	const [answersData, _answersRefetch] = useReactQuery('answers', settingsCategory, questionId, current.guess as string) as AnswersRequestType;
 
 	// Submit guess
 	const submitGuess = (e: EventsType) => {
@@ -340,40 +333,43 @@ export const Guess = () => {
 	};
 
 	useEffect(() => {
-		if (answersComplete && answersData) {
-			// Set status
-			let status = answersData.success ? 'correct' : 'incorrect';
-			if (answersData.close) {
-				status = 'close';
-			}
-
-			// Update round status
-			let roundStatus: RoundType['status'] = 'pending';
-			if (status == 'incorrect' && currentRound.guesses > 2) {
-				roundStatus = 'failed';
-			} else if (status == 'correct') {
-				roundStatus = 'complete';
-			}
-
-			// Deduct 10 for each wrong guess; 0 if failed; no deduction for correct
-			let points = currentRound.points;
-			if (roundStatus == 'failed') {
-				points = 0;
-			} else if (status == 'incorrect' || status == 'close') {
-				points = currentRound.points - 10;
-			}
-
+		if (answersData) {
 			// Update game settings when guess is submitted
 			setGame(
 				produce((draft: Draft<GameType>) => {
+					const round = draft.current.round;
+					const draftRound = draft.rounds[round];
+
+					// Set status
+					let status = answersData.success ? 'correct' : 'incorrect';
+					if (answersData.close) {
+						status = 'close';
+					}
+
+					// Update round status
+					let roundStatus: RoundType['status'] = 'pending';
+					if (status == 'incorrect' && draftRound.guesses > 2) {
+						roundStatus = 'failed';
+					} else if (status == 'correct') {
+						roundStatus = 'complete';
+					}
+
+					// Deduct 10 for each wrong guess; 0 if failed; no deduction for correct
+					let points = draftRound.points;
+					if (roundStatus == 'failed') {
+						points = 0;
+					} else if (status == 'incorrect' || status == 'close') {
+						points = draftRound.points - 10;
+					}
+
 					draft.current.status = status as GameType['current']['status'];
-					draft.current.points = roundStatus != 'pending' ? current.points + points : current.points;
-					draft.rounds[`${current.round}`].points = points;
-					draft.rounds[`${current.round}`].status = roundStatus;
+					draft.current.points = roundStatus != 'pending' ? draft.current.points + points : draft.current.points;
+					draftRound.points = points;
+					draftRound.status = roundStatus;
 				}),
 			);
 		}
-	}, [answersData]);
+	}, [answersData, setGame]);
 
 	return (
 		<>
