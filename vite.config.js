@@ -3,8 +3,8 @@ import { viteUtils } from './vite.utils';
 
 export default defineConfig({
 	root: 'src',
-	envDir: '../',
 	publicDir: '../public',
+	envDir: '../',
 	plugins: viteUtils.plugins,
 	server: {
 		host: 'localhost',
