@@ -6,7 +6,7 @@ import './styles/footer.scss';
 
 export const Footer = () => {
 	const [cookies, _setCookie, removeCookie] = useCookies(['scoreboard']);
-	const hasScoreboard = cookies?.scoreboard ? true : false;
+	const hasScoreboard = cookies?.scoreboard;
 	const date = new Date().getFullYear();
 
 	return (

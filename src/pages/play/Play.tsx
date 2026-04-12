@@ -18,7 +18,7 @@ import { Block, Button, Form, FormActions, FormField, FormFieldWrapper } from '.
 export const Play = () => {
 	const context = useContext(Context);
 	const settings = context.game.settings;
-	const showSettings = !settings.category && !settings.difficulty ? true : false;
+	const showSettings = !settings.category && !settings.difficulty;
 
 	return <div className="play spacing-reset">{showSettings ? <Settings /> : <Round />}</div>;
 };
@@ -284,7 +284,7 @@ export const Guess = () => {
 	const questionId = currentRound.id as string;
 	const hintsLength = currentRound.hints.length;
 	const hintId = `h${hintsLength + 1}`;
-	const hasHints = hintsLength < 3 ? true : false;
+	const hasHints = hintsLength < 3;
 
 	// Use custom hook to get hints
 	const [hintsData, hintsRefetch] = useReactQuery('hints', settingsCategory, questionId, hintId) as HintsRequestType;
@@ -412,7 +412,7 @@ export const Points = () => {
 
 	return (
 		<div className="points">
-			<Block columns={current.round != 'round6' ? true : false}>
+			<Block columns={current.round != 'round6'}>
 				{current.round != 'round6' ? (
 					<p>
 						<strong>Current:</strong> {currentRound.points}
@@ -451,8 +451,8 @@ export const Pagination = () => {
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
 	const roundNumber: number = parseInt(current.round.replace('round', ''));
-	const hasPrevious = current.round != 'round1' ? true : false;
-	const hasNext = currentRound.status != 'pending' && current.round != 'round6' ? true : false;
+	const hasPrevious = current.round != 'round1';
+	const hasNext = currentRound.status != 'pending' && current.round != 'round6';
 
 	const goToRound = (direction: string) => {
 		if (hasPrevious && direction == 'previous') {
