@@ -6,7 +6,7 @@ type Navigation = {
 	id: number;
 	isRoute?: boolean;
 	label: string;
-	props?: ObjectPrimitiveType;
+	props?: ObjectPrimitiveType | CategoriesObjectType;
 	showInNav?: boolean;
 	url: string;
 };

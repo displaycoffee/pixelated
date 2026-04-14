@@ -18,6 +18,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q1',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#d66d00', '#f7b484', '#9d1c1a', '#2e7282', '#020202'],
+					['#621f68', '#f5aa7f', '#ffffff', '#141414', '#252621'],
+					['#7c9ea0', '#99bac3', '#7c9ea0', '#597a83', '#7c9ea0'],
+					['#efc586', '#efc586', '#8bb5a0', '#57645d', '#92cabe'],
+					['#010101', '#e0b16a', '#ff92ac', '#ff92ac', '#782228'],
+				],
+				medium: [
+					['#d66d00', '#f7b484', '#9d1c1a', '#2e7282', '#020202'],
+					['#621f68', '#f5aa7f', '#ffffff', '#141414', '#252621'],
+					['#7c9ea0', '#99bac3', '#7c9ea0', '#597a83', '#7c9ea0'],
+					['#efc586', '#efc586', '#8bb5a0', '#57645d', '#92cabe'],
+					['#010101', '#e0b16a', '#ff92ac', '#ff92ac', '#782228'],
+				],
+				hard: [
+					['#d66d00', '#f7b484', '#9d1c1a', '#2e7282', '#020202'],
+					['#621f68', '#f5aa7f', '#ffffff', '#141414', '#252621'],
+					['#7c9ea0', '#99bac3', '#7c9ea0', '#597a83', '#7c9ea0'],
+					['#efc586', '#efc586', '#8bb5a0', '#57645d', '#92cabe'],
+					['#010101', '#e0b16a', '#ff92ac', '#ff92ac', '#782228'],
+				],
+			},
 			values: [
 				['#d66d00', '#f7b484', '#9d1c1a', '#2e7282', '#020202'],
 				['#621f68', '#f5aa7f', '#ffffff', '#141414', '#252621'],
@@ -29,6 +52,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q2',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#252525', '#f8af7c', '#ffffff', '#7a7a7a', '#252525'],
+					['#252525', '#faae7c', '#e0594e', '#3c67aa', '#ebd586'],
+					['#252525', '#faaf80', '#9bb7de', '#254c73', '#232323'],
+					['#252525', '#f8af7c', '#fddf65', '#818eba', '#c92b50'],
+					['#f076a9', '#fcad7a', '#95a247', '#95a247', '#292726'],
+				],
+				medium: [
+					['#252525', '#f8af7c', '#ffffff', '#7a7a7a', '#252525'],
+					['#252525', '#faae7c', '#e0594e', '#3c67aa', '#ebd586'],
+					['#252525', '#faaf80', '#9bb7de', '#254c73', '#232323'],
+					['#252525', '#f8af7c', '#fddf65', '#818eba', '#c92b50'],
+					['#f076a9', '#fcad7a', '#95a247', '#95a247', '#292726'],
+				],
+				hard: [
+					['#252525', '#f8af7c', '#ffffff', '#7a7a7a', '#252525'],
+					['#252525', '#faae7c', '#e0594e', '#3c67aa', '#ebd586'],
+					['#252525', '#faaf80', '#9bb7de', '#254c73', '#232323'],
+					['#252525', '#f8af7c', '#fddf65', '#818eba', '#c92b50'],
+					['#f076a9', '#fcad7a', '#95a247', '#95a247', '#292726'],
+				],
+			},
 			values: [
 				['#252525', '#f8af7c', '#ffffff', '#7a7a7a', '#252525'],
 				['#252525', '#faae7c', '#e0594e', '#3c67aa', '#ebd586'],
@@ -40,6 +86,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q3',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#fdd923', '#d3b27f', '#fefefe', '#419bd7', '#687981'],
+					['#007fc6', '#fdd923', '#c5de9d', '#c5de9d', '#f05d32'],
+					['#fdd923', '#fdd923', '#f14f29', '#009ddc', '#009ddc'],
+					['#fdd923', '#fdd923', '#f35a31', '#f35a31', '#f35a31'],
+					['#fdd923', '#fdd923', '#6fcff5', '#6fcff5', '#6fcff5'],
+				],
+				medium: [
+					['#fdd923', '#d3b27f', '#fefefe', '#419bd7', '#687981'],
+					['#007fc6', '#fdd923', '#c5de9d', '#c5de9d', '#f05d32'],
+					['#fdd923', '#fdd923', '#f14f29', '#009ddc', '#009ddc'],
+					['#fdd923', '#fdd923', '#f35a31', '#f35a31', '#f35a31'],
+					['#fdd923', '#fdd923', '#6fcff5', '#6fcff5', '#6fcff5'],
+				],
+				hard: [
+					['#fdd923', '#d3b27f', '#fefefe', '#419bd7', '#687981'],
+					['#007fc6', '#fdd923', '#c5de9d', '#c5de9d', '#f05d32'],
+					['#fdd923', '#fdd923', '#f14f29', '#009ddc', '#009ddc'],
+					['#fdd923', '#fdd923', '#f35a31', '#f35a31', '#f35a31'],
+					['#fdd923', '#fdd923', '#6fcff5', '#6fcff5', '#6fcff5'],
+				],
+			},
 			values: [
 				['#fdd923', '#d3b27f', '#fefefe', '#419bd7', '#687981'],
 				['#007fc6', '#fdd923', '#c5de9d', '#c5de9d', '#f05d32'],
@@ -51,6 +120,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q4',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#eecaba', '#eecaba', '#6cb945', '#b18264', '#ed1b24'],
+					['#64879a', '#64879a', '#d5dee5', '#64879a', '#64879a'],
+					['#64879b', '#64879b', '#ed2027', '#f7ef22', '#ed2027'],
+					['#f7ef22', '#de6c36', '#3d87c8', '#3d87c8', '#d5196e'],
+					['#c53928', '#bdd853', '#030708', '#447fc1', '#030708'],
+				],
+				medium: [
+					['#eecaba', '#eecaba', '#6cb945', '#b18264', '#ed1b24'],
+					['#64879a', '#64879a', '#d5dee5', '#64879a', '#64879a'],
+					['#64879b', '#64879b', '#ed2027', '#f7ef22', '#ed2027'],
+					['#f7ef22', '#de6c36', '#3d87c8', '#3d87c8', '#d5196e'],
+					['#c53928', '#bdd853', '#030708', '#447fc1', '#030708'],
+				],
+				hard: [
+					['#eecaba', '#eecaba', '#6cb945', '#b18264', '#ed1b24'],
+					['#64879a', '#64879a', '#d5dee5', '#64879a', '#64879a'],
+					['#64879b', '#64879b', '#ed2027', '#f7ef22', '#ed2027'],
+					['#f7ef22', '#de6c36', '#3d87c8', '#3d87c8', '#d5196e'],
+					['#c53928', '#bdd853', '#030708', '#447fc1', '#030708'],
+				],
+			},
 			values: [
 				['#eecaba', '#eecaba', '#6cb945', '#b18264', '#ed1b24'],
 				['#64879a', '#64879a', '#d5dee5', '#64879a', '#64879a'],
@@ -62,6 +154,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q5',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#3d4884', '#fdd4ad', '#7b3c37', '#36417b', '#1f1916'],
+					['#3fc42a', '#fdd4ad', '#ff4800', '#234e41', '#161317'],
+					['#34c6b1', '#fdd4ad', '#ff0037', '#7f4c3a', '#3f3c49'],
+					['#ff5215', '#fdd4ad', '#ff5215', '#ff5215', '#040302'],
+					['#fcf500', '#fdd4ad', '#6fc6af', '#144f34', '#1d171d'],
+				],
+				medium: [
+					['#3d4884', '#fdd4ad', '#7b3c37', '#36417b', '#1f1916'],
+					['#3fc42a', '#fdd4ad', '#ff4800', '#234e41', '#161317'],
+					['#34c6b1', '#fdd4ad', '#ff0037', '#7f4c3a', '#3f3c49'],
+					['#ff5215', '#fdd4ad', '#ff5215', '#ff5215', '#040302'],
+					['#fcf500', '#fdd4ad', '#6fc6af', '#144f34', '#1d171d'],
+				],
+				hard: [
+					['#3d4884', '#fdd4ad', '#7b3c37', '#36417b', '#1f1916'],
+					['#3fc42a', '#fdd4ad', '#ff4800', '#234e41', '#161317'],
+					['#34c6b1', '#fdd4ad', '#ff0037', '#7f4c3a', '#3f3c49'],
+					['#ff5215', '#fdd4ad', '#ff5215', '#ff5215', '#040302'],
+					['#fcf500', '#fdd4ad', '#6fc6af', '#144f34', '#1d171d'],
+				],
+			},
 			values: [
 				['#3d4884', '#fdd4ad', '#7b3c37', '#36417b', '#1f1916'],
 				['#3fc42a', '#fdd4ad', '#ff4800', '#234e41', '#161317'],
@@ -73,6 +188,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q6',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#80351a', '#fbb7a5', '#ffffff', '#005f36', '#492310'],
+					['#f57a4f', '#fcca9f', '#5fc3a8', '#d1bb99', '#921b58'],
+					['#7d361a', '#fcca9d', '#d86086', '#3a74b3', '#e0e0e0'],
+					['#fef498', '#fbb7a5', '#5d74b7', '#4a4748', '#f1f9f2'],
+					['#fbd9bb', '#fbd9bb', '#f9dd7e', '#de234d', '#bcd4eb'],
+				],
+				medium: [
+					['#80351a', '#fbb7a5', '#ffffff', '#005f36', '#492310'],
+					['#f57a4f', '#fcca9f', '#5fc3a8', '#d1bb99', '#921b58'],
+					['#7d361a', '#fcca9d', '#d86086', '#3a74b3', '#e0e0e0'],
+					['#fef498', '#fbb7a5', '#5d74b7', '#4a4748', '#f1f9f2'],
+					['#fbd9bb', '#fbd9bb', '#f9dd7e', '#de234d', '#bcd4eb'],
+				],
+				hard: [
+					['#80351a', '#fbb7a5', '#ffffff', '#005f36', '#492310'],
+					['#f57a4f', '#fcca9f', '#5fc3a8', '#d1bb99', '#921b58'],
+					['#7d361a', '#fcca9d', '#d86086', '#3a74b3', '#e0e0e0'],
+					['#fef498', '#fbb7a5', '#5d74b7', '#4a4748', '#f1f9f2'],
+					['#fbd9bb', '#fbd9bb', '#f9dd7e', '#de234d', '#bcd4eb'],
+				],
+			},
 			values: [
 				['#80351a', '#fbb7a5', '#ffffff', '#005f36', '#492310'],
 				['#f57a4f', '#fcca9f', '#5fc3a8', '#d1bb99', '#921b58'],
@@ -84,6 +222,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q7',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#b6d7e8', '#d2c9c2', '#aedbd6', '#746440', '#2a2c2b'],
+					['#79542a', '#edbfa8', '#fcfd88', '#303b59', '#ebebeb'],
+					['#cf9354', '#eac7b4', '#cc6cc5', '#ececec', '#000606'],
+					['#6c5a58', '#e6bca4', '#5d6e38', '#9db9d1', '#1f2022'],
+					['#edd78b', '#f5dad3', '#dd4f5b', '#333d82', '#b8b8b6'],
+				],
+				medium: [
+					['#b6d7e8', '#d2c9c2', '#aedbd6', '#746440', '#2a2c2b'],
+					['#79542a', '#edbfa8', '#fcfd88', '#303b59', '#ebebeb'],
+					['#cf9354', '#eac7b4', '#cc6cc5', '#ececec', '#000606'],
+					['#6c5a58', '#e6bca4', '#5d6e38', '#9db9d1', '#1f2022'],
+					['#edd78b', '#f5dad3', '#dd4f5b', '#333d82', '#b8b8b6'],
+				],
+				hard: [
+					['#b6d7e8', '#d2c9c2', '#aedbd6', '#746440', '#2a2c2b'],
+					['#79542a', '#edbfa8', '#fcfd88', '#303b59', '#ebebeb'],
+					['#cf9354', '#eac7b4', '#cc6cc5', '#ececec', '#000606'],
+					['#6c5a58', '#e6bca4', '#5d6e38', '#9db9d1', '#1f2022'],
+					['#edd78b', '#f5dad3', '#dd4f5b', '#333d82', '#b8b8b6'],
+				],
+			},
 			values: [
 				['#b6d7e8', '#d2c9c2', '#aedbd6', '#746440', '#2a2c2b'],
 				['#79542a', '#edbfa8', '#fcfd88', '#303b59', '#ebebeb'],
@@ -95,6 +256,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q8',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#ff952e', '#ffdcc8', '#f27ca6', '#ffffff', '#000000'],
+					['#000000', '#ffdcc8', '#8cc979', '#ffffff', '#000000'],
+					['#fed23f', '#ffdcc8', '#86b3ed', '#ffffff', '#000000'],
+					['#000000', '#face8f', '#ffffff', '#000000', '#000000'],
+					['#ffffff', '#000000', '#b9c84f', '#373678', '#ffffff'],
+				],
+				medium: [
+					['#ff952e', '#ffdcc8', '#f27ca6', '#ffffff', '#000000'],
+					['#000000', '#ffdcc8', '#8cc979', '#ffffff', '#000000'],
+					['#fed23f', '#ffdcc8', '#86b3ed', '#ffffff', '#000000'],
+					['#000000', '#face8f', '#ffffff', '#000000', '#000000'],
+					['#ffffff', '#000000', '#b9c84f', '#373678', '#ffffff'],
+				],
+				hard: [
+					['#ff952e', '#ffdcc8', '#f27ca6', '#ffffff', '#000000'],
+					['#000000', '#ffdcc8', '#8cc979', '#ffffff', '#000000'],
+					['#fed23f', '#ffdcc8', '#86b3ed', '#ffffff', '#000000'],
+					['#000000', '#face8f', '#ffffff', '#000000', '#000000'],
+					['#ffffff', '#000000', '#b9c84f', '#373678', '#ffffff'],
+				],
+			},
 			values: [
 				['#ff952e', '#ffdcc8', '#f27ca6', '#ffffff', '#000000'],
 				['#000000', '#ffdcc8', '#8cc979', '#ffffff', '#000000'],
@@ -106,6 +290,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q9',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#acc284', '#acc284', '#d20053', '#000000', '#000000'],
+					['#bababa', '#49b494', '#46b290', '#9d9d9d', '#b8b8b8'],
+					['#000000', '#f8f0d0', '#0860a9', '#000000', '#000000'],
+					['#551e72', '#f0e5e2', '#000000', '#5c003b', '#000000'],
+					['#000000', '#efc6b8', '#f5f1f2', '#f5f1f2', '#000000'],
+				],
+				medium: [
+					['#acc284', '#acc284', '#d20053', '#000000', '#000000'],
+					['#bababa', '#49b494', '#46b290', '#9d9d9d', '#b8b8b8'],
+					['#000000', '#f8f0d0', '#0860a9', '#000000', '#000000'],
+					['#551e72', '#f0e5e2', '#000000', '#5c003b', '#000000'],
+					['#000000', '#efc6b8', '#f5f1f2', '#f5f1f2', '#000000'],
+				],
+				hard: [
+					['#acc284', '#acc284', '#d20053', '#000000', '#000000'],
+					['#bababa', '#49b494', '#46b290', '#9d9d9d', '#b8b8b8'],
+					['#000000', '#f8f0d0', '#0860a9', '#000000', '#000000'],
+					['#551e72', '#f0e5e2', '#000000', '#5c003b', '#000000'],
+					['#000000', '#efc6b8', '#f5f1f2', '#f5f1f2', '#000000'],
+				],
+			},
 			values: [
 				['#acc284', '#acc284', '#d20053', '#000000', '#000000'],
 				['#bababa', '#49b494', '#46b290', '#9d9d9d', '#b8b8b8'],
@@ -117,6 +324,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q10',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#000000', '#ffffff', '#000000', '#bb8b47', '#ffffff'],
+					['#f23227', '#ffffff', '#90c8db', '#000000', '#ffffff'],
+					['#000000', '#ffffff', '#000000', '#f59ba1', '#ffffff'],
+					['#ffffff', '#adfff1', '#ffffff', '#ffffff', '#f6c5b3'],
+					['#ffffff', '#f3cec3', '#ffffff', '#ffffff', '#f6c5b3'],
+				],
+				medium: [
+					['#000000', '#ffffff', '#000000', '#bb8b47', '#ffffff'],
+					['#f23227', '#ffffff', '#90c8db', '#000000', '#ffffff'],
+					['#000000', '#ffffff', '#000000', '#f59ba1', '#ffffff'],
+					['#ffffff', '#adfff1', '#ffffff', '#ffffff', '#f6c5b3'],
+					['#ffffff', '#f3cec3', '#ffffff', '#ffffff', '#f6c5b3'],
+				],
+				hard: [
+					['#000000', '#ffffff', '#000000', '#bb8b47', '#ffffff'],
+					['#f23227', '#ffffff', '#90c8db', '#000000', '#ffffff'],
+					['#000000', '#ffffff', '#000000', '#f59ba1', '#ffffff'],
+					['#ffffff', '#adfff1', '#ffffff', '#ffffff', '#f6c5b3'],
+					['#ffffff', '#f3cec3', '#ffffff', '#ffffff', '#f6c5b3'],
+				],
+			},
 			values: [
 				['#000000', '#ffffff', '#000000', '#bb8b47', '#ffffff'],
 				['#f23227', '#ffffff', '#90c8db', '#000000', '#ffffff'],
@@ -128,6 +358,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q11',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#999999', '#999999', '#fefefe', '#999999', '#fefefe'],
+					['#000000', '#fba713', '#000000', '#000000', '#fba713'],
+					['#000100', '#fefefe', '#fefefe', '#000100', '#fefefe'],
+					['#e5c393', '#ff4d11', '#b51601', '#1c69af', '#030000'],
+					['#ffe1c5', '#ffe1c5', '#1d60a7', '#ffe1c5', '#ffe1c5'],
+				],
+				medium: [
+					['#999999', '#999999', '#fefefe', '#999999', '#fefefe'],
+					['#000000', '#fba713', '#000000', '#000000', '#fba713'],
+					['#000100', '#fefefe', '#fefefe', '#000100', '#fefefe'],
+					['#e5c393', '#ff4d11', '#b51601', '#1c69af', '#030000'],
+					['#ffe1c5', '#ffe1c5', '#1d60a7', '#ffe1c5', '#ffe1c5'],
+				],
+				hard: [
+					['#999999', '#999999', '#fefefe', '#999999', '#fefefe'],
+					['#000000', '#fba713', '#000000', '#000000', '#fba713'],
+					['#000100', '#fefefe', '#fefefe', '#000100', '#fefefe'],
+					['#e5c393', '#ff4d11', '#b51601', '#1c69af', '#030000'],
+					['#ffe1c5', '#ffe1c5', '#1d60a7', '#ffe1c5', '#ffe1c5'],
+				],
+			},
 			values: [
 				['#999999', '#999999', '#fefefe', '#999999', '#fefefe'],
 				['#000000', '#fba713', '#000000', '#000000', '#fba713'],
@@ -139,6 +392,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q12',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#00b3d4', '#00b3d4', '#ba2835', '#00b3d4', '#ffffff'],
+					['#ea96a7', '#ea96a7', '#fef165', '#aaafcc', '#ffffff'],
+					['#008966', '#ecad3a', '#ffffff', '#008966', '#ecad3a'],
+					['#edd0be', '#edd0be', '#5386b1', '#5386b1', '#edd0be'],
+					['#8696be', '#f4e0c7', '#f4e0c7', '#8696be', '#8696be'],
+				],
+				medium: [
+					['#00b3d4', '#00b3d4', '#ba2835', '#00b3d4', '#ffffff'],
+					['#ea96a7', '#ea96a7', '#fef165', '#aaafcc', '#ffffff'],
+					['#008966', '#ecad3a', '#ffffff', '#008966', '#ecad3a'],
+					['#edd0be', '#edd0be', '#5386b1', '#5386b1', '#edd0be'],
+					['#8696be', '#f4e0c7', '#f4e0c7', '#8696be', '#8696be'],
+				],
+				hard: [
+					['#00b3d4', '#00b3d4', '#ba2835', '#00b3d4', '#ffffff'],
+					['#ea96a7', '#ea96a7', '#fef165', '#aaafcc', '#ffffff'],
+					['#008966', '#ecad3a', '#ffffff', '#008966', '#ecad3a'],
+					['#edd0be', '#edd0be', '#5386b1', '#5386b1', '#edd0be'],
+					['#8696be', '#f4e0c7', '#f4e0c7', '#8696be', '#8696be'],
+				],
+			},
 			values: [
 				['#00b3d4', '#00b3d4', '#ba2835', '#00b3d4', '#ffffff'],
 				['#ea96a7', '#ea96a7', '#fef165', '#aaafcc', '#ffffff'],
@@ -150,6 +426,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q13',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#e3b700', '#fbda8d', '#b2c400', '#a14135', '#000000'],
+					['#ad7901', '#39b8ad', '#ad7901', '#ad7901', '#ad7901'],
+					['#fef898', '#fbda8d', '#f2f2f2', '#0099d7', '#e0b700'],
+					['#ed9801', '#fbd98f', '#6b4291', '#6b4291', '#b093c1'],
+					['#a14135', '#fada8d', '#f0a100', '#c20046', '#f0a100'],
+				],
+				medium: [
+					['#e3b700', '#fbda8d', '#b2c400', '#a14135', '#000000'],
+					['#ad7901', '#39b8ad', '#ad7901', '#ad7901', '#ad7901'],
+					['#fef898', '#fbda8d', '#f2f2f2', '#0099d7', '#e0b700'],
+					['#ed9801', '#fbd98f', '#6b4291', '#6b4291', '#b093c1'],
+					['#a14135', '#fada8d', '#f0a100', '#c20046', '#f0a100'],
+				],
+				hard: [
+					['#e3b700', '#fbda8d', '#b2c400', '#a14135', '#000000'],
+					['#ad7901', '#39b8ad', '#ad7901', '#ad7901', '#ad7901'],
+					['#fef898', '#fbda8d', '#f2f2f2', '#0099d7', '#e0b700'],
+					['#ed9801', '#fbd98f', '#6b4291', '#6b4291', '#b093c1'],
+					['#a14135', '#fada8d', '#f0a100', '#c20046', '#f0a100'],
+				],
+			},
 			values: [
 				['#e3b700', '#fbda8d', '#b2c400', '#a14135', '#000000'],
 				['#ad7901', '#39b8ad', '#ad7901', '#ad7901', '#ad7901'],
@@ -161,6 +460,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q14',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#fff454', '#fff454', '#fffeff', '#d78a20', '#211f20'],
+					['#f7a08c', '#f7a08c', '#c0d72e', '#f7a08c', '#f7a08c'],
+					['#bdd7cc', '#bdd7cc', '#e9ac12', '#bdd7cc', '#bdd7cc'],
+					['#d49f63', '#fff5be', '#ffffff', '#ffffff', '#afb7ba'],
+					['#f03f35', '#d0e5a4', '#a4d7f4', '#8ba4d5', '#f03f35'],
+				],
+				medium: [
+					['#fff454', '#fff454', '#fffeff', '#d78a20', '#211f20'],
+					['#f7a08c', '#f7a08c', '#c0d72e', '#f7a08c', '#f7a08c'],
+					['#bdd7cc', '#bdd7cc', '#e9ac12', '#bdd7cc', '#bdd7cc'],
+					['#d49f63', '#fff5be', '#ffffff', '#ffffff', '#afb7ba'],
+					['#f03f35', '#d0e5a4', '#a4d7f4', '#8ba4d5', '#f03f35'],
+				],
+				hard: [
+					['#fff454', '#fff454', '#fffeff', '#d78a20', '#211f20'],
+					['#f7a08c', '#f7a08c', '#c0d72e', '#f7a08c', '#f7a08c'],
+					['#bdd7cc', '#bdd7cc', '#e9ac12', '#bdd7cc', '#bdd7cc'],
+					['#d49f63', '#fff5be', '#ffffff', '#ffffff', '#afb7ba'],
+					['#f03f35', '#d0e5a4', '#a4d7f4', '#8ba4d5', '#f03f35'],
+				],
+			},
 			values: [
 				['#fff454', '#fff454', '#fffeff', '#d78a20', '#211f20'],
 				['#f7a08c', '#f7a08c', '#c0d72e', '#f7a08c', '#f7a08c'],
@@ -172,6 +494,29 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q15',
 			difficulty,
+			difficulty2: {
+				easy: [
+					['#ffffff', '#feddd4', '#079cd7', '#0f6dbd', '#010002'],
+					['#fcb723', '#ffffff', '#fcb723', '#fcb723', '#fcb723'],
+					['#fcc627', '#afdbf4', '#ffffff', '#ffffff', '#0072bb'],
+					['#f29ca5', '#f2d7ea', '#f272ab', '#7d4398', '#f272ab'],
+					['#101010', '#eaedf2', '#9f9ea3', '#272881', '#ae0a37'],
+				],
+				medium: [
+					['#ffffff', '#feddd4', '#079cd7', '#0f6dbd', '#010002'],
+					['#fcb723', '#ffffff', '#fcb723', '#fcb723', '#fcb723'],
+					['#fcc627', '#afdbf4', '#ffffff', '#ffffff', '#0072bb'],
+					['#f29ca5', '#f2d7ea', '#f272ab', '#7d4398', '#f272ab'],
+					['#101010', '#eaedf2', '#9f9ea3', '#272881', '#ae0a37'],
+				],
+				hard: [
+					['#ffffff', '#feddd4', '#079cd7', '#0f6dbd', '#010002'],
+					['#fcb723', '#ffffff', '#fcb723', '#fcb723', '#fcb723'],
+					['#fcc627', '#afdbf4', '#ffffff', '#ffffff', '#0072bb'],
+					['#f29ca5', '#f2d7ea', '#f272ab', '#7d4398', '#f272ab'],
+					['#101010', '#eaedf2', '#9f9ea3', '#272881', '#ae0a37'],
+				],
+			},
 			values: [
 				['#ffffff', '#feddd4', '#079cd7', '#0f6dbd', '#010002'],
 				['#fcb723', '#ffffff', '#fcb723', '#fcb723', '#fcb723'],

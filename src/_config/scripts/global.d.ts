@@ -34,6 +34,7 @@ type Category = {
 type CategoryQuestions = {
 	id: string;
 	difficulty: DifficultyMap;
+	difficulty2: DifficultyMap2;
 	values: string[][];
 }[];
 
@@ -42,6 +43,10 @@ type CategoryValues = Category & {
 };
 
 type CategoriesList = CategoryValues[];
+
+type CategoriesObject = {
+	[key: string]: CategoriesList;
+};
 
 type Difficulty = {
 	id: string;
@@ -55,6 +60,12 @@ type DifficultyMap = {
 	easy: number[];
 	medium: number[];
 	hard: number[];
+};
+
+type DifficultyMap2 = {
+	easy: string[][];
+	medium: string[][];
+	hard: string[][];
 };
 
 type Game = {
@@ -138,9 +149,13 @@ declare global {
 
 	type CategoriesListType = CategoriesList;
 
+	type CategoriesObjectType = CategoriesObject;
+
 	type DifficultyType = Difficulty;
 
 	type DifficultyListType = DifficultyList;
+
+	type DifficultyMap2Type = DifficultyMap2;
 
 	type GameType = Game;
 
@@ -161,6 +176,9 @@ declare global {
 
 	/* Declare global prop types */
 	type ObjectPrimitiveProps = ObjectPrimitive;
+
+	/* Declare global content prop types */
+	type CategoriesObjectProps = CategoriesObject;
 }
 
 /* Export global types */

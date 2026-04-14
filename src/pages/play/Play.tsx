@@ -1,5 +1,5 @@
 /* React */
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, Fragment, useContext, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { produce, Draft } from 'immer';
 
@@ -493,6 +493,58 @@ export const Pagination = () => {
 			<Button className="pagination-next" onClick={() => goToRound('next')} disabled={!hasNext}>
 				{current.round == 'round5' ? 'Game End' : 'Next'}
 			</Button>
+		</div>
+	);
+};
+
+/* Note: this component is only used for testing on dev.
+   It won't be imported or added on prodution. */
+export const PixelsGallery = (props: CategoriesObjectProps) => {
+	const categories = props.categories;
+
+	return (
+		<div className="play spacing-reset">
+			<div className="round round1">
+				{categories.map((category) => {
+					return (
+						<Fragment key={category.id}>
+							<h2>{category.name}</h2>
+
+							{category.values.map((value) => {
+								const difficulty = Object.keys(value.difficulty2);
+
+								return difficulty.map((diff) => {
+									const pixels = value.difficulty2[diff as keyof DifficultyMap2Type];
+
+									return (
+										<Fragment key={`${category.id}-${value.id}-${diff}`}>
+											<h3>
+												{value.id} - {diff}
+											</h3>
+
+											<div className="pixels">
+												<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
+													{pixels.map((pixel, pixelIndex) => (
+														<div className="column" key={`${pixel.join()}-${pixelIndex}`}>
+															{pixel.map((color, colorIndex) => (
+																<div
+																	className="pixel-block"
+																	style={{ backgroundColor: color }}
+																	key={`${color}-${colorIndex}`}
+																></div>
+															))}
+														</div>
+													))}
+												</div>
+											</div>
+										</Fragment>
+									);
+								});
+							})}
+						</Fragment>
+					);
+				})}
+			</div>
 		</div>
 	);
 };
