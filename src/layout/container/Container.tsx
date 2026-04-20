@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './styles/container.scss';
 
 /* Local scripts */
-import { useBodyClass } from '../../_config/scripts/hooks';
+import { useBodyClass } from './scripts/container-hooks';
 
 /* Local components */
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';

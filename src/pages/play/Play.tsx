@@ -1,5 +1,5 @@
 /* React */
-import { ChangeEvent, Fragment, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { produce, Draft } from 'immer';
 
@@ -7,25 +7,24 @@ import { produce, Draft } from 'immer';
 import './styles/play.scss';
 
 /* Local scripts */
+import { useAppContext } from '../../context/scripts/context-hooks';
 import { useReactQuery } from '../../_config/scripts/hooks';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
 /* Local components */
-import { Context } from '../../context/Context';
 import { Block, Button, Form, FormActions, FormField, FormFieldWrapper } from '../../components/blocks/Blocks';
 
 export const Play = () => {
-	const context = useContext(Context);
-	const settings = context.game.settings;
+	const { game } = useAppContext();
+	const settings = game.settings;
 	const showSettings = !settings.category && !settings.difficulty;
 
 	return <div className="play spacing-reset">{showSettings ? <Settings /> : <Round />}</div>;
 };
 
 export const Round = () => {
-	const context = useContext(Context);
-	const { game, setGame, queryClient } = context;
+	const { game, gameDefault, setGame, queryClient } = useAppContext();
 	const { current, rounds, settings } = game;
 	const settingsDifficulty = settings.difficulty as DifficultyType;
 	const currentRound = rounds[`${current.round}`];
@@ -39,7 +38,7 @@ export const Round = () => {
 	const resetGame = () => {
 		void queryClient.resetQueries({ queryKey: ['hints'] });
 		void queryClient.resetQueries({ queryKey: ['answers'] });
-		setGame(context.gameDefault);
+		setGame(gameDefault);
 	};
 
 	// Set score
@@ -133,8 +132,7 @@ export const Round = () => {
 };
 
 export const Settings = () => {
-	const context = useContext(Context);
-	const setGame = context.setGame;
+	const { setGame } = useAppContext();
 	const [descriptions, setDescriptions] = useState({
 		difficulty: difficulty[1].description,
 		categories: categories[0].description,
@@ -276,8 +274,7 @@ export const Settings = () => {
 };
 
 export const Guess = () => {
-	const context = useContext(Context);
-	const { game, setGame } = context;
+	const { game, setGame } = useAppContext();
 	const { current, rounds, settings } = game;
 	const currentRound = rounds[`${current.round}`];
 	const settingsCategory = settings.category as CategoryType;
@@ -405,8 +402,7 @@ export const Guess = () => {
 };
 
 export const Points = () => {
-	const context = useContext(Context);
-	const { game } = context;
+	const { game } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
 
@@ -446,8 +442,7 @@ export const Status = (props: ObjectPrimitiveProps) => {
 };
 
 export const Pagination = () => {
-	const context = useContext(Context);
-	const { game, setGame } = context;
+	const { game, setGame } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
 	const roundNumber: number = parseInt(current.round.replace('round', ''));
