@@ -63,9 +63,10 @@ type DifficultyMap = {
 };
 
 type DifficultyMap2 = {
-	easy: string[][];
-	medium: string[][];
-	hard: string[][];
+	five: string[][];
+	three: string[][];
+	two: string[][];
+	one: string[][];
 };
 
 type Game = {

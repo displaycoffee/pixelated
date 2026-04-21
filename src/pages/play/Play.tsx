@@ -507,34 +507,43 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 
 							{category.values.map((value) => {
 								const difficulty = Object.keys(value.difficulty2);
+								const categoryId = `${category.id}-${value.id}`;
 
-								return difficulty.map((diff) => {
-									const pixels = value.difficulty2[diff as keyof DifficultyMap2Type];
+								return (
+									<Fragment key={categoryId}>
+										<Block>
+											<h3>{value.id}</h3>
+										</Block>
 
-									return (
-										<Fragment key={`${category.id}-${value.id}-${diff}`}>
-											<h3>
-												{value.id} - {diff}
-											</h3>
+										<div className="round-question row row-wrap row-spacing-20">
+											{difficulty.map((diff) => {
+												const pixels = value.difficulty2[diff as keyof DifficultyMap2Type];
 
-											<div className="pixels">
-												<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
-													{pixels.map((pixel, pixelIndex) => (
-														<div className="column" key={`${pixel.join()}-${pixelIndex}`}>
-															{pixel.map((color, colorIndex) => (
-																<div
-																	className="pixel-block"
-																	style={{ backgroundColor: color }}
-																	key={`${color}-${colorIndex}`}
-																></div>
-															))}
+												return (
+													<div className="column column-width-25" key={`${categoryId}-${diff}`}>
+														<h4>{diff}</h4>
+
+														<div className="pixels">
+															<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
+																{pixels.map((pixel, pixelIndex) => (
+																	<div className="column" key={`${pixel.join()}-${pixelIndex}`}>
+																		{pixel.map((color, colorIndex) => (
+																			<div
+																				className="pixel-block"
+																				style={{ backgroundColor: color }}
+																				key={`${color}-${colorIndex}`}
+																			></div>
+																		))}
+																	</div>
+																))}
+															</div>
 														</div>
-													))}
-												</div>
-											</div>
-										</Fragment>
-									);
-								});
+													</div>
+												);
+											})}
+										</div>
+									</Fragment>
+								);
 							})}
 						</Fragment>
 					);

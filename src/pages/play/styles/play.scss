@@ -52,6 +52,28 @@
 			@include mixins.gap(theme.$spacing-x2);
 		}
 	}
+	.page-pixels-gallery {
+		#index > .container {
+			max-width: 1500px;
+		}
+		.round {
+			.block.pixelated h3 {
+				margin: 0;
+			}
+			.round-question {
+				& > .column {
+					@include mixins.flex-layout((flex-flow: column nowrap));
+					h4, .pixels {
+						min-height: 1px;
+						@include mixins.flex(0 1 auto);
+					}
+					.pixels {
+						margin-top: auto;
+					}
+				}
+			}
+		}
+	}
 	@include mixins.respond-min(theme.$bp-01) {
 		.play {
 			.settings {
