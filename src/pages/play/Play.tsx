@@ -520,7 +520,7 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 												const pixels = value.difficulty2[diff as keyof DifficultyMap2Type];
 
 												return (
-													<div className="column column-width-25" key={`${categoryId}-${diff}`}>
+													<div className="column column-width-20" key={`${categoryId}-${diff}`}>
 														<h4>{diff}</h4>
 
 														<div className="pixels">
