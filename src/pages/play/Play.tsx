@@ -502,7 +502,7 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 			<div className="round round1">
 				{categories.map((category) => {
 					return (
-						<Fragment key={category.id}>
+						<div className="round-category" key={category.id}>
 							<h2>{category.name}</h2>
 
 							{category.values.map((value) => {
@@ -510,12 +510,12 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 								const categoryId = `${category.id}-${value.id}`;
 
 								return (
-									<Fragment key={categoryId}>
-										<Block>
+									<div className="round-question" key={categoryId}>
+										<Block className="round-header">
 											<h3>{value.id}</h3>
 										</Block>
 
-										<div className="round-question row row-wrap row-spacing-20">
+										<div className="round-content row row-wrap row-spacing-20">
 											{difficulty.map((diff) => {
 												const pixels = value.difficulty2[diff as keyof DifficultyMap2Type];
 
@@ -542,10 +542,10 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 												);
 											})}
 										</div>
-									</Fragment>
+									</div>
 								);
 							})}
-						</Fragment>
+						</div>
 					);
 				})}
 			</div>

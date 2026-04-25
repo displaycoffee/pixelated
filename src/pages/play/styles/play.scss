@@ -57,18 +57,30 @@
 			max-width: 1500px;
 		}
 		.round {
-			.block.pixelated h3 {
-				margin: 0;
-			}
-			.round-question {
-				& > .column {
-					@include mixins.flex-layout((flex-flow: column nowrap));
-					h4, .pixels {
-						min-height: 1px;
-						@include mixins.flex(0 1 auto);
+			.round-category {
+				margin: 0 0 theme.$spacing-x8 0;
+				&, .round-question {
+					&:last-child {
+						margin-bottom: 0;
 					}
-					.pixels {
-						margin-top: auto;
+				}
+				.round-question {
+					margin: 0 0 theme.$spacing-x4 0;
+					.round-header h3 {
+						margin: 0;
+					}
+					.round-content {
+						margin: theme.$spacing-x4 0 0 0;
+						& > .column {
+							@include mixins.flex-layout((flex-flow: column nowrap));
+							h4, .pixels {
+								min-height: 1px;
+								@include mixins.flex(0 1 auto);
+							}
+							.pixels {
+								margin-top: auto;
+							}
+						}
 					}
 				}
 			}
