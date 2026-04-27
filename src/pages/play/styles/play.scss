@@ -71,13 +71,11 @@
 					}
 					.round-content {
 						margin: theme.$spacing-x4 0 0 0;
-						& > .column {
+						.round-pixels {
 							@include mixins.flex-layout((flex-flow: column nowrap));
-							h4, .pixels {
-								min-height: 1px;
-								@include mixins.flex(0 1 auto);
-							}
 							.pixels {
+								@include mixins.flex(0 1 auto);
+								min-height: 1px;
 								margin-top: auto;
 							}
 						}

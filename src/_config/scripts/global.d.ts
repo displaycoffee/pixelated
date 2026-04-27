@@ -6,10 +6,6 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 /* Generic type definitions */
 type Events = SyntheticEvent | Event;
 
-type ObjectString = {
-	[key: string]: string;
-};
-
 type ObjectPrimitive = {
 	[key: string]: string | number | boolean;
 };
@@ -33,9 +29,7 @@ type Category = {
 
 type CategoryQuestions = {
 	id: string;
-	difficulty: DifficultyMap;
-	difficulty2: DifficultyMap2;
-	values: string[][];
+	values: string[][][];
 }[];
 
 type CategoryValues = Category & {
@@ -49,22 +43,12 @@ type CategoriesObject = {
 };
 
 type Difficulty = {
-	id: string;
+	id: number;
 	name: string;
 	description: string;
 };
 
 type DifficultyList = Difficulty[];
-
-type DifficultyMap = {
-	easy: number[];
-	medium: number[];
-	hard: number[];
-};
-
-type DifficultyMap2 = {
-	[key: string]: string[][];
-};
 
 type Game = {
 	current: {
@@ -97,11 +81,10 @@ type HintsRequest = [Hints, Function, Statuses];
 type Round = {
 	id: boolean | string;
 	status: 'pending' | 'complete' | 'failed' | 'close' | 'game end';
-	difficulty: DifficultyMap;
 	guesses: number;
 	hints: string[];
 	points: number;
-	values: string[][];
+	values: string[][][];
 };
 
 /* Request type definitions */
@@ -130,8 +113,6 @@ declare global {
 	/* Declare global generic types */
 	type EventsType = Events;
 
-	type ObjectStringType = ObjectString;
-
 	type ObjectPrimitiveType = ObjectPrimitive;
 
 	/* Declare global content types */
@@ -152,8 +133,6 @@ declare global {
 	type DifficultyType = Difficulty;
 
 	type DifficultyListType = DifficultyList;
-
-	type DifficultyMap2Type = DifficultyMap2;
 
 	type GameType = Game;
 

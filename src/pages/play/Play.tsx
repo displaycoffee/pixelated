@@ -29,10 +29,8 @@ export const Round = () => {
 	const settingsDifficulty = settings.difficulty as DifficultyType;
 	const currentRound = rounds[`${current.round}`];
 	const title = currentRound.status == 'game end' ? `Game Over` : `Round ${current.round.replace('round', '')}`;
+	const pixels = currentRound.values[currentRound.values.length - settingsDifficulty.id];
 	const [cookies, setCookie] = useCookies(['scoreboard']);
-
-	// Set up pixel includes (default difficulty is "medium")
-	const includePixels = currentRound.difficulty[settingsDifficulty.id as keyof typeof currentRound.difficulty];
 
 	// Reset game
 	const resetGame = () => {
@@ -99,17 +97,17 @@ export const Round = () => {
 						<>
 							<div className="pixels">
 								<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
-									{currentRound.values.map((value, index) => {
+									{pixels.map((pixel, index) => {
 										return (
 											<div className="column" key={`${currentRound}-${index}`}>
-												{value.map((color, colorIndex) => {
-													return includePixels.includes(colorIndex) ? (
+												{pixel.map((color, colorIndex) => {
+													return (
 														<div
 															className="pixel-block"
 															style={{ backgroundColor: color }}
 															key={`${color}-${colorIndex}`}
 														></div>
-													) : null;
+													);
 												})}
 											</div>
 										);
@@ -166,7 +164,7 @@ export const Settings = () => {
 
 		if (difficultyValue && categoryValue) {
 			// Find difficulty
-			const difficultyDetails = difficulty.filter((diff) => diff.id === difficultyValue).pop() as DifficultyType;
+			const difficultyDetails = difficulty.filter((diff) => diff.id === Number(difficultyValue)).pop() as DifficultyType;
 
 			// Find category
 			const categoryMatch = categories.filter((category) => category.id === categoryValue).pop() as CategoryValuesType;
@@ -232,7 +230,7 @@ export const Settings = () => {
 						<select
 							id="settings-difficulty"
 							name="difficulty"
-							defaultValue={difficulty[1].id}
+							defaultValue={difficulty[2].id}
 							onChange={(e) => updateDescriptions(e, 'difficulty')}
 						>
 							{difficulty.map((diff) => {
@@ -506,7 +504,6 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 							<h2>{category.name}</h2>
 
 							{category.values.map((value) => {
-								const difficulty = Object.keys(value.difficulty2);
 								const categoryId = `${category.id}-${value.id}`;
 
 								return (
@@ -516,27 +513,21 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 										</Block>
 
 										<div className="round-content row row-wrap row-spacing-20">
-											{difficulty.map((diff) => {
-												const pixels = value.difficulty2[diff as keyof DifficultyMap2Type];
-
+											{value.values.map((pixels, pixelsIndex) => {
 												return (
-													<div className="column column-width-20" key={`${categoryId}-${diff}`}>
-														<h4>{diff}</h4>
-
-														<div className="pixels">
-															<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
-																{pixels.map((pixel, pixelIndex) => (
-																	<div className="column" key={`${pixel.join()}-${pixelIndex}`}>
-																		{pixel.map((color, colorIndex) => (
-																			<div
-																				className="pixel-block"
-																				style={{ backgroundColor: color }}
-																				key={`${color}-${colorIndex}`}
-																			></div>
-																		))}
-																	</div>
-																))}
-															</div>
+													<div className="round-pixels column column-width-20" key={`${categoryId}-${pixelsIndex}`}>
+														<div className="pixels row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
+															{pixels.map((pixel, pixelIndex) => (
+																<div className="column" key={`${pixel.join()}-${pixelIndex}`}>
+																	{pixel.map((color, colorIndex) => (
+																		<div
+																			className="pixel-block"
+																			style={{ backgroundColor: color }}
+																			key={`${color}-${colorIndex}`}
+																		></div>
+																	))}
+																</div>
+															))}
 														</div>
 													</div>
 												);
