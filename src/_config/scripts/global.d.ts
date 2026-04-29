@@ -6,6 +6,10 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 /* Generic type definitions */
 type Events = SyntheticEvent | Event;
 
+type ObjectNumbers = {
+	[key: string]: number[];
+};
+
 type ObjectPrimitive = {
 	[key: string]: string | number | boolean;
 };
@@ -25,6 +29,10 @@ type Category = {
 	category: string;
 	subCategory: string;
 	description: string;
+};
+
+type CategoryHexMap = {
+	[key: string]: string[][];
 };
 
 type CategoryQuestions = {
@@ -113,6 +121,8 @@ declare global {
 	/* Declare global generic types */
 	type EventsType = Events;
 
+	type ObjectNumbersType = ObjectNumbers;
+
 	type ObjectPrimitiveType = ObjectPrimitive;
 
 	/* Declare global content types */
@@ -121,6 +131,8 @@ declare global {
 	type AnswersRequestType = AnswersRequest;
 
 	type CategoryType = Category;
+
+	type CategoryHexMapType = CategoryHexMap;
 
 	type CategoryQuestionsType = CategoryQuestions;
 

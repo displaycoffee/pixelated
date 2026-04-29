@@ -1,8 +1,26 @@
+/* Local scripts */
+import { utils } from '../../../_config/scripts/utils';
+
+/* Get hex function */
+const pixels = utils.pixels;
+
 /* Category variables */
 const mainCategory = 'animation';
 const subCategory = 'movies';
 const id = `${mainCategory}-${subCategory}`;
 
+/* Category hex map */
+const map: CategoryHexMapType = {
+	q1: [
+		['#5a2019', '#ffc5a8', '#308ec3', '#ffffff', '#308ec3'],
+		['#5f3801', '#844f2d', '#6a0604', '#391b1e', '#844f2d'],
+		['#000000', '#c76f57', '#8b0002', '#32251f', '#732b1f'],
+		['#feed73', '#feed73', '#f4b100', '#f4b100', '#f4b100'],
+		['#b0421c', '#f9ded9', '#563736', '#b0421c', '#b0421c'],
+	],
+};
+
+/* Category list */
 export const category: CategoryValuesType = {
 	name: 'Animation - Movies',
 	id: id,
@@ -13,35 +31,11 @@ export const category: CategoryValuesType = {
 		{
 			id: 'q1',
 			values: [
-				[
-					['#5a2019', '#ffc5a8', '#308ec3', '#ffffff', '#308ec3'],
-					['#5f3801', '#844f2d', '#6a0604', '#391b1e', '#844f2d'],
-					['#000000', '#c76f57', '#8b0002', '#32251f', '#732b1f'],
-					['#feed73', '#feed73', '#f4b100', '#f4b100', '#f4b100'],
-					['#b0421c', '#f9ded9', '#563736', '#b0421c', '#b0421c'],
-				],
-				[
-					['#5a2019', '#308ec3', '#ffffff', '#308ec3'],
-					['#5f3801', '#6a0604', '#391b1e', '#844f2d'],
-					['#000000', '#8b0002', '#32251f', '#732b1f'],
-					['#feed73', '#f4b100', '#f4b100', '#f4b100'],
-					['#f9ded9', '#563736', '#b0421c', '#b0421c'],
-				],
-				[
-					['#5a2019', '#308ec3', '#ffffff'],
-					['#844f2d', '#6a0604', '#391b1e'],
-					['#000000', '#8b0002', '#32251f'],
-					['#feed73', '#f4b100', '#f4b100'],
-					['#f9ded9', '#563736', '#b0421c'],
-				],
-				[
-					['#5a2019', '#308ec3'],
-					['#5f3801', '#6a0604'],
-					['#000000', '#8b0002'],
-					['#feed73', '#f4b100'],
-					['#563736', '#b0421c'],
-				],
-				[['#5a2019'], ['#5f3801'], ['#000000'], ['#f4b100'], ['#b0421c']],
+				map.q1,
+				pixels(map.q1, 4, { 4: [1, 2, 3, 4] }),
+				pixels(map.q1, 3, { 4: [1, 2, 3] }),
+				pixels(map.q1, 2, { 4: [2, 3] }),
+				pixels(map.q1, 1, { 3: [2], 4: [3] }),
 			],
 		},
 		{
