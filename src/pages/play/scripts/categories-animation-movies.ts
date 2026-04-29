@@ -1,7 +1,7 @@
 /* Local scripts */
 import { utils } from '../../../_config/scripts/utils';
 
-/* Get hex function */
+/* Set function for creating pixel maps */
 const pixels = utils.pixels;
 
 /* Category variables */
@@ -10,7 +10,7 @@ const subCategory = 'movies';
 const id = `${mainCategory}-${subCategory}`;
 
 /* Category hex map */
-const map: CategoryHexMapType = {
+const hexMap: CategoryHexMapType = {
 	q1: [
 		['#5a2019', '#ffc5a8', '#308ec3', '#ffffff', '#308ec3'],
 		['#5f3801', '#844f2d', '#6a0604', '#391b1e', '#844f2d'],
@@ -30,13 +30,7 @@ export const category: CategoryValuesType = {
 	values: [
 		{
 			id: 'q1',
-			values: [
-				map.q1,
-				pixels(map.q1, 4, { 4: [1, 2, 3, 4] }),
-				pixels(map.q1, 3, { 4: [1, 2, 3] }),
-				pixels(map.q1, 2, { 4: [2, 3] }),
-				pixels(map.q1, 1, { 3: [2], 4: [3] }),
-			],
+			values: pixels(hexMap.q1, { '3-1': [2], '4-4': [1, 2, 3, 4], '4-3': [1, 2, 3], '4-2': [2, 3], '4-1': [3] }),
 		},
 		{
 			id: 'q2',
