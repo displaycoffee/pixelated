@@ -1,8 +1,8 @@
 /* Local scripts */
-import { utils } from '../../../_config/scripts/utils';
+import { categoriesUtils } from './categories-utils';
 
 /* Set function for creating pixel maps */
-const pixels = utils.pixels;
+const setPixels = categoriesUtils.setPixels;
 
 /* Category variables */
 const mainCategory = 'animation';
@@ -30,7 +30,7 @@ export const category: CategoryValuesType = {
 	values: [
 		{
 			id: 'q1',
-			values: pixels(hexMap.q1, { '3-1': [2], '4-4': [1, 2, 3, 4], '4-3': [1, 2, 3], '4-2': [2, 3], '4-1': [3] }),
+			values: setPixels(hexMap.q1, { 3: { 1: [2] }, 4: { 1: [3], 2: [2, 3], 3: [1, 2, 3], 4: [1, 2, 3, 4] } }),
 		},
 		{
 			id: 'q2',

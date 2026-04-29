@@ -23,7 +23,7 @@ type NavigationRoutes = {
 	element: JSX.Element;
 	id: number;
 	path: string;
-	props?: ObjectPrimitiveType;
+	props?: ObjectPrimitiveType | CategoriesObjectType;
 };
 
 /* Export types */
