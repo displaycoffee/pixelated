@@ -1,4 +1,15 @@
 export const categoriesUtils = {
+	buildValues: (values: CategoryValuesUnformattedType) => {
+		// Create question values for categories
+		return values.map((value) => {
+			return {
+				id: value.id,
+				values: value.hexMap
+					? categoriesUtils.setPixels(value.values, value.hexMap as CategoryNumbersMapType)
+					: categoriesUtils.setPixels(value.values),
+			};
+		});
+	},
 	setPixels: (allColors: string[][], map?: CategoryNumbersMapType) => {
 		// Function to get an array of hex colors
 		let hexMap = [1, 2, 3, 4, 5];

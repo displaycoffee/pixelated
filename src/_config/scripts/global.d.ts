@@ -46,6 +46,12 @@ type CategoryValues = Category & {
 	values: CategoryQuestions;
 };
 
+type CategoryValuesUnformatted = {
+	id: string;
+	values: string[][];
+	hexMap: CategoryNumbersMap | boolean;
+}[];
+
 type CategoriesList = CategoryValues[];
 
 type CategoriesObject = {
@@ -139,6 +145,8 @@ declare global {
 	type CategoryQuestionsType = CategoryQuestions;
 
 	type CategoryValuesType = CategoryValues;
+
+	type CategoryValuesUnformattedType = CategoryValuesUnformatted;
 
 	type CategoriesListType = CategoriesList;
 
