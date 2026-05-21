@@ -1,5 +1,9 @@
 /* Local scripts */
 import { categoriesUtils } from './categories-utils';
+import { colors } from './colors';
+
+/* Get colors */
+const { black, white, tone1, tone2, tone3, tone4, tone6, tone8 } = colors;
 
 /* Category variables */
 const mainCategory = 'video-games';
@@ -11,22 +15,22 @@ const categoryValues: CategoryValuesUnformattedType = [
 	{
 		id: 'q1',
 		values: [
-			['#b2deb4', '#f6ddbd', '#ac1f15', '#ffffff', '#ac1f15'],
-			['#d1cdb2', '#f3bea0', '#f1f5e4', '#08306f', '#08306f'],
-			['#e5d032', '#f8c3a5', '#6aaadd', '#443184', '#bac1c9'],
-			['#e6d037', '#ffdac0', '#605a9f', '#f5f2f5', '#ffffff'],
-			['#ebe0a1', '#f5d4b9', '#85bb25', '#f5d4b9', '#ffffff'],
+			['#b2deb4', tone1, '#ac1f15', white, '#ac1f15'],
+			['#d1cdb2', tone3, '#f1f5e4', '#08306f', '#08306f'],
+			['#e5d032', tone3, '#6aaadd', '#443184', '#bac1c9'],
+			['#e6d037', tone3, '#605a9f', '#f5f2f5', white],
+			['#ebe0a1', tone2, '#85bb25', '#f5d4b9', white],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q2',
 		values: [
-			['#f3c86b', '#fdddcf', '#4d4a5b', '#4d4a5b', '#4d4a5b'],
-			['#2f2b2c', '#ffc9a6', '#ffffff', '#19100f', '#ffc9a6'],
-			['#643f35', '#ffd1ac', '#960e1a', '#e7767c', '#e7767c'],
-			['#353331', '#955441', '#76583e', '#313924', '#313924'],
-			['#ebc78a', '#e9a888', '#414864', '#4a3d29', '#4a3d29'],
+			['#f3c86b', tone3, '#4d4a5b', '#4d4a5b', '#4d4a5b'],
+			['#2f2b2c', tone3, white, '#19100f', '#ffc9a6'],
+			['#643f35', tone2, '#960e1a', '#e7767c', '#e7767c'],
+			['#353331', tone8, '#76583e', '#313924', '#313924'],
+			['#ebc78a', tone4, '#414864', '#4a3d29', '#4a3d29'],
 		],
 		hexMap: {
 			3: { 2: [1, 4] },
@@ -35,21 +39,21 @@ const categoryValues: CategoryValuesUnformattedType = [
 	{
 		id: 'q3',
 		values: [
-			['#675650', '#fee6c0', '#ffffff', '#2f2f2f', '#2f2f2f'],
-			['#2f2f2f', '#fee0c0', '#7db7d1', '#405ac3', '#fee0c0'],
-			['#ffd17f', '#fff1cf', '#b66c4a', '#b66c4a', '#1a1718'],
-			['#ffda84', '#fee6c0', '#2f2f2f', '#355d86', '#fee6c0'],
-			['#533923', '#efccb4', '#deb45a', '#deb45a', '#efccb4'],
+			['#675650', tone3, white, '#2f2f2f', '#2f2f2f'],
+			['#2f2f2f', tone2, '#7db7d1', '#405ac3', tone2],
+			['#ffd17f', tone2, '#b66c4a', '#b66c4a', '#1a1718'],
+			['#ffda84', tone3, '#2f2f2f', '#355d86', tone3],
+			['#533923', tone2, '#deb45a', '#deb45a', tone2],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q4',
 		values: [
-			['#f7d273', '#ffeeda', '#0e4e58', '#6aa8d7', '#6aa8d7'],
+			['#f7d273', tone3, '#0e4e58', '#6aa8d7', '#6aa8d7'],
 			['#c18f46', '#000002', '#93caf9', '#93caf9', '#88ded1'],
-			['#0f0810', '#fedbc5', '#ffffff', '#f0841d', '#f0841d'],
-			['#aeb3bb', '#f6ddbc', '#aeb3bb', '#181818', '#aeb3bb'],
+			['#0f0810', tone2, white, '#f0841d', '#f0841d'],
+			['#aeb3bb', tone3, '#aeb3bb', '#181818', '#aeb3bb'],
 			['#db4c36', '#f6ffe7', '#db4c36', '#db4c36', '#5d2c0c'],
 		],
 		hexMap: {
@@ -63,42 +67,42 @@ const categoryValues: CategoryValuesUnformattedType = [
 	{
 		id: 'q5',
 		values: [
-			['#e0301b', '#f0b27f', '#0086b1', '#0086b1', '#a1530b'],
-			['#ffac3a', '#f1c294', '#e6e4d5', '#e6e4d5', '#e6e4d5'],
-			['#51692a', '#f4af7a', '#f97823', '#f97823', '#f4af7a'],
+			['#e0301b', tone3, '#0086b1', '#0086b1', '#a1530b'],
+			['#ffac3a', tone2, '#e6e4d5', '#e6e4d5', '#e6e4d5'],
+			['#51692a', tone3, '#f97823', '#f97823', tone3],
 			['#9bbe6a', '#9bbe6a', '#e7ab01', '#e7e6de', '#e7e6de'],
-			['#e7ca92', '#f2c29a', '#9994da', '#9994da', '#f2c29a'],
+			['#e7ca92', tone2, '#9994da', '#9994da', tone2],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q6',
 		values: [
-			['#b4bcc7', '#fce9da', '#5c7eab', '#ffffff', '#ffffff'],
-			['#544138', '#d39d8b', '#343145', '#626f59', '#343145'],
-			['#a99573', '#eeb589', '#6b8036', '#624322', '#94652a'],
-			['#c4cc70', '#fcc59c', '#9b86b4', '#2a261e', '#ffffff'],
-			['#fcdd64', '#eebf74', '#9d461f', '#2b3116', '#79411e'],
+			['#b4bcc7', tone1, '#5c7eab', white, white],
+			['#544138', tone4, '#343145', '#626f59', '#343145'],
+			['#a99573', tone3, '#6b8036', '#624322', '#94652a'],
+			['#c4cc70', tone3, '#9b86b4', '#2a261e', white],
+			['#fcdd64', tone3, '#9d461f', '#2b3116', '#79411e'],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q7',
 		values: [
-			['#bd2910', '#ffb59c', '#bdbdbd', '#5284ef', '#bdbdbd'],
-			['#63b58c', '#ffb59c', '#5273d6', '#5273d6', '#bdbdbd'],
-			['#efde5a', '#ffb59c', '#ffffff', '#00ad08', '#d6b5b5'],
-			['#5a84ef', '#ffb59c', '#bdbdbd', '#9c2910', '#bdbdbd'],
-			['#4060a0', '#ffb59c', '#bdbdbd', '#b02000', '#bdbdbd'],
+			['#bd2910', tone3, '#bdbdbd', '#5284ef', '#bdbdbd'],
+			['#63b58c', tone3, '#5273d6', '#5273d6', '#bdbdbd'],
+			['#efde5a', tone3, white, '#00ad08', '#d6b5b5'],
+			['#5a84ef', tone1, '#bdbdbd', '#9c2910', '#bdbdbd'],
+			['#4060a0', tone3, '#bdbdbd', '#b02000', '#bdbdbd'],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q8',
 		values: [
-			['#078bc5', '#f8c3a5', '#9d2522', '#327973', '#94341e'],
-			['#e09324', '#f8c3a5', '#f0b12d', '#197679', '#197679'],
-			['#f6ca0f', '#f8c3a5', '#f7e9ce', '#6895b2', '#8b481e'],
+			['#078bc5', tone3, '#9d2522', '#327973', '#94341e'],
+			['#e09324', tone2, '#f0b12d', '#197679', '#197679'],
+			['#f6ca0f', tone3, '#f7e9ce', '#6895b2', '#8b481e'],
 			['#9db8d8', '#9db8d8', '#deebf9', '#9db8d8', '#000543'],
 			['#a6a4a0', '#a6a4a0', '#a6a4a0', '#a6a4a0', '#4b4b48'],
 		],
@@ -109,33 +113,33 @@ const categoryValues: CategoryValuesUnformattedType = [
 	{
 		id: 'q9',
 		values: [
-			['#e5c13f', '#f8c3a5', '#2a3d53', '#ffffff', '#ffffff'],
-			['#3371b5', '#f8c3a5', '#3a4097', '#161835', '#ffffff'],
-			['#7f8dd1', '#f8c3a5', '#2b0f6a', '#ffffff', '#ffffff'],
-			['#0e4289', '#f8c3a5', '#26654b', '#a27d37', '#a27d37'],
-			['#7296b6', '#f8c3a5', '#9dbf36', '#9dbf36', '#f8c3a5'],
+			['#e5c13f', tone3, '#2a3d53', white, white],
+			['#3371b5', tone2, '#3a4097', '#161835', white],
+			['#7f8dd1', tone2, '#2b0f6a', white, white],
+			['#0e4289', tone3, '#26654b', '#a27d37', '#a27d37'],
+			['#7296b6', tone3, '#9dbf36', '#9dbf36', tone3],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q10',
 		values: [
-			['#5e5061', '#f8c3a5', '#4f4b4c', '#514249', '#8a7c71'],
-			['#fab9c1', '#f8c3a5', '#ffffff', '#df7083', '#ffffff'],
-			['#9a5f3d', '#f8c3a5', '#b55153', '#ffffff', '#ffffff'],
-			['#a97359', '#f8c3a5', '#ffffff', '#dbac44', '#dbac44'],
-			['#685e93', '#f8c3a5', '#424c81', '#424c81', '#f8c3a5'],
+			['#5e5061', tone3, '#4f4b4c', '#514249', '#8a7c71'],
+			['#fab9c1', tone2, white, '#df7083', white],
+			['#9a5f3d', tone3, '#b55153', white, white],
+			['#a97359', tone3, white, '#dbac44', '#dbac44'],
+			['#685e93', tone2, '#424c81', '#424c81', tone2],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q11',
 		values: [
-			['#e7633b', '#f8dbb7', '#2f4496', '#2f4496', '#ffffff'],
-			['#01a75f', '#f8dbb7', '#d27627', '#cc2781', '#ba2b25'],
-			['#b975a9', '#fae6df', '#f6b7b5', '#f6b7b5', '#f6b7b5'],
-			['#7a669c', '#fae6df', '#c7c4d9', '#c7c4d9', '#443384'],
-			['#544433', '#ceac75', '#89673a', '#1b995a', '#1b995a'],
+			['#e7633b', tone3, '#2f4496', '#2f4496', white],
+			['#01a75f', tone3, '#d27627', '#cc2781', '#ba2b25'],
+			['#b975a9', tone2, '#f6b7b5', '#f6b7b5', '#f6b7b5'],
+			['#7a669c', tone1, '#c7c4d9', '#c7c4d9', '#443384'],
+			['#544433', tone6, '#89673a', '#1b995a', '#1b995a'],
 		],
 		hexMap: {
 			4: { 3: [1, 3, 5] },
@@ -145,22 +149,22 @@ const categoryValues: CategoryValuesUnformattedType = [
 	{
 		id: 'q12',
 		values: [
-			['#ceb783', '#e8d5b4', '#741b21', '#3a302f', '#57362d'],
-			['#8e6353', '#f6dace', '#f4f5ef', '#83aab1', '#eedbd4'],
-			['#000000', '#f8cea4', '#291c38', '#291c38', '#291c38'],
-			['#d0bb8c', '#ead2a2', '#94af68', '#9a7b67', '#8b5843'],
-			['#cfd3ee', '#f6dace', '#306a92', '#85bed2', '#306a92'],
+			['#ceb783', tone3, '#741b21', '#3a302f', '#57362d'],
+			['#8e6353', tone2, '#f4f5ef', '#83aab1', tone2],
+			[black, tone3, '#291c38', '#291c38', '#291c38'],
+			['#d0bb8c', tone3, '#94af68', '#9a7b67', '#8b5843'],
+			['#cfd3ee', tone2, '#306a92', '#85bed2', '#306a92'],
 		],
 		hexMap: false,
 	},
 	{
 		id: 'q13',
 		values: [
-			['#854a38', '#f1ba84', '#4e613d', '#d08f41', '#d08f41'],
-			['#5490c6', '#f6dace', '#042c5f', '#f2f369', '#893e1f'],
-			['#f2b258', '#f1ba84', '#ffffff', '#2b589b', '#ffffff'],
-			['#000000', '#a36f43', '#364e96', '#ffffff', '#000000'],
-			['#000000', '#f6dace', '#f8b9ca', '#f8b9ca', '#f8b9ca'],
+			['#854a38', tone3, '#4e613d', '#d08f41', '#d08f41'],
+			['#5490c6', tone2, '#042c5f', '#f2f369', '#893e1f'],
+			['#f2b258', tone3, white, '#2b589b', white],
+			[black, tone6, '#364e96', white, black],
+			[black, tone2, '#f8b9ca', '#f8b9ca', '#f8b9ca'],
 		],
 		hexMap: {
 			3: { 3: [1, 3, 5] },
@@ -169,11 +173,11 @@ const categoryValues: CategoryValuesUnformattedType = [
 	{
 		id: 'q14',
 		values: [
-			['#945d56', '#f4d0b1', '#c0525d', '#44424f', '#c0525d'],
-			['#f3ecb6', '#f8d6bb', '#ffffff', '#ffffff', '#515082'],
-			['#eee8f1', '#f7e0d1', '#a3b2cd', '#a3b2cd', '#a3b2cd'],
-			['#eee8f1', '#f7e0d1', '#da8c76', '#da8c76', '#54464b'],
-			['#46434e', '#f7e0d1', '#cac4de', '#cac4de', '#46434e'],
+			['#945d56', tone3, '#c0525d', '#44424f', '#c0525d'],
+			['#f3ecb6', tone2, white, white, '#515082'],
+			['#eee8f1', tone1, '#a3b2cd', '#a3b2cd', '#a3b2cd'],
+			['#eee8f1', tone1, '#da8c76', '#da8c76', '#54464b'],
+			['#46434e', tone2, '#cac4de', '#cac4de', '#46434e'],
 		],
 		hexMap: {
 			2: { 3: [1, 3, 5] },
@@ -184,11 +188,11 @@ const categoryValues: CategoryValuesUnformattedType = [
 	{
 		id: 'q15',
 		values: [
-			['#4b433f', '#e5af66', '#ffffff', '#41564f', '#41564f'],
-			['#bb673d', '#f6d7c4', '#ffffff', '#6b625e', '#9f6d5e'],
-			['#000000', '#f6d7c4', '#cccd7f', '#edaab3', '#cccd7f'],
-			['#f1bf87', '#e5af66', '#7c646e', '#ffffff', '#ffffff'],
-			['#e8dadc', '#f6d7c4', '#578288', '#578288', '#71502e'],
+			['#4b433f', tone4, white, '#41564f', '#41564f'],
+			['#bb673d', tone2, white, '#6b625e', '#9f6d5e'],
+			[black, tone2, '#cccd7f', '#edaab3', '#cccd7f'],
+			['#f1bf87', tone4, '#7c646e', white, white],
+			['#e8dadc', tone2, '#578288', '#578288', '#71502e'],
 		],
 		hexMap: {
 			2: { 3: [1, 3, 5] },
