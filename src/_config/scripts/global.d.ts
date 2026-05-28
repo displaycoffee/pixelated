@@ -11,10 +11,17 @@ type ObjectPrimitive = {
 };
 
 /* Content type definitions */
+type Actions = {
+	getHint: Function;
+	hasHints: boolean;
+};
+
 type Answers = {
 	close: string;
 	message: string;
 	success: string;
+	title?: string;
+	characters?: string;
 };
 
 type AnswersRequest = [Answers, Function, Statuses];
@@ -94,6 +101,10 @@ type Hints = {
 
 type HintsRequest = [Hints, Function, Statuses];
 
+type Pagination = {
+	resetGame: Function;
+};
+
 type Round = {
 	id: boolean | string;
 	status: 'pending' | 'complete' | 'failed' | 'close' | 'game end';
@@ -101,6 +112,8 @@ type Round = {
 	hints: string[];
 	points: number;
 	values: string[][][];
+	title: string;
+	characters: string;
 };
 
 /* Request type definitions */
@@ -177,7 +190,11 @@ declare global {
 	type ObjectPrimitiveProps = ObjectPrimitive;
 
 	/* Declare global content prop types */
+	type ActionsProps = Actions;
+
 	type CategoriesObjectProps = CategoriesObject;
+
+	type PaginationProps = Pagination;
 }
 
 /* Export global types */

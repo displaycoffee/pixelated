@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 /* Local scripts */
 import { requests } from './requests';
 
-export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string) => {
+export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string, guessNumber?: number) => {
 	// Note: Content is either the hintId or the user's guess
 
 	// Set initial variables
 	let requestData = false;
-	const queryKey = [key, JSON.stringify(category), questionId, content] as QueryKeyType;
+	const queryKey = [key, JSON.stringify(category), questionId, content, String(guessNumber ?? 0)] as QueryKeyType;
 
 	// If content, add to queryKey
 	if (key == 'answers') {

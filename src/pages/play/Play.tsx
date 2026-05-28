@@ -116,13 +116,13 @@ export const Round = () => {
 							</div>
 
 							{{
-								complete: <Status status={'complete'} />,
-								failed: <Status status={'failed'} />,
+								complete: <Status status={'complete'} title={currentRound.title} characters={currentRound.characters} />,
+								failed: <Status status={'failed'} title={currentRound.title} characters={currentRound.characters} />,
 							}[currentRound.status as string] || <Guess />}
 						</>
 					) : null}
 
-					<Pagination />
+					<Pagination resetGame={resetGame} />
 				</>
 			)}
 		</div>
@@ -132,7 +132,7 @@ export const Round = () => {
 export const Settings = () => {
 	const { setGame } = useAppContext();
 	const [descriptions, setDescriptions] = useState({
-		difficulty: difficulty[1].description,
+		difficulty: difficulty[2].description,
 		categories: categories[0].description,
 	});
 
@@ -306,7 +306,13 @@ export const Guess = () => {
 	};
 
 	// Use custom hook to get answers
-	const [answersData, _answersRefetch] = useReactQuery('answers', settingsCategory, questionId, current.guess as string) as AnswersRequestType;
+	const [answersData, _answersRefetch] = useReactQuery(
+		'answers',
+		settingsCategory,
+		questionId,
+		current.guess as string,
+		currentRound.guesses,
+	) as AnswersRequestType;
 
 	// Submit guess
 	const submitGuess = (e: EventsType) => {
@@ -361,6 +367,11 @@ export const Guess = () => {
 					draft.current.points = roundStatus != 'pending' ? draft.current.points + points : draft.current.points;
 					draftRound.points = points;
 					draftRound.status = roundStatus;
+
+					if (answersData.title) {
+						draftRound.title = answersData.title;
+						draftRound.characters = answersData.characters || '';
+					}
 				}),
 			);
 		}
@@ -377,10 +388,6 @@ export const Guess = () => {
 					</FormFieldWrapper>
 
 					<Button className="guess-submit">Submit</Button>
-
-					<Button className="guess-hint" onClick={() => getHint()} disabled={!hasHints}>
-						Get Hint
-					</Button>
 				</FormField>
 			</Form>
 
@@ -395,6 +402,8 @@ export const Guess = () => {
 					</Block>
 				</div>
 			) : null}
+
+			<Actions getHint={getHint} hasHints={hasHints} />
 		</>
 	);
 };
@@ -425,6 +434,8 @@ export const Points = () => {
 
 export const Status = (props: ObjectPrimitiveProps) => {
 	const status = props.status;
+	const title = props.title as string;
+	const characters = props.characters as string;
 
 	// Determine status message
 	let message = '😍 You got it!';
@@ -436,10 +447,42 @@ export const Status = (props: ObjectPrimitiveProps) => {
 		message = '😩 Out of guesses!';
 	}
 
-	return <div className="status">{message}</div>;
+	return (
+		<div className="status">
+			<p>{message}</p>
+
+			{title && (status == 'complete' || status == 'failed') ? (
+				<Block>
+					<p>
+						<strong>{title}</strong>
+					</p>
+					<p>{characters}</p>
+				</Block>
+			) : null}
+		</div>
+	);
 };
 
-export const Pagination = () => {
+export const Actions = (props: ActionsProps) => {
+	const { getHint, hasHints } = props;
+	// const { game, setGame } = useAppContext();
+	// const { current, rounds } = game;
+	// const currentRound = rounds[`${current.round}`];
+
+	return (
+		<div className="actions flex-nowrap flex-align-items-center flex-justify-content-center">
+			<Button className="actions-get-hint" onClick={() => getHint()} disabled={!hasHints}>
+				Get Hint
+			</Button>
+			&nbsp;
+			<Button className="actions-get-answer">Get Answer</Button>&nbsp;
+			<Button className="actions-get-characters">Get Characters</Button>
+		</div>
+	);
+};
+
+export const Pagination = (props: PaginationProps) => {
+	const resetGame = props.resetGame;
 	const { game, setGame } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
@@ -481,6 +524,10 @@ export const Pagination = () => {
 		<div className="pagination flex-nowrap flex-align-items-center flex-justify-content-center">
 			<Button className="pagination-previous" onClick={() => goToRound('previous')} disabled={!hasPrevious}>
 				Previous
+			</Button>
+
+			<Button className="pagination-start-over" onClick={() => resetGame()}>
+				New Game?
 			</Button>
 
 			<Button className="pagination-next" onClick={() => goToRound('next')} disabled={!hasNext}>

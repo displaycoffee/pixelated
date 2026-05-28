@@ -46,6 +46,8 @@ export const ContextProvider = ({ children }: ContextProps) => {
 		hints: [],
 		points: 100,
 		values: [],
+		title: '',
+		characters: '',
 	};
 
 	// Create game config

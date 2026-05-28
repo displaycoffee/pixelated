@@ -27,7 +27,6 @@ export const Rules = () => {
 				<li>There are five rounds and each round is randomly generated.</li>
 				<li>In each round, you will have three guesses and three hints to complete the round.</li>
 				<li>You can log your score once "Round 5" is complete.</li>
-				<li>Refreshing the page will restart the game.</li>
 			</ol>
 
 			<h3>Scoring</h3>
@@ -37,7 +36,18 @@ export const Rules = () => {
 					Each incorrect guess is <strong>minus 10 points</strong>.
 				</li>
 				<li>
-					Each hint is <strong>minus 10 points</strong>.
+					Each hint is <strong>minus 10 points</strong>. You'll get the same type of hint for each round:
+					<ul>
+						<li>
+							<strong>Hint 1:</strong> The first letter of each character's name.
+						</li>
+						<li>
+							<strong>Hint 2:</strong> A rhyming word for a character's name.
+						</li>
+						<li>
+							<strong>Hint 3:</strong> Emoji clues.
+						</li>
+					</ul>
 				</li>
 				<li>
 					Therefore, if you use three hints and two guesses and complete the round on the third guess, you have <strong>50 points</strong>{' '}
@@ -48,16 +58,14 @@ export const Rules = () => {
 				</li>
 			</ol>
 
-			<h3>Tips</h3>
+			<h3>Hints and tips</h3>
 
 			<ol>
 				<li>
 					Each round you will have five characters generated. The pixel blocks rendered are not to the scale of a character's height.
-					Meaning, all characters will be rendered the same height.
-				</li>
-				<li>
-					The characters displayed are usually going to be five main characters from the category, however, some will be secondary
-					characters if there are not five main characters.
+					Meaning, all characters will be rendered the same height. The topmost block can be thought of as the character's hat or hair,
+					while the bottom block would be pants or shoes. The characters displayed are usually going to be five main characters from the
+					category, however, some will be secondary or supporting.
 				</li>
 				<li>
 					Casing (lowercase or uppercase) doesn't matter when submitting your guess. Special characters have also been stripped out in the
