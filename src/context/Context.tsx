@@ -42,15 +42,12 @@ export const ContextProvider = ({ children }: ContextProps) => {
 	const round: RoundType = {
 		id: false,
 		status: 'pending',
-		difficulty: {
-			easy: [],
-			medium: [],
-			hard: [],
-		},
 		guesses: 0,
 		hints: [],
 		points: 100,
 		values: [],
+		title: '',
+		characters: '',
 	};
 
 	// Create game config

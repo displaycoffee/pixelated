@@ -13,7 +13,7 @@ type Block = BlockShared & {
 
 type Button = BlockShared & {
 	disabled?: boolean;
-	onClick?: MouseEventHandler<HTMLButtonElement>;
+	onClick?: MouseEvent<HTMLButtonElement>;
 };
 
 type ButtonAttributes = ButtonHTMLAttributes<HTMLButtonElement>;

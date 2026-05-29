@@ -1,5 +1,5 @@
 /* React */
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { produce, Draft } from 'immer';
 
@@ -7,39 +7,36 @@ import { produce, Draft } from 'immer';
 import './styles/play.scss';
 
 /* Local scripts */
-import { useReactQuery } from '../../_config/scripts/hooks';
+import { useAppContext } from '../../context/scripts/context-hooks';
+import { useReactQuery, useRespond } from '../../_config/scripts/hooks';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
 /* Local components */
-import { Context } from '../../context/Context';
 import { Block, Button, Form, FormActions, FormField, FormFieldWrapper } from '../../components/blocks/Blocks';
 
 export const Play = () => {
-	const context = useContext(Context);
-	const settings = context.game.settings;
+	const { game } = useAppContext();
+	const settings = game.settings;
 	const showSettings = !settings.category && !settings.difficulty;
 
 	return <div className="play spacing-reset">{showSettings ? <Settings /> : <Round />}</div>;
 };
 
 export const Round = () => {
-	const context = useContext(Context);
-	const { game, setGame, queryClient } = context;
+	const { game, gameDefault, setGame, queryClient } = useAppContext();
 	const { current, rounds, settings } = game;
 	const settingsDifficulty = settings.difficulty as DifficultyType;
 	const currentRound = rounds[`${current.round}`];
 	const title = currentRound.status == 'game end' ? `Game Over` : `Round ${current.round.replace('round', '')}`;
+	const pixels = currentRound.values[currentRound.values.length - settingsDifficulty.id];
 	const [cookies, setCookie] = useCookies(['scoreboard']);
-
-	// Set up pixel includes (default difficulty is "medium")
-	const includePixels = currentRound.difficulty[settingsDifficulty.id as keyof typeof currentRound.difficulty];
 
 	// Reset game
 	const resetGame = () => {
 		void queryClient.resetQueries({ queryKey: ['hints'] });
 		void queryClient.resetQueries({ queryKey: ['answers'] });
-		setGame(context.gameDefault);
+		setGame(gameDefault);
 	};
 
 	// Set score
@@ -59,7 +56,7 @@ export const Round = () => {
 
 			// Prepend new score and trim to limit
 			const updatedScoreboard = [newScore, ...currentScoreboard].slice(0, scoreLimit).join('|');
-			setCookie('scoreboard', updatedScoreboard);
+			setCookie('scoreboard', updatedScoreboard, { path: '/', maxAge: 60 * 60 * 24 * 365 });
 
 			// Update score logged
 			setGame(
@@ -100,17 +97,17 @@ export const Round = () => {
 						<>
 							<div className="pixels">
 								<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
-									{currentRound.values.map((value, index) => {
+									{pixels.map((pixel, index) => {
 										return (
 											<div className="column" key={`${currentRound}-${index}`}>
-												{value.map((color, colorIndex) => {
-													return includePixels.includes(colorIndex) ? (
+												{pixel.map((color, colorIndex) => {
+													return (
 														<div
 															className="pixel-block"
 															style={{ backgroundColor: color }}
 															key={`${color}-${colorIndex}`}
 														></div>
-													) : null;
+													);
 												})}
 											</div>
 										);
@@ -125,7 +122,7 @@ export const Round = () => {
 						</>
 					) : null}
 
-					<Pagination />
+					<Pagination resetGame={resetGame} />
 				</>
 			)}
 		</div>
@@ -133,10 +130,9 @@ export const Round = () => {
 };
 
 export const Settings = () => {
-	const context = useContext(Context);
-	const setGame = context.setGame;
+	const { setGame } = useAppContext();
 	const [descriptions, setDescriptions] = useState({
-		difficulty: difficulty[1].description,
+		difficulty: difficulty[2].description,
 		categories: categories[0].description,
 	});
 
@@ -168,7 +164,7 @@ export const Settings = () => {
 
 		if (difficultyValue && categoryValue) {
 			// Find difficulty
-			const difficultyDetails = difficulty.filter((diff) => diff.id === difficultyValue).pop() as DifficultyType;
+			const difficultyDetails = difficulty.filter((diff) => diff.id === Number(difficultyValue)).pop() as DifficultyType;
 
 			// Find category
 			const categoryMatch = categories.filter((category) => category.id === categoryValue).pop() as CategoryValuesType;
@@ -234,7 +230,7 @@ export const Settings = () => {
 						<select
 							id="settings-difficulty"
 							name="difficulty"
-							defaultValue={difficulty[1].id}
+							defaultValue={difficulty[2].id}
 							onChange={(e) => updateDescriptions(e, 'difficulty')}
 						>
 							{difficulty.map((diff) => {
@@ -276,8 +272,7 @@ export const Settings = () => {
 };
 
 export const Guess = () => {
-	const context = useContext(Context);
-	const { game, setGame } = context;
+	const { game, setGame } = useAppContext();
 	const { current, rounds, settings } = game;
 	const currentRound = rounds[`${current.round}`];
 	const settingsCategory = settings.category as CategoryType;
@@ -311,7 +306,13 @@ export const Guess = () => {
 	};
 
 	// Use custom hook to get answers
-	const [answersData, _answersRefetch] = useReactQuery('answers', settingsCategory, questionId, current.guess as string) as AnswersRequestType;
+	const [answersData, _answersRefetch] = useReactQuery(
+		'answers',
+		settingsCategory,
+		questionId,
+		current.guess as string,
+		currentRound.guesses,
+	) as AnswersRequestType;
 
 	// Submit guess
 	const submitGuess = (e: EventsType) => {
@@ -366,6 +367,11 @@ export const Guess = () => {
 					draft.current.points = roundStatus != 'pending' ? draft.current.points + points : draft.current.points;
 					draftRound.points = points;
 					draftRound.status = roundStatus;
+
+					if (answersData.title) {
+						draftRound.title = answersData.title;
+						draftRound.characters = answersData.characters || '';
+					}
 				}),
 			);
 		}
@@ -382,10 +388,6 @@ export const Guess = () => {
 					</FormFieldWrapper>
 
 					<Button className="guess-submit">Submit</Button>
-
-					<Button className="guess-hint" onClick={() => getHint()} disabled={!hasHints}>
-						Get Hint
-					</Button>
 				</FormField>
 			</Form>
 
@@ -400,13 +402,14 @@ export const Guess = () => {
 					</Block>
 				</div>
 			) : null}
+
+			<Actions hasActions={false} getHint={getHint} hasHints={hasHints} />
 		</>
 	);
 };
 
 export const Points = () => {
-	const context = useContext(Context);
-	const { game } = context;
+	const { game } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
 
@@ -431,6 +434,7 @@ export const Points = () => {
 
 export const Status = (props: ObjectPrimitiveProps) => {
 	const status = props.status;
+	const enableActions = status == 'complete' || status == 'failed';
 
 	// Determine status message
 	let message = '😍 You got it!';
@@ -442,17 +446,112 @@ export const Status = (props: ObjectPrimitiveProps) => {
 		message = '😩 Out of guesses!';
 	}
 
-	return <div className="status">{message}</div>;
+	return (
+		<>
+			<div className="status">
+				<p>{message}</p>
+			</div>
+
+			{enableActions ? <Actions hasActions={enableActions} hasHints={false} /> : null}
+		</>
+	);
 };
 
-export const Pagination = () => {
-	const context = useContext(Context);
-	const { game, setGame } = context;
+export const Actions = (props: ActionsProps) => {
+	const { hasActions, getHint, hasHints } = props;
+	const { game, theme } = useAppContext();
+	const { current, rounds } = game;
+	const currentRound = rounds[`${current.round}`];
+	const [showAnswerForRound, setShowAnswerForRound] = useState<string | null>(null);
+	const [showCharactersForRound, setShowCharactersForRound] = useState<string | null>(null);
+	const showAnswer = showAnswerForRound === current.round;
+	const showCharacters = showCharactersForRound === current.round;
+	const isDesktop = useRespond(theme.bps.bp01 as number);
+
+	return (
+		<>
+			{showAnswer || showCharacters ? (
+				<div className="details">
+					<Block>
+						{showAnswer && (
+							<p>
+								<strong>Title:</strong> {currentRound.title}
+							</p>
+						)}
+
+						{showCharacters && (
+							<p>
+								<strong>Characters:</strong> {currentRound.characters}
+							</p>
+						)}
+					</Block>
+				</div>
+			) : null}
+
+			<div className="actions">
+				<div className="row row-auto row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
+					<div className="column">
+						<Button
+							className="actions-get-hint"
+							onClick={() => {
+								if (typeof getHint == 'function') {
+									getHint();
+								} else {
+									return false;
+								}
+							}}
+							disabled={!hasHints}
+						>
+							{isDesktop ? 'Get ' : ''}Hint
+						</Button>
+					</div>
+
+					<div className="column">
+						<Button
+							className="actions-get-answer"
+							onClick={() => {
+								if (!showAnswer) {
+									setShowAnswerForRound(current.round);
+								} else {
+									return false;
+								}
+							}}
+							disabled={!hasActions || showAnswer}
+						>
+							{isDesktop ? 'Get ' : ''}Answer
+						</Button>
+					</div>
+
+					<div className="column">
+						<Button
+							className="actions-get-characters"
+							onClick={() => {
+								if (!showCharacters) {
+									setShowCharactersForRound(current.round);
+								} else {
+									return false;
+								}
+							}}
+							disabled={!hasActions || showCharacters}
+						>
+							{isDesktop ? 'Get ' : ''}Characters
+						</Button>
+					</div>
+				</div>
+			</div>
+		</>
+	);
+};
+
+export const Pagination = (props: PaginationProps) => {
+	const resetGame = props.resetGame;
+	const { game, setGame, theme } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
 	const roundNumber: number = parseInt(current.round.replace('round', ''));
 	const hasPrevious = current.round != 'round1';
 	const hasNext = currentRound.status != 'pending' && current.round != 'round6';
+	const isDesktop = useRespond(theme.bps.bp01 as number);
 
 	const goToRound = (direction: string) => {
 		if (hasPrevious && direction == 'previous') {
@@ -485,14 +584,80 @@ export const Pagination = () => {
 	};
 
 	return (
-		<div className="pagination flex-nowrap flex-align-items-center flex-justify-content-center">
-			<Button className="pagination-previous" onClick={() => goToRound('previous')} disabled={!hasPrevious}>
-				Previous
-			</Button>
+		<div className="pagination">
+			<div className="row row-auto row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
+				<div className="column">
+					<Button className="pagination-previous" onClick={() => goToRound('previous')} disabled={!hasPrevious}>
+						{isDesktop ? 'Previous' : '<'}
+					</Button>
+				</div>
 
-			<Button className="pagination-next" onClick={() => goToRound('next')} disabled={!hasNext}>
-				{current.round == 'round5' ? 'Game End' : 'Next'}
-			</Button>
+				<div className="column">
+					<Button className="pagination-next" onClick={() => goToRound('next')} disabled={!hasNext}>
+						{current.round == 'round5' ? 'Game End' : isDesktop ? 'Next' : '>'}
+					</Button>
+				</div>
+
+				<div className="column">
+					<Button className="pagination-start-over" onClick={() => resetGame()}>
+						New Game?
+					</Button>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+/* Note: this component is only used for testing on dev.
+   It won't be imported or added on prodution. */
+export const PixelsGallery = (props: CategoriesObjectProps) => {
+	const categories = props.categories;
+
+	return (
+		<div className="play spacing-reset">
+			<div className="round round1">
+				{categories.map((category) => {
+					return (
+						<div className="round-category" key={category.id}>
+							<h2>{category.name}</h2>
+
+							{category.values.map((value) => {
+								const categoryId = `${category.id}-${value.id}`;
+
+								return (
+									<div className="round-question" key={categoryId}>
+										<Block className="round-header">
+											<h3>{value.id}</h3>
+										</Block>
+
+										<div className="round-content row row-wrap row-spacing-20">
+											{value.values.map((pixels, pixelsIndex) => {
+												return (
+													<div className="round-pixels column column-width-20" key={`${categoryId}-${pixelsIndex}`}>
+														<div className="pixels row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
+															{pixels.map((pixel, pixelIndex) => (
+																<div className="column" key={`${pixel.join()}-${pixelIndex}`}>
+																	{pixel.map((color, colorIndex) => (
+																		<div
+																			className="pixel-block"
+																			style={{ backgroundColor: color }}
+																			key={`${color}-${colorIndex}`}
+																		></div>
+																	))}
+																</div>
+															))}
+														</div>
+													</div>
+												);
+											})}
+										</div>
+									</div>
+								);
+							})}
+						</div>
+					);
+				})}
+			</div>
 		</div>
 	);
 };

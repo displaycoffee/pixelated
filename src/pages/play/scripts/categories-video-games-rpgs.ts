@@ -1,184 +1,219 @@
+/* Local scripts */
+import { categoriesUtils } from './categories-utils';
+import { colors } from './colors';
+
+/* Get colors */
+const { black, white, tone1, tone2, tone3, tone4, tone6, tone8 } = colors;
+
 /* Category variables */
 const mainCategory = 'video-games';
 const subCategory = 'rpgs';
 const id = `${mainCategory}-${subCategory}`;
-const difficulty = {
-	easy: [0, 1, 2, 3, 4],
-	medium: [0, 2, 3],
-	hard: [0],
-};
 
-export const category: CategoryValuesType = {
+/* Unformatted category questions */
+const categoryValues: CategoryValuesUnformattedType = [
+	{
+		id: 'q1',
+		values: [
+			['#b2deb4', tone1, '#ac1f15', white, '#ac1f15'],
+			['#d1cdb2', tone3, '#f1f5e4', '#08306f', '#08306f'],
+			['#e5d032', tone3, '#6aaadd', '#443184', '#bac1c9'],
+			['#e6d037', tone3, '#605a9f', '#f5f2f5', white],
+			['#ebe0a1', tone2, '#85bb25', '#f5d4b9', white],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q2',
+		values: [
+			['#f3c86b', tone3, '#4d4a5b', '#4d4a5b', '#4d4a5b'],
+			['#2f2b2c', tone3, white, '#19100f', '#ffc9a6'],
+			['#643f35', tone2, '#960e1a', '#e7767c', '#e7767c'],
+			['#353331', tone8, '#76583e', '#313924', '#313924'],
+			['#ebc78a', tone4, '#414864', '#4a3d29', '#4a3d29'],
+		],
+		hexMap: {
+			3: { 2: [1, 4] },
+		},
+	},
+	{
+		id: 'q3',
+		values: [
+			['#675650', tone3, white, '#2f2f2f', '#2f2f2f'],
+			['#2f2f2f', tone2, '#7db7d1', '#405ac3', tone2],
+			['#ffd17f', tone2, '#b66c4a', '#b66c4a', '#1a1718'],
+			['#ffda84', tone3, '#2f2f2f', '#355d86', tone3],
+			['#533923', tone2, '#deb45a', '#deb45a', tone2],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q4',
+		values: [
+			['#f7d273', tone3, '#0e4e58', '#6aa8d7', '#6aa8d7'],
+			['#c18f46', '#000002', '#93caf9', '#93caf9', '#88ded1'],
+			['#0f0810', tone2, white, '#f0841d', '#f0841d'],
+			['#aeb3bb', tone3, '#aeb3bb', '#181818', '#aeb3bb'],
+			['#db4c36', '#f6ffe7', '#db4c36', '#db4c36', '#5d2c0c'],
+		],
+		hexMap: {
+			1: {},
+			2: { 2: [2, 3], 3: [1, 2, 3], 4: [1, 2, 3, 5] },
+			3: { 2: [1, 4] },
+			4: {},
+			5: { 3: [1, 3, 5] },
+		},
+	},
+	{
+		id: 'q5',
+		values: [
+			['#e0301b', tone3, '#0086b1', '#0086b1', '#a1530b'],
+			['#ffac3a', tone2, '#e6e4d5', '#e6e4d5', '#e6e4d5'],
+			['#51692a', tone3, '#f97823', '#f97823', tone3],
+			['#9bbe6a', '#9bbe6a', '#e7ab01', '#e7e6de', '#e7e6de'],
+			['#e7ca92', tone2, '#9994da', '#9994da', tone2],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q6',
+		values: [
+			['#b4bcc7', tone1, '#5c7eab', white, white],
+			['#544138', tone4, '#343145', '#626f59', '#343145'],
+			['#a99573', tone3, '#6b8036', '#624322', '#94652a'],
+			['#c4cc70', tone3, '#9b86b4', '#2a261e', white],
+			['#fcdd64', tone3, '#9d461f', '#2b3116', '#79411e'],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q7',
+		values: [
+			['#bd2910', tone3, '#bdbdbd', '#5284ef', '#bdbdbd'],
+			['#63b58c', tone3, '#5273d6', '#5273d6', '#bdbdbd'],
+			['#efde5a', tone3, white, '#00ad08', '#d6b5b5'],
+			['#5a84ef', tone1, '#bdbdbd', '#9c2910', '#bdbdbd'],
+			['#4060a0', tone3, '#bdbdbd', '#b02000', '#bdbdbd'],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q8',
+		values: [
+			['#078bc5', tone3, '#9d2522', '#327973', '#94341e'],
+			['#e09324', tone2, '#f0b12d', '#197679', '#197679'],
+			['#f6ca0f', tone3, '#f7e9ce', '#6895b2', '#8b481e'],
+			['#9db8d8', '#9db8d8', '#deebf9', '#9db8d8', '#000543'],
+			['#a6a4a0', '#a6a4a0', '#a6a4a0', '#a6a4a0', '#4b4b48'],
+		],
+		hexMap: {
+			5: { 3: [1, 3, 5] },
+		},
+	},
+	{
+		id: 'q9',
+		values: [
+			['#e5c13f', tone3, '#2a3d53', white, white],
+			['#3371b5', tone2, '#3a4097', '#161835', white],
+			['#7f8dd1', tone2, '#2b0f6a', white, white],
+			['#0e4289', tone3, '#26654b', '#a27d37', '#a27d37'],
+			['#7296b6', tone3, '#9dbf36', '#9dbf36', tone3],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q10',
+		values: [
+			['#5e5061', tone3, '#4f4b4c', '#514249', '#8a7c71'],
+			['#fab9c1', tone2, white, '#df7083', white],
+			['#9a5f3d', tone3, '#b55153', white, white],
+			['#a97359', tone3, white, '#dbac44', '#dbac44'],
+			['#685e93', tone2, '#424c81', '#424c81', tone2],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q11',
+		values: [
+			['#e7633b', tone3, '#2f4496', '#2f4496', white],
+			['#01a75f', tone3, '#d27627', '#cc2781', '#ba2b25'],
+			['#b975a9', tone2, '#f6b7b5', '#f6b7b5', '#f6b7b5'],
+			['#7a669c', tone1, '#c7c4d9', '#c7c4d9', '#443384'],
+			['#544433', tone6, '#89673a', '#1b995a', '#1b995a'],
+		],
+		hexMap: {
+			4: { 3: [1, 3, 5] },
+			5: { 2: [1, 4] },
+		},
+	},
+	{
+		id: 'q12',
+		values: [
+			['#ceb783', tone3, '#741b21', '#3a302f', '#57362d'],
+			['#8e6353', tone2, '#f4f5ef', '#83aab1', tone2],
+			[black, tone3, '#291c38', '#291c38', '#291c38'],
+			['#d0bb8c', tone3, '#94af68', '#9a7b67', '#8b5843'],
+			['#cfd3ee', tone2, '#306a92', '#85bed2', '#306a92'],
+		],
+		hexMap: false,
+	},
+	{
+		id: 'q13',
+		values: [
+			['#854a38', tone3, '#4e613d', '#d08f41', '#d08f41'],
+			['#5490c6', tone2, '#042c5f', '#f2f369', '#893e1f'],
+			['#f2b258', tone3, white, '#2b589b', white],
+			[black, tone6, '#364e96', white, black],
+			[black, tone2, '#f8b9ca', '#f8b9ca', '#f8b9ca'],
+		],
+		hexMap: {
+			3: { 3: [1, 3, 5] },
+		},
+	},
+	{
+		id: 'q14',
+		values: [
+			['#945d56', tone3, '#c0525d', '#44424f', '#c0525d'],
+			['#f3ecb6', tone2, white, white, '#515082'],
+			['#eee8f1', tone1, '#a3b2cd', '#a3b2cd', '#a3b2cd'],
+			['#eee8f1', tone1, '#da8c76', '#da8c76', '#54464b'],
+			['#46434e', tone2, '#cac4de', '#cac4de', '#46434e'],
+		],
+		hexMap: {
+			2: { 3: [1, 3, 5] },
+			4: { 3: [1, 3, 5] },
+			5: { 3: [1, 3, 5] },
+		},
+	},
+	{
+		id: 'q15',
+		values: [
+			['#4b433f', tone4, white, '#41564f', '#41564f'],
+			['#bb673d', tone2, white, '#6b625e', '#9f6d5e'],
+			[black, tone2, '#cccd7f', '#edaab3', '#cccd7f'],
+			['#f1bf87', tone4, '#7c646e', white, white],
+			['#e8dadc', tone2, '#578288', '#578288', '#71502e'],
+		],
+		hexMap: {
+			2: { 3: [1, 3, 5] },
+			3: { 3: [1, 3, 5] },
+			4: { 2: [1, 4] },
+		},
+	},
+];
+
+/* Format category question values */
+const values: CategoryQuestionsType = categoriesUtils.buildValues(categoryValues);
+
+/* Category list */
+const categoryList: CategoryValuesType = {
 	name: 'Video Games - RPGs',
 	id: id,
 	category: mainCategory,
 	subCategory: subCategory,
-	description: 'Characters from video game RPGS.',
-	values: [
-		{
-			id: 'q1',
-			difficulty,
-			values: [
-				['#80a880', '#f8c088', '#900000', '#c880f8', '#b89000'],
-				['#a0a070', '#f8b878', '#e4e3cd', '#203860', '#784028'],
-				['#c0b050', '#f8c088', '#98d048', '#98d048', '#80a0d0'],
-				['#98b0a0', '#f8c880', '#5870b8', '#303030', '#905800'],
-				['#c0b050', '#f8c088', '#98d048', '#585088', '#307030'],
-			],
-		},
-		{
-			id: 'q2',
-			difficulty,
-			values: [
-				['#f3c86b', '#fdddcf', '#4d4a5b', '#4d4a5b', '#7a604b'],
-				['#2f2b2c', '#ffc9a6', '#fbffff', '#19100f', '#540e0d'],
-				['#643f35', '#ffd1ac', '#960e1a', '#e7767c', '#764030'],
-				['#353331', '#955441', '#76583e', '#313924', '#552518'],
-				['#ebc78a', '#e9a888', '#414864', '#4a3d29', '#722a25'],
-			],
-		},
-		{
-			id: 'q3',
-			difficulty,
-			values: [
-				['#675650', '#fee6c0', '#f1ecec', '#2f2f2f', '#2f2f2f'],
-				['#2f2f2f', '#fee0c0', '#7db7d1', '#405ac3', '#2f2f2f'],
-				['#ffd17f', '#fff1cf', '#e08e5a', '#e08e5a', '#534746'],
-				['#975135', '#f6d9b0', '#594f82', '#a98a5c', '#2f2f2f'],
-				['#ffda84', '#fee6c0', '#2f2f2f', '#355d86', '#923226'],
-			],
-		},
-		{
-			id: 'q4',
-			difficulty,
-			values: [
-				['#f7d273', '#ffeeda', '#0e4e58', '#6aa8d7', '#767851'],
-				['#c18f46', '#000002', '#93caf9', '#88ded1', '#b64717'],
-				['#0f0810', '#fedbc5', '#f0841d', '#f0841d', '#be3334'],
-				['#6385a9', '#f6ddbc', '#f0fbff', '#c2cbba', '#6b88b4'],
-				['#c32e39', '#ebe4d2', '#d8fbf7', '#df3b41', '#81392b'],
-			],
-		},
-		{
-			id: 'q5',
-			difficulty,
-			values: [
-				['#cf2a30', '#f3d7c1', '#df8620', '#62778a', '#631d1b'],
-				['#e4c46d', '#e2c0a5', '#e7d9d9', '#e7d9d9', '#c7aa66'],
-				['#906a45', '#f3e5d8', '#8e7936', '#e59a27', '#a65c4f'],
-				['#b5c74d', '#e7eeba', '#9b8b36', '#e2d8ce', '#2f3e69'],
-				['#e6d3b2', '#eddbcd', '#c9c3c7', '#95848e', '#c9c3c7'],
-			],
-		},
-		{
-			id: 'q6',
-			difficulty,
-			values: [
-				['#a2acb4', '#fce9df', '#5d82aa', '#fcf8f5', '#5f7db1'],
-				['#3f3131', '#d49b88', '#2f2d3b', '#5b6950', '#595764'],
-				['#7f6a53', '#ffc99b', '#5b6930', '#684125', '#8e5a22'],
-				['#cad26b', '#f9c29c', '#9886b3', '#fffdfd', '#271b0f'],
-				['#fdd261', '#ffd589', '#9f401c', '#252b14', '#79431f'],
-			],
-		},
-		{
-			id: 'q7',
-			difficulty,
-			values: [
-				['#b21e00', '#fabfa1', '#bec1e0', '#20186e', '#c1c1dd'],
-				['#6cbe90', '#fac09a', '#f7f8fa', '#5889f0', '#181f39'],
-				['#d9b020', '#fabea2', '#dab020', '#016701', '#d8b0ae'],
-				['#1f177c', '#fac4a8', '#c4c2e7', '#ae2207', '#c6c2e5'],
-				['#463fa9', '#f6c1a1', '#f6fafb', '#da6f83', '#019a65'],
-			],
-		},
-		{
-			id: 'q8',
-			difficulty,
-			values: [
-				['#078bc5', '#fbd167', '#9d2522', '#327973', '#94341e'],
-				['#e09324', '#ffdb91', '#f0b12d', '#197679', '#bda0b5'],
-				['#f6ca0f', '#fac349', '#b4ad6c', '#6895b2', '#8b481e'],
-				['#000543', '#9db8d8', '#deebf9', '#9db8d8', '#000543'],
-				['#fff549', '#ffd77c', '#faa930', '#d85f28', '#ffffff'],
-			],
-		},
-		{
-			id: 'q9',
-			difficulty,
-			values: [
-				['#f5e189', '#fad5bb', '#bace88', '#7e94a3', '#727b63'],
-				['#6c89c4', '#ffe6c8', '#25225e', '#c50032', '#c6c2b3'],
-				['#8c668e', '#e0cac6', '#2e2455', '#2e2455', '#b4acc7'],
-				['#8fa0b5', '#c9b8b3', '#465a33', '#374677', '#36291b'],
-				['#6b809b', '#d6bbab', '#5a612a', '#bbc2c4', '#573b32'],
-			],
-		},
-		{
-			id: 'q10',
-			difficulty,
-			values: [
-				['#5b4d5e', '#f5c9a6', '#504a4c', '#3f363b', '#897d71'],
-				['#fab7c0', '#f6d1b4', '#e7e7ef', '#df6f85', '#eef1e0'],
-				['#9f6442', '#f0c4a9', '#b35150', '#d9d7c0', '#3c363a'],
-				['#a87258', '#f3c8a6', '#bece61', '#dbac44', '#454452'],
-				['#685e93', '#facaa4', '#414987', '#b48142', '#3e4a7e'],
-			],
-		},
-		{
-			id: 'q11',
-			difficulty,
-			values: [
-				['#df493e', '#f1ccb0', '#5577b9', '#94b0d9', '#ae9d6a'],
-				['#079860', '#f5d1b2', '#d77822', '#cf2d86', '#b42e2e'],
-				['#ba74a9', '#f8e8db', '#f5b7b5', '#e56a6b', '#a35a5a'],
-				['#7c64a1', '#c2a19a', '#c8c5da', '#443288', '#9c94c4'],
-				['#2e271b', '#c5a772', '#f1eed8', '#24965f', '#bfad1b'],
-			],
-		},
-		{
-			id: 'q12',
-			difficulty,
-			values: [
-				['#ceb783', '#e8d5b4', '#741b21', '#3a302f', '#57362d'],
-				['#8e6353', '#eedbd4', '#f4f5ef', '#83aab1', '#643933'],
-				['#030106', '#f8cea4', '#291c38', '#a88134', '#271839'],
-				['#d0bb8c', '#ead2a2', '#94af68', '#9a7b67', '#8b5843'],
-				['#cfd3ee', '#f6dace', '#306a92', '#85bed2', '#dfa75c'],
-			],
-		},
-		{
-			id: 'q13',
-			difficulty,
-			values: [
-				['#615130', '#ffe19b', '#76703c', '#fff58f', '#2a1911'],
-				['#2f6db8', '#fffcdb', '#214776', '#fcfc7a', '#b76d50'],
-				['#f2b258', '#e2b25d', '#f9fbfa', '#2b589b', '#f3ed75'],
-				['#010101', '#e26a47', '#2b518f', '#f3eedb', '#181415'],
-				['#040406', '#f5f6e4', '#e8c7dc', '#31487c', '#3e2f32'],
-			],
-		},
-		{
-			id: 'q14',
-			difficulty,
-			values: [
-				['#89594d', '#fff4e2', '#cb3445', '#594f67', '#ce3c4e'],
-				['#fbe496', '#feeac9', '#fdfcff', '#675f99', '#f8faf7'],
-				['#e6eef9', '#f1e3c0', '#8daed9', '#cde1e8', '#504d6b'],
-				['#d8e5f6', '#fadfc1', '#eca356', '#583e49', '#f7ffff'],
-				['#aa454a', '#fdddc4', '#583a6e', '#aa8bc5', '#faf9ff'],
-			],
-		},
-		{
-			id: 'q15',
-			difficulty,
-			values: [
-				['#313538', '#fabca1', '#f6eae9', '#3c4a4c', '#4a4e46'],
-				['#c2673f', '#f7d9cd', '#fafafc', '#82767c', '#9c6d59'],
-				['#40464d', '#f8d8c5', '#cccd7f', '#edaab3', '#b19a9b'],
-				['#f1bf87', '#f1b179', '#dc402c', '#8c6a81', '#f8fcff'],
-				['#e8dbe0', '#fbe0de', '#c0c387', '#51797e', '#7c4a30'],
-			],
-		},
-	],
+	description: 'Characters from video game RPGs.',
+	values: values,
 };
+
+/* Category list */
+export const category = categoryList;

@@ -1,5 +1,4 @@
 /* React */
-import { useContext } from 'react';
 import { useCookies } from 'react-cookie';
 
 /* Local styles */
@@ -7,15 +6,15 @@ import './styles/scoreboard.scss';
 
 /* Local scripts */
 import { useRespond } from '../../_config/scripts/hooks';
+import { useAppContext } from '../../context/scripts/context-hooks';
 import { ScoreboardType } from './scripts/scoreboard-types';
 
 /* Local components */
-import { Context } from '../../context/Context';
 import { Block } from '../../components/blocks/Blocks';
 
 export const Scoreboard = () => {
-	const context = useContext(Context);
-	const isDesktop = useRespond(context.theme.bps.bp02 as number);
+	const { theme } = useAppContext();
+	const isDesktop = useRespond(theme.bps.bp02 as number);
 	const [cookies] = useCookies(['scoreboard']);
 	const scoreboardCookie = cookies?.scoreboard ? cookies.scoreboard.split('|') : [];
 

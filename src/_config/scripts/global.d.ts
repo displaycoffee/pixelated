@@ -6,19 +6,23 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 /* Generic type definitions */
 type Events = SyntheticEvent | Event;
 
-type ObjectString = {
-	[key: string]: string;
-};
-
 type ObjectPrimitive = {
 	[key: string]: string | number | boolean;
 };
 
 /* Content type definitions */
+type Actions = {
+	hasActions: boolean;
+	getHint?: Function;
+	hasHints: boolean;
+};
+
 type Answers = {
 	close: string;
 	message: string;
 	success: string;
+	title?: string;
+	characters?: string;
 };
 
 type AnswersRequest = [Answers, Function, Statuses];
@@ -31,31 +35,44 @@ type Category = {
 	description: string;
 };
 
+type CategoryHexMap = {
+	[key: string]: string[][];
+};
+
+type CategoryNumbersMap = {
+	[key: string]: {
+		[key: string]: number[];
+	};
+};
+
 type CategoryQuestions = {
 	id: string;
-	difficulty: DifficultyMap;
-	values: string[][];
+	values: string[][][];
 }[];
 
 type CategoryValues = Category & {
 	values: CategoryQuestions;
 };
 
+type CategoryValuesUnformatted = {
+	id: string;
+	values: string[][];
+	hexMap: CategoryNumbersMap | boolean;
+}[];
+
 type CategoriesList = CategoryValues[];
 
+type CategoriesObject = {
+	[key: string]: CategoriesList;
+};
+
 type Difficulty = {
-	id: string;
+	id: number;
 	name: string;
 	description: string;
 };
 
 type DifficultyList = Difficulty[];
-
-type DifficultyMap = {
-	easy: number[];
-	medium: number[];
-	hard: number[];
-};
 
 type Game = {
 	current: {
@@ -85,14 +102,19 @@ type Hints = {
 
 type HintsRequest = [Hints, Function, Statuses];
 
+type Pagination = {
+	resetGame: Function;
+};
+
 type Round = {
 	id: boolean | string;
 	status: 'pending' | 'complete' | 'failed' | 'close' | 'game end';
-	difficulty: DifficultyMap;
 	guesses: number;
 	hints: string[];
 	points: number;
-	values: string[][];
+	values: string[][][];
+	title: string;
+	characters: string;
 };
 
 /* Request type definitions */
@@ -121,8 +143,6 @@ declare global {
 	/* Declare global generic types */
 	type EventsType = Events;
 
-	type ObjectStringType = ObjectString;
-
 	type ObjectPrimitiveType = ObjectPrimitive;
 
 	/* Declare global content types */
@@ -132,11 +152,19 @@ declare global {
 
 	type CategoryType = Category;
 
+	type CategoryHexMapType = CategoryHexMap;
+
+	type CategoryNumbersMapType = CategoryNumbersMap;
+
 	type CategoryQuestionsType = CategoryQuestions;
 
 	type CategoryValuesType = CategoryValues;
 
+	type CategoryValuesUnformattedType = CategoryValuesUnformatted;
+
 	type CategoriesListType = CategoriesList;
+
+	type CategoriesObjectType = CategoriesObject;
 
 	type DifficultyType = Difficulty;
 
@@ -161,6 +189,13 @@ declare global {
 
 	/* Declare global prop types */
 	type ObjectPrimitiveProps = ObjectPrimitive;
+
+	/* Declare global content prop types */
+	type ActionsProps = Actions;
+
+	type CategoriesObjectProps = CategoriesObject;
+
+	type PaginationProps = Pagination;
 }
 
 /* Export global types */

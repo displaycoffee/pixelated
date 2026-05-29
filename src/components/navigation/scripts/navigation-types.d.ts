@@ -6,7 +6,7 @@ type Navigation = {
 	id: number;
 	isRoute?: boolean;
 	label: string;
-	props?: ObjectPrimitiveType;
+	props?: ObjectPrimitiveType | CategoriesObjectType;
 	showInNav?: boolean;
 	url: string;
 };
@@ -23,7 +23,7 @@ type NavigationRoutes = {
 	element: JSX.Element;
 	id: number;
 	path: string;
-	props?: ObjectPrimitiveType;
+	props?: ObjectPrimitiveType | CategoriesObjectType;
 };
 
 /* Export types */

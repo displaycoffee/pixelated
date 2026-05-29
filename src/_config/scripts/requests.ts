@@ -23,10 +23,11 @@ const throwError = (json: ResponseErrorType) => {
 
 export const requests: RequestsType = {
 	answers: async ({ queryKey }: QueryFunctionContext) => {
-		// queryKey: ['answers', categoryType (JSON), questionId, guess]
+		// queryKey: ['answers', categoryType (JSON), questionId, guess, guessNumber]
 		const { category, subCategory } = JSON.parse(queryKey[1] as string) as CategoryType;
 		const questionId = queryKey[2] as string;
 		const guess = queryKey[3] as string;
+		const guessNumber = parseInt(queryKey[4] as string, 10);
 
 		// Storage for answers data
 		let answers = {} as AnswersType;
@@ -34,7 +35,7 @@ export const requests: RequestsType = {
 		// Set options
 		const options = {
 			...parameters.options(),
-			body: JSON.stringify({ category, subCategory, questionId, guess }),
+			body: JSON.stringify({ category, subCategory, questionId, guess, guessNumber }),
 		};
 
 		// Fetch answers

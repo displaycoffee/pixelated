@@ -27,7 +27,7 @@ export const Button = (props: ButtonProps) => {
 	let buttonAttributes: ButtonAttributesType = {
 		className: `${buttonClass}button pixelated`,
 		type: `submit`,
-		'aria-label': `${children} button`,
+		'aria-label': `${typeof children == 'object' ? children.join('') : children} button`,
 	};
 	if (onClick) {
 		buttonAttributes = {

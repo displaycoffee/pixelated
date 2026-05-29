@@ -22,20 +22,6 @@ export const About = () => {
 			<p>
 				This site sets one cookie to log scores at the end of each round. However, this is optional; just don't click the "Log Score" button.
 			</p>
-
-			<h2>Credits</h2>
-
-			<p>
-				Most of the hints were sourced from{' '}
-				<a href="//www.imdb.com" target="_blank" rel="noreferrer">
-					IMDB
-				</a>{' '}
-				or{' '}
-				<a href="//en.wikipedia.org" target="_blank" rel="noreferrer">
-					Wikipedia
-				</a>
-				. <em>(Please don't come after me.)</em>
-			</p>
 		</div>
 	);
 };

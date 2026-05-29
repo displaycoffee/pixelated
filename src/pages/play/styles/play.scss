@@ -34,6 +34,17 @@
 					padding-bottom: 100%;
 				}
 			}
+			.guess {
+				.guess-field {
+					.form-field-wrapper {
+						@include mixins.flex;
+					}
+					.guess-submit {
+						min-width: 1px;
+						@include mixins.flex(0 1 auto);
+					}
+				}
+			}
 			.points {
 				.flawless-victory {
 					font-weight: theme.$font-weight-01;
@@ -47,9 +58,61 @@
 					text-align: left;
 				}
 			}
+			.actions {
+				margin-bottom: theme.$spacing-x2;
+			}
+			.game-end {
+				@include mixins.gap(theme.$spacing-x2);
+			}
 		}
-		.round .game-end, .pagination {
-			@include mixins.gap(theme.$spacing-x2);
+		.round .actions, .pagination {
+			.row {
+				.column {
+					width: 25%;
+					line-height: 1;
+					&:last-child {
+						width: 50%;
+					}
+					.button {
+						min-width: 1px;
+						width: 100%;
+						padding: 0 theme.$spacing-x1;
+						font-size: functions.em(12px, rem);
+					}
+				}
+			}
+		}
+	}
+	.page-pixels-gallery {
+		#index > .container {
+			max-width: 1500px;
+		}
+		.round {
+			.round-category {
+				margin: 0 0 theme.$spacing-x8 0;
+				&, .round-question {
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+				.round-question {
+					margin: 0 0 theme.$spacing-x4 0;
+					.round-header h3 {
+						margin: 0;
+					}
+					.round-content {
+						margin: theme.$spacing-x4 0 0 0;
+						.round-pixels {
+							@include mixins.flex-layout((flex-flow: column nowrap));
+							.pixels {
+								@include mixins.flex(0 1 auto);
+								min-height: 1px;
+								margin-top: auto;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	@include mixins.respond-min(theme.$bp-01) {
@@ -57,6 +120,31 @@
 			.settings {
 				.form-actions {
 					text-align: right;
+				}
+			}
+			.round .actions, .pagination {
+				.row {
+					.column {
+						&, &:last-child {
+							width: 33.33%;
+						}
+						.button {
+							padding: 0 theme.$spacing-x4;
+						}
+					}
+				}
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-02) {
+		.play {
+			.round .actions, .pagination {
+				.row {
+					.column {
+						.button {
+							font-size: functions.em(16px, rem);
+						}
+					}
 				}
 			}
 		}

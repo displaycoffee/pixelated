@@ -1,42 +1,16 @@
 /* React */
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useLocation } from 'react-router-dom';
 
 /* Local scripts */
 import { requests } from './requests';
 
-/* Variables for useBodyClass */
-const bodyPrefix = 'page-';
-const bodySelector = document.querySelector('body');
-let previousPage = '';
-
-export const useBodyClass = (defaultPrefix: string) => {
-	const location = useLocation();
-
-	useEffect(() => {
-		if (!bodySelector) return;
-
-		// Remove any previous body class
-		bodySelector.classList.remove(`${bodyPrefix}${previousPage || defaultPrefix}`);
-
-		// Update previous location path
-		// Replace any body prefix, remove first slash, and replace any other slash with hyphen
-		previousPage = location.pathname.replace(bodyPrefix, '').replace('/', '').replace(/\//g, '-');
-
-		// Add new body class
-		bodySelector.classList.add(`${bodyPrefix}${previousPage || defaultPrefix}`);
-	}, [location, defaultPrefix]);
-
-	return null;
-};
-
-export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string) => {
+export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string, guessNumber?: number) => {
 	// Note: Content is either the hintId or the user's guess
 
 	// Set initial variables
 	let requestData = false;
-	const queryKey = [key, JSON.stringify(category), questionId, content] as QueryKeyType;
+	const queryKey = [key, JSON.stringify(category), questionId, content, String(guessNumber ?? 0)] as QueryKeyType;
 
 	// If content, add to queryKey
 	if (key == 'answers') {

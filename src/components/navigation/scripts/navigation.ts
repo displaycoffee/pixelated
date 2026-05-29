@@ -2,10 +2,13 @@
 import { lazy } from 'react';
 
 /* Local scripts */
+import { variables } from '../../../_config/scripts/variables';
+import { categories } from '../../../pages/play/scripts/categories';
 import { NavigationType } from './navigation-types';
 
 /* Local components */
 const Play = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.Play })));
+const PixelsGallery = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.PixelsGallery })));
 const About = lazy(() => import('../../../pages/about/About').then((m) => ({ default: m.About })));
 const Rules = lazy(() => import('../../../pages/rules/Rules').then((m) => ({ default: m.Rules })));
 const Scoreboard = lazy(() => import('../../../pages/scoreboard/Scoreboard').then((m) => ({ default: m.Scoreboard })));
@@ -48,3 +51,19 @@ export const navigation = [
 		url: '/scoreboard',
 	},
 ] as NavigationType[];
+
+/* Only add gallery url for testing pixels in development mode */
+if (variables.paths.api.includes('localhost')) {
+	navigation.push({
+		id: 4,
+		alt: 'Pixels Gallery',
+		element: PixelsGallery,
+		isRoute: true,
+		label: 'Pixels Gallery',
+		showInNav: true,
+		url: '/pixels-gallery',
+		props: {
+			categories: categories,
+		},
+	});
+}

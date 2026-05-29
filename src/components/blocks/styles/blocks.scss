@@ -67,6 +67,14 @@
 		&, &:before, &:after {
 			background-color: theme.$color-03;
 		}
+		&:focus, &:focus-visible, &:focus-visible {
+			outline: 0;
+			border-left-color: theme.$color-02;
+			border-right-color: theme.$color-02;
+			&:before, &:after {
+				background-color: theme.$color-02;
+			}
+		}
 		span {
 			display: block;
 			@include mixins.ellipsis;
