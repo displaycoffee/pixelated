@@ -1,4 +1,4 @@
-/* React */
+/* External imports */
 import { NavLink } from 'react-router-dom';
 
 export const About = () => {

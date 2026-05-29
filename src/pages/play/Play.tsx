@@ -1,18 +1,18 @@
-/* React */
+/* Styles */
+import './styles/play.scss';
+
+/* External imports */
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { produce, Draft } from 'immer';
 
-/* Local styles */
-import './styles/play.scss';
-
-/* Local scripts */
+/* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
 import { useReactQuery, useRespond, useViewTransition } from '../../_config/scripts/hooks';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
-/* Local components */
+/* Components */
 import { Block, Button, Form, FormActions, FormField, FormFieldWrapper } from '../../components/blocks/Blocks';
 
 export const Play = () => {

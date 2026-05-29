@@ -1,4 +1,4 @@
-/* React */
+/* External imports */
 import { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 

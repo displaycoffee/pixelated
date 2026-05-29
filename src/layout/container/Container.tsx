@@ -1,13 +1,13 @@
-/* React */
-import { Link } from 'react-router-dom';
-
-/* Local styles */
+/* Styles */
 import './styles/container.scss';
 
-/* Local scripts */
+/* External imports */
+import { Link } from 'react-router-dom';
+
+/* Scripts */
 import { useBodyClass } from './scripts/container-hooks';
 
-/* Local components */
+/* Components */
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';
 import { Navigation } from '../../components/navigation/Navigation';
 import { Header } from '../header/Header';

@@ -1,7 +1,7 @@
-/* Local styles */
+/* Styles */
 import './styles/blocks.scss';
 
-/* Local scripts */
+/* Scripts */
 import {
 	BlockProps,
 	ButtonAttributesType,

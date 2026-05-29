@@ -1,9 +1,9 @@
-/* React */
+/* External imports */
 import { createContext, useState } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { DefaultOptions, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-/* Local scripts */
+/* Scripts */
 import { ContextProps, ContextValuesType } from './scripts/context-types';
 import { theme } from '../_config/scripts/theme';
 import { utils } from '../_config/scripts/utils';

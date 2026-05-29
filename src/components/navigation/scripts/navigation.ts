@@ -1,12 +1,12 @@
-/* React */
+/* External imports */
 import { lazy } from 'react';
 
-/* Local scripts */
+/* Scripts */
 import { variables } from '../../../_config/scripts/variables';
 import { categories } from '../../../pages/play/scripts/categories';
 import { NavigationType } from './navigation-types';
 
-/* Local components */
+/* Components */
 const Play = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.Play })));
 const PixelsGallery = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.PixelsGallery })));
 const About = lazy(() => import('../../../pages/about/About').then((m) => ({ default: m.About })));

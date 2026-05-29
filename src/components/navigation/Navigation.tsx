@@ -1,11 +1,11 @@
-/* React */
+/* Styles */
+import './styles/navigation.scss';
+
+/* External imports */
 import { Fragment, Suspense, useEffect } from 'react';
 import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
-/* Local styles */
-import './styles/navigation.scss';
-
-/* Local scripts */
+/* Scripts */
 import { useViewTransition } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 import { NavigationListItemProps, NavigationRoutesProps } from './scripts/navigation-types';

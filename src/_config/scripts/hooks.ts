@@ -1,10 +1,10 @@
-/* React */
+/* External imports */
 import { MouseEvent, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-/* Local scripts */
+/* Scripts */
 import { requests } from './requests';
 
 export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string, guessNumber?: number) => {

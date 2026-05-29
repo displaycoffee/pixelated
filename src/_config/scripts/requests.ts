@@ -1,7 +1,7 @@
-/* React */
+/* External imports */
 import { QueryFunctionContext } from '@tanstack/react-query';
 
-/* Local scripts */
+/* Scripts */
 import { variables } from './variables';
 
 /* Setup parameters to pass to fetches */
