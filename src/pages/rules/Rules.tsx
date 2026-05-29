@@ -1,7 +1,7 @@
-/* Local styles */
+/* Styles */
 import './styles/rules.scss';
 
-/* Local scripts */
+/* Scripts */
 import { difficulty } from '../play/scripts/difficulty';
 
 export const Rules = () => {

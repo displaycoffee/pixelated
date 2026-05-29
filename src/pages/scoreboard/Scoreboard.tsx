@@ -1,15 +1,15 @@
-/* React */
-import { useCookies } from 'react-cookie';
-
-/* Local styles */
+/* Styles */
 import './styles/scoreboard.scss';
 
-/* Local scripts */
+/* Packages */
+import { useCookies } from 'react-cookie';
+
+/* Scripts */
 import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 import { ScoreboardType } from './scripts/scoreboard-types';
 
-/* Local components */
+/* Components */
 import { Block } from '../../components/blocks/Blocks';
 
 export const Scoreboard = () => {

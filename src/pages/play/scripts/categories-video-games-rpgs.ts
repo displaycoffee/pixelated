@@ -1,4 +1,4 @@
-/* Local scripts */
+/* Scripts */
 import { categoriesUtils } from './categories-utils';
 import { colors } from './colors';
 

@@ -1,8 +1,8 @@
-/* React */
-import { useCookies } from 'react-cookie';
-
-/* Local styles */
+/* Styles */
 import './styles/footer.scss';
+
+/* Packages */
+import { useCookies } from 'react-cookie';
 
 export const Footer = () => {
 	const [cookies, _setCookie, removeCookie] = useCookies(['scoreboard']);

@@ -1,18 +1,18 @@
-/* React */
+/* Styles */
+import './styles/play.scss';
+
+/* Packages */
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { produce, Draft } from 'immer';
 
-/* Local styles */
-import './styles/play.scss';
-
-/* Local scripts */
+/* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { useReactQuery, useRespond } from '../../_config/scripts/hooks';
+import { useReactQuery, useRespond, useViewTransition } from '../../_config/scripts/hooks';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
-/* Local components */
+/* Components */
 import { Block, Button, Form, FormActions, FormField, FormFieldWrapper } from '../../components/blocks/Blocks';
 
 export const Play = () => {
@@ -403,7 +403,7 @@ export const Guess = () => {
 				</div>
 			) : null}
 
-			<Actions hasActions={false} getHint={getHint} hasHints={hasHints} />
+			<Actions key={current.round} hasActions={false} getHint={getHint} hasHints={hasHints} />
 		</>
 	);
 };
@@ -435,6 +435,8 @@ export const Points = () => {
 export const Status = (props: ObjectPrimitiveProps) => {
 	const status = props.status;
 	const enableActions = status == 'complete' || status == 'failed';
+	const { game } = useAppContext();
+	const { current } = game;
 
 	// Determine status message
 	let message = '😍 You got it!';
@@ -452,7 +454,7 @@ export const Status = (props: ObjectPrimitiveProps) => {
 				<p>{message}</p>
 			</div>
 
-			{enableActions ? <Actions hasActions={enableActions} hasHints={false} /> : null}
+			{enableActions ? <Actions key={current.round} hasActions={enableActions} hasHints={false} /> : null}
 		</>
 	);
 };
@@ -462,10 +464,8 @@ export const Actions = (props: ActionsProps) => {
 	const { game, theme } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
-	const [showAnswerForRound, setShowAnswerForRound] = useState<string | null>(null);
-	const [showCharactersForRound, setShowCharactersForRound] = useState<string | null>(null);
-	const showAnswer = showAnswerForRound === current.round;
-	const showCharacters = showCharactersForRound === current.round;
+	const [showAnswer, setShowAnswer] = useState(false);
+	const [showCharacters, setShowCharacters] = useState(false);
 	const isDesktop = useRespond(theme.bps.bp01 as number);
 
 	return (
@@ -511,7 +511,7 @@ export const Actions = (props: ActionsProps) => {
 							className="actions-get-answer"
 							onClick={() => {
 								if (!showAnswer) {
-									setShowAnswerForRound(current.round);
+									setShowAnswer(true);
 								} else {
 									return false;
 								}
@@ -527,7 +527,7 @@ export const Actions = (props: ActionsProps) => {
 							className="actions-get-characters"
 							onClick={() => {
 								if (!showCharacters) {
-									setShowCharactersForRound(current.round);
+									setShowCharacters(true);
 								} else {
 									return false;
 								}
@@ -552,6 +552,7 @@ export const Pagination = (props: PaginationProps) => {
 	const hasPrevious = current.round != 'round1';
 	const hasNext = currentRound.status != 'pending' && current.round != 'round6';
 	const isDesktop = useRespond(theme.bps.bp01 as number);
+	const handleTransition = useViewTransition();
 
 	const goToRound = (direction: string) => {
 		if (hasPrevious && direction == 'previous') {
@@ -587,19 +588,19 @@ export const Pagination = (props: PaginationProps) => {
 		<div className="pagination">
 			<div className="row row-auto row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
 				<div className="column">
-					<Button className="pagination-previous" onClick={() => goToRound('previous')} disabled={!hasPrevious}>
+					<Button className="pagination-previous" onClick={(e) => handleTransition(e, () => goToRound('previous'))} disabled={!hasPrevious}>
 						{isDesktop ? 'Previous' : '<'}
 					</Button>
 				</div>
 
 				<div className="column">
-					<Button className="pagination-next" onClick={() => goToRound('next')} disabled={!hasNext}>
+					<Button className="pagination-next" onClick={(e) => handleTransition(e, () => goToRound('next'))} disabled={!hasNext}>
 						{current.round == 'round5' ? 'Game End' : isDesktop ? 'Next' : '>'}
 					</Button>
 				</div>
 
 				<div className="column">
-					<Button className="pagination-start-over" onClick={() => resetGame()}>
+					<Button className="pagination-start-over" onClick={(e) => handleTransition(e, () => resetGame())}>
 						New Game?
 					</Button>
 				</div>

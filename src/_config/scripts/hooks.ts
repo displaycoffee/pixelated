@@ -1,8 +1,10 @@
-/* React */
-import { useEffect, useState } from 'react';
+/* Packages */
+import { MouseEvent, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
-/* Local scripts */
+/* Scripts */
 import { requests } from './requests';
 
 export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string, guessNumber?: number) => {
@@ -45,4 +47,37 @@ export const useRespond = (bp: number) => {
 	}, [bp]);
 
 	return match;
+};
+
+export const useViewTransition = () => {
+	// Custom hook to use View Transitions API
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	return (e: MouseEvent<HTMLElement>, target: string | (() => void)) => {
+		const isUrl = typeof target === 'string';
+
+		if (!document.startViewTransition || e.ctrlKey || e.metaKey || e.shiftKey || (isUrl && target === location.pathname)) {
+			return false;
+		} else {
+			e.preventDefault();
+
+			const contentEl = document.querySelector('.content') as HTMLElement;
+			if (contentEl) contentEl.style.viewTransitionName = 'page-content';
+
+			void document
+				.startViewTransition(() => {
+					flushSync(() => {
+						if (isUrl) {
+							void navigate(target);
+						} else {
+							target();
+						}
+					});
+				})
+				.finished.finally(() => {
+					if (contentEl) contentEl.style.viewTransitionName = '';
+				});
+		}
+	};
 };
