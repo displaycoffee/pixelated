@@ -1,5 +1,5 @@
 /* React */
-import { ButtonHTMLAttributes, SubmitEventHandler } from 'react';
+import { ButtonHTMLAttributes, MouseEvent, SubmitEventHandler } from 'react';
 
 /* Type definitions */
 type BlockShared = {
@@ -13,7 +13,7 @@ type Block = BlockShared & {
 
 type Button = BlockShared & {
 	disabled?: boolean;
-	onClick?: MouseEvent<HTMLButtonElement>;
+	onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 type ButtonAttributes = ButtonHTMLAttributes<HTMLButtonElement>;

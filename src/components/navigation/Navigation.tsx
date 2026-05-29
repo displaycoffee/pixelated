@@ -6,6 +6,7 @@ import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import './styles/navigation.scss';
 
 /* Local scripts */
+import { useViewTransition } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 import { NavigationListItemProps, NavigationRoutesProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
@@ -41,6 +42,7 @@ export const Navigation = () => {
 
 export const NavigationListItem = (props: NavigationListItemProps) => {
 	const { children, nav, navigationLinkClass } = props;
+	const handleTransition = useViewTransition();
 	const navigationActiveClass = `${navigationLinkClass} ${navigationLinkClass}-active`;
 
 	return (
@@ -49,6 +51,7 @@ export const NavigationListItem = (props: NavigationListItemProps) => {
 				<NavLink
 					to={nav.url}
 					title={nav.alt || nav.label}
+					onClick={(e) => handleTransition(e, nav.url)}
 					className={({ isActive }) => (isActive ? navigationActiveClass : navigationLinkClass)}
 				>
 					{nav.label}
