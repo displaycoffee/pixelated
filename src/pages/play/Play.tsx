@@ -56,7 +56,7 @@ export const Round = () => {
 
 			// Prepend new score and trim to limit
 			const updatedScoreboard = [newScore, ...currentScoreboard].slice(0, scoreLimit).join('|');
-			setCookie('scoreboard', updatedScoreboard);
+			setCookie('scoreboard', updatedScoreboard, { path: '/', maxAge: 60 * 60 * 24 * 365 });
 
 			// Update score logged
 			setGame(
