@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/header.scss';
 
-/* External imports */
+/* Packages */
 import { Link } from 'react-router-dom';
 
 export const Header = () => {

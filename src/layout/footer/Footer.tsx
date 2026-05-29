@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/footer.scss';
 
-/* External imports */
+/* Packages */
 import { useCookies } from 'react-cookie';
 
 export const Footer = () => {

@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/container.scss';
 
-/* External imports */
+/* Packages */
 import { Link } from 'react-router-dom';
 
 /* Scripts */

@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/play.scss';
 
-/* External imports */
+/* Packages */
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { produce, Draft } from 'immer';

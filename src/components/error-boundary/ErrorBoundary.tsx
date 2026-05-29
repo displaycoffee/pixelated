@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/error-boundary.scss';
 
-/* External imports */
+/* Packages */
 /* Note: mostly code from react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary */
 import { Component, ErrorInfo } from 'react';
 

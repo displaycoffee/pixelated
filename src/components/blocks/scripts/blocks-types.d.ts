@@ -1,4 +1,4 @@
-/* External imports */
+/* Packages */
 import { ButtonHTMLAttributes, MouseEvent, SubmitEventHandler } from 'react';
 
 /* Type definitions */

@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/navigation.scss';
 
-/* External imports */
+/* Packages */
 import { Fragment, Suspense, useEffect } from 'react';
 import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 

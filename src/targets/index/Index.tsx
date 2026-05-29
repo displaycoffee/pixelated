@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/index.scss';
 
-/* External imports */
+/* Packages */
 import { BrowserRouter } from 'react-router-dom';
 
 /* Scripts */

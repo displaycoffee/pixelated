@@ -1,4 +1,4 @@
-/* External imports */
+/* Packages */
 import { useContext } from 'react';
 
 /* Components */

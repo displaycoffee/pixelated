@@ -1,4 +1,4 @@
-/* External imports */
+/* Packages */
 import { QueryClient } from '@tanstack/react-query';
 
 /* Type definitions */

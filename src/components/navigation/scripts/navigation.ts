@@ -1,4 +1,4 @@
-/* External imports */
+/* Packages */
 import { lazy } from 'react';
 
 /* Scripts */

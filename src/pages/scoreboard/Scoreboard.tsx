@@ -1,7 +1,7 @@
 /* Styles */
 import './styles/scoreboard.scss';
 
-/* External imports */
+/* Packages */
 import { useCookies } from 'react-cookie';
 
 /* Scripts */

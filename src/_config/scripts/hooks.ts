@@ -1,4 +1,4 @@
-/* External imports */
+/* Packages */
 import { MouseEvent, useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';

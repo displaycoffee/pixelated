@@ -1,4 +1,4 @@
-/* External imports */
+/* Packages */
 import { QueryFunctionContext } from '@tanstack/react-query';
 
 /* Scripts */
