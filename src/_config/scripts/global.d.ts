@@ -12,7 +12,8 @@ type ObjectPrimitive = {
 
 /* Content type definitions */
 type Actions = {
-	getHint: Function;
+	hasActions: boolean;
+	getHint?: Function;
 	hasHints: boolean;
 };
 

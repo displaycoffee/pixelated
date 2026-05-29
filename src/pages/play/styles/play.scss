@@ -47,9 +47,29 @@
 					text-align: left;
 				}
 			}
+			.actions {
+				margin-bottom: theme.$spacing-x2;
+			}
+			.game-end {
+				@include mixins.gap(theme.$spacing-x2);
+			}
 		}
-		.round .game-end, .pagination {
-			@include mixins.gap(theme.$spacing-x2);
+		.round .actions, .pagination {
+			.row {
+				.column {
+					width: 25%;
+					line-height: 1;
+					&:last-child {
+						width: 50%;
+					}
+					.button {
+						min-width: 1px;
+						width: 100%;
+						padding: 0 theme.$spacing-x1;
+						font-size: functions.em(12px, rem);
+					}
+				}
+			}
 		}
 	}
 	.page-pixels-gallery {
@@ -89,6 +109,31 @@
 			.settings {
 				.form-actions {
 					text-align: right;
+				}
+			}
+			.round .actions, .pagination {
+				.row {
+					.column {
+						&, &:last-child {
+							width: 33.33%;
+						}
+						.button {
+							padding: 0 theme.$spacing-x4;
+						}
+					}
+				}
+			}
+		}
+	}
+	@include mixins.respond-min(theme.$bp-02) {
+		.play {
+			.round .actions, .pagination {
+				.row {
+					.column {
+						.button {
+							font-size: functions.em(16px, rem);
+						}
+					}
 				}
 			}
 		}
