@@ -55,7 +55,7 @@ export const Form = (props: FormProps) => {
 	const formClass = className ? `${className} ` : '';
 
 	return (
-		<form className={`${formClass}form spacing-reset`} onSubmit={(e) => onSubmit(e)}>
+		<form className={`${formClass}form margin-trim`} onSubmit={(e) => onSubmit(e)}>
 			{children}
 		</form>
 	);

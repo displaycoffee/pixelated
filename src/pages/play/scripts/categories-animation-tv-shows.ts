@@ -10,8 +10,8 @@ const mainCategory = 'animation';
 const subCategory = 'tv-shows';
 const id = `${mainCategory}-${subCategory}`;
 
-/* Unformatted category questions */
-const categoryValues: CategoryValuesUnformattedType = [
+/* Raw category questions */
+const categoryValues: CategoryValuesRawType = [
 	{
 		id: 'q1',
 		values: [

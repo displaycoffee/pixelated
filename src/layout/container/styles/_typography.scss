@@ -19,7 +19,7 @@
 	body {
 		font-size: functions.em(theme.$font-size-global, rem);
 		font-weight: normal;
-		color: theme.$color-02;
+		color: theme.$color-04;
 		line-height: 1.5;
 	}
 	b, strong {
@@ -32,15 +32,15 @@
 		text-decoration: none;
 	}
 	a, .a {
-		color: theme.$color-03;
+		color: theme.$color-05;
 		@include mixins.transition(color 0.3s ease-in-out);
 		@include mixins.text-decoration($thickness: 1px, $offset: 5px, $color: inherit);
 		&:active, &:hover {
-			color: theme.$color-02;
+			color: theme.$color-04;
 		}
 	}
 	mark {
-		background: theme.$color-10;
+		background: theme.$color-12;
 	}
 	small {
 		font-size: 80%;
@@ -71,11 +71,11 @@
 			text-transform: theme.$font-transform
 		));
 		line-height: 1.2;
-		color: theme.$color-02;
+		color: theme.$color-04;
 		a {
 			color: inherit;
 			&:hover {
-				color: theme.$color-03;
+				color: theme.$color-05;
 			}
 		}
 	}
@@ -101,11 +101,11 @@
 	// Style block
 	
 	code, kbd, pre, samp {
-		background: theme.$color-02;
+		background: theme.$color-04;
 		padding: theme.$spacing-x4;
 		font-family: 'Courier New', monospace;
 		font-size: functions.em(16px, rem);
-		color: theme.$color-01;
+		color: theme.$color-03;
 		white-space: pre-wrap;
 		word-break: break-word;
 	}

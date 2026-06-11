@@ -35,9 +35,9 @@
 	.block {
 		width: 100%;
 		padding: theme.$spacing-x4;
-		background-color: theme.$color-04;
-		border-left: $pixel-size solid theme.$color-02;
-		border-right: $pixel-size solid theme.$color-02;
+		background-color: theme.$color-06;
+		border-left: $pixel-size solid theme.$color-04;
+		border-right: $pixel-size solid theme.$color-04;
 		&.block-columns {
 			@include mixins.flex-layout((display: inline-flex));
 			@include mixins.gap(theme.$spacing-x1 theme.$spacing-x2);
@@ -50,7 +50,7 @@
 			}
 		}
 		&:before, &:after {
-			background-color: theme.$color-02;
+			background-color: theme.$color-04;
 		}
 		p {
 			margin: 0 0 theme.$spacing-x1 0;
@@ -61,18 +61,18 @@
 	}
 	.button {
 		min-width: $set-width;
-		border-left: $pixel-size solid theme.$color-03;
-		border-right: $pixel-size solid theme.$color-03;
-		color: theme.$color-01;
+		border-left: $pixel-size solid theme.$color-05;
+		border-right: $pixel-size solid theme.$color-05;
+		color: theme.$color-03;
 		&, &:before, &:after {
-			background-color: theme.$color-03;
+			background-color: theme.$color-05;
 		}
 		&:focus, &:focus-visible, &:focus-visible {
 			outline: 0;
-			border-left-color: theme.$color-02;
-			border-right-color: theme.$color-02;
+			border-left-color: theme.$color-04;
+			border-right-color: theme.$color-04;
 			&:before, &:after {
-				background-color: theme.$color-02;
+				background-color: theme.$color-04;
 			}
 		}
 		span {
@@ -101,14 +101,14 @@
 		}
 	}
 	.form-field-wrapper {
-		background-color: theme.$color-04;
-		border-left: $pixel-size solid theme.$color-02;
-		border-right: $pixel-size solid theme.$color-02;
+		background-color: theme.$color-06;
+		border-left: $pixel-size solid theme.$color-04;
+		border-right: $pixel-size solid theme.$color-04;
 		&:has(.form-field-arrow) select {
 			padding-right: theme.$spacing-x8;
 		}
 		&:before, &:after {
-			background-color: theme.$color-02;
+			background-color: theme.$color-04;
 		}
 		select, input {
 			width: 100%;
@@ -117,7 +117,7 @@
 		}
 		input {
 			@include mixins.placeholder {
-				color: theme.$color-06;
+				color: theme.$color-08;
 			}
 		}
 		.form-field-arrow {

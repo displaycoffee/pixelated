@@ -7,7 +7,44 @@ import { QueryFunctionContext } from '@tanstack/react-query';
 type Events = SyntheticEvent | Event;
 
 type ObjectPrimitive = {
-	[key: string]: string | number | boolean;
+	[key: string]: Primitive;
+};
+
+type Primitive = string | number | boolean;
+
+type Theme = {
+	bps: {
+		bp01: Primitive;
+		bp02: Primitive;
+		bp03: Primitive;
+		bp04: Primitive;
+	};
+	colors: {
+		color01: Primitive;
+		color02: Primitive;
+		color03: Primitive;
+		color04: Primitive;
+		color05: Primitive;
+		color06: Primitive;
+		color07: Primitive;
+		color08: Primitive;
+		color09: Primitive;
+		color10: Primitive;
+		color11: Primitive;
+		color12: Primitive;
+	};
+};
+
+type Utils = {
+	getLast: (value: string | string[], delimeter?: string) => string | number;
+	scrollTo: (e?: Events, selector?: string, offset?: number) => void;
+};
+
+type Variables = {
+	paths: {
+		api: string;
+		basename: string;
+	};
 };
 
 /* Content type definitions */
@@ -54,7 +91,7 @@ type CategoryValues = Category & {
 	values: CategoryQuestions;
 };
 
-type CategoryValuesUnformatted = {
+type CategoryValuesRaw = {
 	id: string;
 	values: string[][];
 	hexMap: CategoryNumbersMap | boolean;
@@ -145,6 +182,12 @@ declare global {
 
 	type ObjectPrimitiveType = ObjectPrimitive;
 
+	type ThemeType = Theme;
+
+	type UtilsType = Utils;
+
+	type VariablesType = Variables;
+
 	/* Declare global content types */
 	type AnswersType = Answers;
 
@@ -160,7 +203,7 @@ declare global {
 
 	type CategoryValuesType = CategoryValues;
 
-	type CategoryValuesUnformattedType = CategoryValuesUnformatted;
+	type CategoryValuesRawType = CategoryValuesRaw;
 
 	type CategoriesListType = CategoriesList;
 

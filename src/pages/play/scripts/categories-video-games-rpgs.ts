@@ -10,8 +10,8 @@ const mainCategory = 'video-games';
 const subCategory = 'rpgs';
 const id = `${mainCategory}-${subCategory}`;
 
-/* Unformatted category questions */
-const categoryValues: CategoryValuesUnformattedType = [
+/* Raw category questions */
+const categoryValues: CategoryValuesRawType = [
 	{
 		id: 'q1',
 		values: [

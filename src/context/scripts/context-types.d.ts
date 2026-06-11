@@ -11,16 +11,9 @@ type ContextValues = {
 	game: GameType;
 	setGame: React.Dispatch;
 	queryClient: QueryClient;
-	theme: {
-		[key: string]: ObjectPrimitiveType;
-	};
-	utils: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		[key: string]: (...args: any[]) => any;
-	};
-	variables: {
-		[key: string]: ObjectPrimitiveType;
-	};
+	theme: ThemeType;
+	utils: UtilsType;
+	variables: VariablesType;
 };
 
 /* Export types */

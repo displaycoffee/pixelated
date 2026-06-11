@@ -31,16 +31,18 @@
 //// COLORS
 //// --------------------------------------------------------------------------
 
-	$color-01: #b99976; // main
-	$color-02: #333333; // light text
-	$color-03: #4a2d18; // links
-	$color-04: lighten(#b99976, 8%); // form field backgrounds
-	$color-05: #666666; // placeholder
-	$color-06: #555555;
-	$color-07: rgba(#000000, 0.75); // overlay
-	$color-08: false;
-	$color-09: false;
-	$color-10: #f7f79e; // highlights and errors
+	$color-01: #ffffff; // white
+	$color-02: #000000; // black
+	$color-03: #b99976; // main background
+	$color-04: #333333; // light text
+	$color-05: #4a2d18; // links
+	$color-06: lighten(#b99976, 8%); // form field backgrounds
+	$color-07: #666666; // placeholder
+	$color-08: #555555;
+	$color-09: rgba(#000000, 0.75); // overlay
+	$color-10: false;
+	$color-11: false;
+	$color-12: #f7f79e; // highlights and errors
 
 //// FONTS
 //// --------------------------------------------------------------------------

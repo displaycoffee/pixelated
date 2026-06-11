@@ -13,7 +13,7 @@ const About = lazy(() => import('../../../pages/about/About').then((m) => ({ def
 const Rules = lazy(() => import('../../../pages/rules/Rules').then((m) => ({ default: m.Rules })));
 const Scoreboard = lazy(() => import('../../../pages/scoreboard/Scoreboard').then((m) => ({ default: m.Scoreboard })));
 
-export const navigation = [
+export const navigation: NavigationType[] = [
 	{
 		id: 0,
 		alt: 'Play',
@@ -50,7 +50,7 @@ export const navigation = [
 		showInNav: true,
 		url: '/scoreboard',
 	},
-] as NavigationType[];
+];
 
 /* Only add gallery url for testing pixels in development mode */
 if (variables.paths.api.includes('localhost')) {

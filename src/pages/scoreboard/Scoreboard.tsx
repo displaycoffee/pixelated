@@ -16,7 +16,7 @@ export const Scoreboard = () => {
 	const { theme } = useAppContext();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 	const [cookies] = useCookies(['scoreboard']);
-	const scoreboardCookie = cookies?.scoreboard ? cookies.scoreboard.split('|') : [];
+	const scoreboardCookie = cookies?.scoreboard?.split('|') ?? [];
 
 	// Format scoreboard cookie
 	const scoreboard = scoreboardCookie.map((score: string) => {
@@ -31,10 +31,10 @@ export const Scoreboard = () => {
 	});
 
 	return (
-		<div className="scoreboard spacing-reset">
+		<div className="scoreboard margin-trim">
 			<h2>Scoreboard</h2>
 
-			{scoreboard && scoreboard.length !== 0 ? (
+			{scoreboard.length !== 0 ? (
 				<>
 					<div className="scores">
 						<Block>

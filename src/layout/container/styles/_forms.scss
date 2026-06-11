@@ -27,9 +27,9 @@
 		padding: 0 theme.$spacing-x4;
 	}
 	select, input {
-		border: 1px solid theme.$color-02;
-		background-color: theme.$color-04;
-		color: theme.$color-02;
+		border: 1px solid theme.$color-04;
+		background-color: theme.$color-06;
+		color: theme.$color-04;
 		outline: 0;
 	}
 	select {
@@ -47,7 +47,7 @@
 			transition: $input-transition;
 		}
 		@include mixins.placeholder {
-			color: theme.$color-05;
+			color: theme.$color-07;
 		}
 	}
 	button.unstyled {
