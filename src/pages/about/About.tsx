@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 export const About = () => {
 	return (
-		<div className="about spacing-reset">
+		<div className="about margin-trim">
 			<h2>About</h2>
 
 			<p>

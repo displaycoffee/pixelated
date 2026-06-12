@@ -1,5 +1,5 @@
 export const categoriesUtils = {
-	buildValues: (values: CategoryValuesUnformattedType) => {
+	buildValues: (values: CategoryValuesRawType) => {
 		// Create question values for categories
 		return values.map((value) => {
 			return {

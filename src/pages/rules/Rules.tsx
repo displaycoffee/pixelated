@@ -6,7 +6,7 @@ import { difficulty } from '../play/scripts/difficulty';
 
 export const Rules = () => {
 	return (
-		<div className="rules spacing-reset">
+		<div className="rules margin-trim">
 			<h2>Rules</h2>
 
 			<h3>How to Play</h3>

@@ -19,7 +19,7 @@ export const Container = () => {
 	useBodyClass('play');
 
 	return (
-		<div className="container spacing-reset">
+		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
 				<Header />
 

@@ -12,7 +12,6 @@
 		.navigation-list {
 			@include mixins.flex-layout((align-items: center, justify-content: center));
 			@include mixins.gap(theme.$spacing-x4);
-			margin: 0;
 			.navigation-list-item {
 				.navigation-link:not(.navigation-link-active) {
 					text-decoration: none;

@@ -20,7 +20,7 @@ export const Play = () => {
 	const settings = game.settings;
 	const showSettings = !settings.category && !settings.difficulty;
 
-	return <div className="play spacing-reset">{showSettings ? <Settings /> : <Round />}</div>;
+	return <div className="play margin-trim">{showSettings ? <Settings /> : <Round />}</div>;
 };
 
 export const Round = () => {
@@ -615,7 +615,7 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 	const categories = props.categories;
 
 	return (
-		<div className="play spacing-reset">
+		<div className="play margin-trim">
 			<div className="round round1">
 				{categories.map((category) => {
 					return (
