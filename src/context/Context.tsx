@@ -64,11 +64,11 @@ export const ContextProvider = ({ children }: ContextProps) => {
 			difficulty: false,
 		},
 		rounds: {
-			round1: round,
-			round2: round,
-			round3: round,
-			round4: round,
-			round5: round,
+			round1: { ...round },
+			round2: { ...round },
+			round3: { ...round },
+			round4: { ...round },
+			round5: { ...round },
 			round6: {
 				...round,
 				status: 'game end',

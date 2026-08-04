@@ -37,6 +37,7 @@ type Theme = {
 
 type Utils = {
 	getLast: (value: string | string[], delimeter?: string) => string | number;
+	handleize: (value: string) => string;
 	scrollTo: (e?: Events, selector?: string, offset?: number) => void;
 };
 
@@ -50,7 +51,7 @@ type Variables = {
 /* Content type definitions */
 type Actions = {
 	hasActions: boolean;
-	getHint?: Function;
+	getHint?: () => void;
 	hasHints: boolean;
 };
 
@@ -62,7 +63,7 @@ type Answers = {
 	characters?: string;
 };
 
-type AnswersRequest = [Answers, Function, Statuses];
+type AnswersRequest = [Answers, () => void, Statuses];
 
 type Category = {
 	name: string;
@@ -137,10 +138,10 @@ type Hints = {
 	message: string;
 };
 
-type HintsRequest = [Hints, Function, Statuses];
+type HintsRequest = [Hints, () => void, Statuses];
 
 type Pagination = {
-	resetGame: Function;
+	resetGame: () => void;
 };
 
 type Round = {
@@ -171,6 +172,7 @@ type ResponseError = {
 };
 
 type Statuses = {
+	error: boolean;
 	fetched: boolean;
 	pending: boolean;
 	success: boolean;

@@ -1,6 +1,5 @@
 /* Type definitions */
 type Navigation = {
-	alt?: string;
 	children?: Navigation[];
 	element?: JSX.Element;
 	id: number;
@@ -9,6 +8,10 @@ type Navigation = {
 	props?: ObjectPrimitiveType | CategoriesObjectType;
 	showInNav?: boolean;
 	url: string;
+};
+
+type NavigationComponent = {
+	label: string;
 };
 
 type NavigationListItem = {
@@ -32,6 +35,8 @@ export type NavigationRoutesType = NavigationRoutes;
 export type NavigationType = Navigation;
 
 /* Export prop types */
+export type NavigationComponentProps = NavigationComponent;
+
 export type NavigationListItemProps = NavigationListItem;
 
 export type NavigationRoutesProps = NavigationRoutes;

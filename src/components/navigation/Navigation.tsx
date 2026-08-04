@@ -8,14 +8,15 @@ import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 /* Scripts */
 import { useViewTransition } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { NavigationListItemProps, NavigationRoutesProps } from './scripts/navigation-types';
+import { NavigationComponentProps, NavigationListItemProps, NavigationRoutesProps } from './scripts/navigation-types';
 import { navigationUtils } from './scripts/navigation-utils';
 import { navigationRoutes } from './scripts/navigation-routes';
 
 /* Get navigation menu */
 const navigationList = navigationUtils.get.list();
 
-export const Navigation = () => {
+export const Navigation = (props: NavigationComponentProps) => {
+	const { label } = props;
 	const { pathname } = useLocation();
 	const { utils } = useAppContext();
 	const navigationLinkClass = 'navigation-link';
@@ -26,7 +27,7 @@ export const Navigation = () => {
 	}, [pathname, utils]);
 
 	return navigationList.length != 0 ? (
-		<nav className="navigation">
+		<nav className="navigation" aria-label={label}>
 			<ul className="navigation-list unstyled">
 				{navigationList.map((nav) => {
 					return (
@@ -50,14 +51,13 @@ export const NavigationListItem = (props: NavigationListItemProps) => {
 			{nav.isRoute ? (
 				<NavLink
 					to={nav.url}
-					title={nav.alt || nav.label}
 					onClick={(e) => handleTransition(e, nav.url)}
 					className={({ isActive }) => (isActive ? navigationActiveClass : navigationLinkClass)}
 				>
 					{nav.label}
 				</NavLink>
 			) : (
-				<a href={nav.url} title={nav.alt || nav.label} target="_blank" rel="noreferrer">
+				<a href={nav.url} target="_blank" rel="noreferrer">
 					{nav.label}
 				</a>
 			)}

@@ -1,5 +1,5 @@
 /* Packages */
-import { ButtonHTMLAttributes, MouseEvent, SubmitEventHandler } from 'react';
+import { ButtonHTMLAttributes, HTMLAttributes, MouseEvent, SubmitEventHandler } from 'react';
 
 /* Type definitions */
 type BlockShared = {
@@ -12,11 +12,28 @@ type Block = BlockShared & {
 };
 
 type Button = BlockShared & {
+	ariaLabel?: string;
 	disabled?: boolean;
 	onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 type ButtonAttributes = ButtonHTMLAttributes<HTMLButtonElement>;
+
+type Data = {
+	children: ReactNode;
+	label: string;
+};
+
+type DataAttributes = HTMLAttributes<HTMLDivElement>;
+
+type DataColumn = {
+	label: string;
+	value?: string | number;
+};
+
+type DataRow = {
+	children: ReactNode;
+};
 
 type Form = BlockShared & {
 	onSubmit: SubmitEventHandler<HTMLFormElement>;
@@ -38,10 +55,18 @@ type FormFieldWrapper = {
 /* Export types */
 export type ButtonAttributesType = ButtonAttributes;
 
+export type DataAttributesType = DataAttributes;
+
 /* Export prop types */
 export type BlockProps = Block;
 
 export type ButtonProps = Button;
+
+export type DataProps = Data;
+
+export type DataColumnProps = DataColumn;
+
+export type DataRowProps = DataRow;
 
 export type FormProps = Form;
 

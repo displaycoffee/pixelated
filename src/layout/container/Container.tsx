@@ -21,11 +21,15 @@ export const Container = () => {
 	return (
 		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
+				<a href="#main-content" className="skip-link sr-only">
+					Skip to main content
+				</a>
+
 				<Header />
 
-				<Navigation />
+				<Navigation label={'Header Navigation'} />
 
-				<main className="main">
+				<main id="main-content" className="main">
 					<div className="main-layout flex-wrap">
 						<Content />
 					</div>

@@ -12,10 +12,7 @@ export const About = () => {
 					displaycoffee
 				</a>
 				. It is inspired by the Futurama episode "All the Way Down" (Season 11, Episode 10). On each round, you'll try to guess a set of
-				pixel-rendered characters from a category. More information on how to play can be found on the{' '}
-				<NavLink to={'/rules'} title={'Rules'}>
-					Rules
-				</NavLink>{' '}
+				pixel-rendered characters from a category. More information on how to play can be found on the <NavLink to={'/rules'}>Rules</NavLink>{' '}
 				page.
 			</p>
 
