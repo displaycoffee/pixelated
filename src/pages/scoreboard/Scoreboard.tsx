@@ -10,7 +10,7 @@ import { useAppContext } from '../../context/scripts/context-hooks';
 import { ScoreboardType } from './scripts/scoreboard-types';
 
 /* Components */
-import { Block } from '../../components/blocks/Blocks';
+import { Data, DataColumn, DataRow } from '../../components/blocks/Blocks';
 
 export const Scoreboard = () => {
 	const { theme } = useAppContext();
@@ -36,64 +36,34 @@ export const Scoreboard = () => {
 
 			{scoreboard.length !== 0 ? (
 				<>
-					<div className="scores">
-						<Block>
+					<div className="scoreboard-data">
+						<Data label={'Scoreboard'}>
 							{isDesktop ? (
-								<div className="row row-wrap row-spacing-10">
-									<p className="points column">
-										<strong>Points</strong>
-									</p>
-									<p className="date column">
-										<strong>Date</strong>
-									</p>
-									<p className="difficulty column">
-										<strong>Difficulty</strong>
-									</p>
-									<p className="category column">
-										<strong>Category</strong>
-									</p>
-								</div>
+								<DataRow>
+									<DataColumn label={'Points'} />
+
+									<DataColumn label={'Date'} />
+
+									<DataColumn label={'Difficulty'} />
+
+									<DataColumn label={'Category'} />
+								</DataRow>
 							) : null}
 
 							{scoreboard.map((score: ScoreboardType, index: number) => {
 								return (
-									<div className={`row row-wrap row-spacing-${isDesktop ? 10 : 5}`} key={`${score.key}-${index}`}>
-										<p className="points column">
-											{!isDesktop ? (
-												<>
-													<strong>Points:</strong>{' '}
-												</>
-											) : null}
-											{score.points}
-										</p>
-										<p className="date column">
-											{!isDesktop ? (
-												<>
-													<strong>Date:</strong>{' '}
-												</>
-											) : null}
-											{score.date}
-										</p>
-										<p className="difficulty column">
-											{!isDesktop ? (
-												<>
-													<strong>Difficulty:</strong>{' '}
-												</>
-											) : null}
-											{score.difficulty}
-										</p>
-										<p className="category column">
-											{!isDesktop ? (
-												<>
-													<strong>Category:</strong>{' '}
-												</>
-											) : null}
-											{score.category}
-										</p>
-									</div>
+									<DataRow key={`${score.key}-${index}`}>
+										<DataColumn label={'Points'} value={score.points} />
+
+										<DataColumn label={'Date'} value={score.date} />
+
+										<DataColumn label={'Difficulty'} value={score.difficulty} />
+
+										<DataColumn label={'Category'} value={score.category} />
+									</DataRow>
 								);
 							})}
-						</Block>
+						</Data>
 					</div>
 
 					<p>

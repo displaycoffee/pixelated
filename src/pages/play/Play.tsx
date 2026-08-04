@@ -282,7 +282,7 @@ export const Guess = () => {
 	const hasHints = hintsLength < 3;
 
 	// Use custom hook to get hints
-	const [hintsData, hintsRefetch] = useReactQuery('hints', settingsCategory, questionId, hintId) as HintsRequestType;
+	const [hintsData, hintsRefetch, hintsStatus] = useReactQuery('hints', settingsCategory, questionId, hintId) as HintsRequestType;
 	useEffect(() => {
 		if (hintsData) {
 			// Update game when hints are fetched
@@ -306,7 +306,7 @@ export const Guess = () => {
 	};
 
 	// Use custom hook to get answers
-	const [answersData, _answersRefetch] = useReactQuery(
+	const [answersData, _answersRefetch, answersStatus] = useReactQuery(
 		'answers',
 		settingsCategory,
 		questionId,
@@ -381,8 +381,18 @@ export const Guess = () => {
 		<>
 			{current.status == 'incorrect' || current.status == 'close' ? <Status status={current.status} /> : null}
 
+			{hintsStatus.error || answersStatus.error ? (
+				<div className="status" role="alert">
+					<p>😵 Something went wrong. Please try again.</p>
+				</div>
+			) : null}
+
 			<Form className={'guess'} onSubmit={(e) => submitGuess(e)}>
 				<FormField className={'guess-field'}>
+					<label htmlFor={questionId} className="sr-only">
+						Guess
+					</label>
+
 					<FormFieldWrapper hasSelect={false}>
 						<input id={questionId} name="guess" type="text" placeholder="Guess the pixels." />
 					</FormFieldWrapper>
@@ -412,6 +422,7 @@ export const Points = () => {
 	const { game } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
+	const isFinal = current.round == 'round5';
 
 	return (
 		<div className="points">
@@ -426,7 +437,7 @@ export const Points = () => {
 					<strong>Total:</strong> {current.points}
 				</p>
 
-				{current.round == 'round5' && current.points == 500 ? <p className="flawless-victory">Flawless Victory</p> : null}
+				{isFinal && current.points == 500 ? <p className="flawless-victory">Flawless Victory</p> : null}
 			</Block>
 		</div>
 	);
@@ -450,7 +461,7 @@ export const Status = (props: ObjectPrimitiveProps) => {
 
 	return (
 		<>
-			<div className="status">
+			<div className="status" role="status">
 				<p>{message}</p>
 			</div>
 
@@ -553,7 +564,22 @@ export const Pagination = (props: PaginationProps) => {
 	const hasNext = currentRound.status != 'pending' && current.round != 'round6';
 	const isDesktop = useRespond(theme.bps.bp01 as number);
 	const handleTransition = useViewTransition();
+	const isFinal = current.round == 'round5';
 
+	// Set button labels
+	let previousLabel = 'Previous';
+	let previousAriaLabel = '';
+	let nextLabel = isFinal ? 'Game End' : 'Next';
+	let nextAriaLabel = '';
+
+	if (!isDesktop) {
+		previousAriaLabel = 'Previous';
+		previousLabel = '<';
+		nextAriaLabel = isFinal ? '' : 'Next';
+		nextLabel = isFinal ? 'Game End' : '>';
+	}
+
+	// Navigation to round
 	const goToRound = (direction: string) => {
 		if (hasPrevious && direction == 'previous') {
 			const previousRound = `round${roundNumber - 1}` as keyof GameType['rounds'];
@@ -588,14 +614,24 @@ export const Pagination = (props: PaginationProps) => {
 		<div className="pagination">
 			<div className="row row-auto row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
 				<div className="column">
-					<Button className="pagination-previous" onClick={(e) => handleTransition(e, () => goToRound('previous'))} disabled={!hasPrevious}>
-						{isDesktop ? 'Previous' : '<'}
+					<Button
+						ariaLabel={previousAriaLabel}
+						className="pagination-previous"
+						onClick={(e) => handleTransition(e, () => goToRound('previous'))}
+						disabled={!hasPrevious}
+					>
+						{previousLabel}
 					</Button>
 				</div>
 
 				<div className="column">
-					<Button className="pagination-next" onClick={(e) => handleTransition(e, () => goToRound('next'))} disabled={!hasNext}>
-						{current.round == 'round5' ? 'Game End' : isDesktop ? 'Next' : '>'}
+					<Button
+						ariaLabel={nextAriaLabel}
+						className="pagination-next"
+						onClick={(e) => handleTransition(e, () => goToRound('next'))}
+						disabled={!hasNext}
+					>
+						{nextLabel}
 					</Button>
 				</div>
 

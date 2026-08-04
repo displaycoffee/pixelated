@@ -22,6 +22,7 @@ export const useReactQuery = (key: string, category: CategoryType, questionId: s
 	// Create query request
 	const {
 		data: data,
+		isError: isError,
 		isPending: isPending,
 		isSuccess: isSuccess,
 		isFetched: isFetched,
@@ -32,7 +33,7 @@ export const useReactQuery = (key: string, category: CategoryType, questionId: s
 		enabled: requestData,
 	});
 
-	return [data, refetch, { fetched: isFetched, pending: isPending, success: isSuccess }];
+	return [data, refetch, { error: isError, fetched: isFetched, pending: isPending, success: isSuccess }];
 };
 
 export const useRespond = (bp: number) => {

@@ -16,7 +16,6 @@ const Scoreboard = lazy(() => import('../../../pages/scoreboard/Scoreboard').the
 export const navigation: NavigationType[] = [
 	{
 		id: 0,
-		alt: 'Play',
 		element: Play,
 		isRoute: true,
 		label: 'Play',
@@ -25,7 +24,6 @@ export const navigation: NavigationType[] = [
 	},
 	{
 		id: 1,
-		alt: 'About',
 		element: About,
 		isRoute: true,
 		label: 'About',
@@ -34,7 +32,6 @@ export const navigation: NavigationType[] = [
 	},
 	{
 		id: 2,
-		alt: 'Rules',
 		element: Rules,
 		isRoute: true,
 		label: 'Rules',
@@ -43,7 +40,6 @@ export const navigation: NavigationType[] = [
 	},
 	{
 		id: 3,
-		alt: 'Scoreboard',
 		element: Scoreboard,
 		isRoute: true,
 		label: 'Scoreboard',
@@ -56,7 +52,6 @@ export const navigation: NavigationType[] = [
 if (variables.paths.api.includes('localhost')) {
 	navigation.push({
 		id: 4,
-		alt: 'Pixels Gallery',
 		element: PixelsGallery,
 		isRoute: true,
 		label: 'Pixels Gallery',

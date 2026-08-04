@@ -9,6 +9,14 @@ export const utils: UtilsType = {
 		}
 		return valueArray[valueArray.length - 1] ?? '';
 	},
+	handleize: (value: string) => {
+		// Format value for html classes
+		return value
+			.toLowerCase()
+			.trim()
+			.replace(/[^\w\s]/g, '')
+			.replace(/\s/g, '-');
+	},
 	scrollTo: (e?: EventsType, selector?: string, offset?: number) => {
 		// Scroll to element on page
 		if (e) {
