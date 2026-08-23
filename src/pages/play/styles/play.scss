@@ -10,11 +10,6 @@
 
 	.play {
 		margin: 0 auto;
-		.settings {			
-			.form-actions {
-				text-align: left;
-			}
-		}
 		.round {
 			& > * {
 				margin: 0 0 theme.$spacing-x4 0;
@@ -119,7 +114,7 @@
 		.play {
 			.settings {
 				.form-actions {
-					text-align: right;
+					@include mixins.flex-parent(justify-content, flex-end)
 				}
 			}
 			.round .actions, .pagination {

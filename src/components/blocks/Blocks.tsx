@@ -4,16 +4,13 @@ import './styles/blocks.scss';
 /* Scripts */
 import {
 	BlockProps,
+	PixelatedProps,
 	ButtonAttributesType,
 	ButtonProps,
 	DataProps,
 	DataAttributesType,
 	DataColumnProps,
 	DataRowProps,
-	FormProps,
-	FormActionsProps,
-	FormFieldProps,
-	FormFieldWrapperProps,
 } from './scripts/blocks-types';
 import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
@@ -23,6 +20,13 @@ export const Block = (props: BlockProps) => {
 	const blockClass = className ? `${className} ` : '';
 
 	return <div className={`${blockClass}block${columns ? ' block-columns' : ''} pixelated`}>{children}</div>;
+};
+
+export const Pixelated = (props: PixelatedProps) => {
+	const { children, className } = props;
+	const pixelatedClass = className ? `${className} ` : '';
+
+	return <div className={`${pixelatedClass}pixelated`}>{children}</div>;
 };
 
 export const Button = (props: ButtonProps) => {
@@ -129,55 +133,6 @@ export const DataColumn = (props: DataColumnProps) => {
 				</>
 			)}
 			{value ? value : ''}
-		</div>
-	);
-};
-
-export const Form = (props: FormProps) => {
-	const { children, className, onSubmit } = props;
-	const formClass = className ? `${className} ` : '';
-
-	return (
-		<form className={`${formClass}form margin-trim`} onSubmit={(e) => onSubmit(e)}>
-			{children}
-		</form>
-	);
-};
-
-export const FormActions = (props: FormActionsProps) => {
-	const { children, className } = props;
-	const formActionsClass = className ? `${className} ` : '';
-
-	return <div className={`${formActionsClass}form-actions`}>{children}</div>;
-};
-
-export const FormField = (props: FormFieldProps) => {
-	const { children, className, description, id, label } = props;
-	const formFieldClass = className ? `${className} ` : '';
-
-	return (
-		<div className={`${formFieldClass}form-field flex-wrap flex-align-items-center flex-justify-content-center`}>
-			{label ? id ? <label htmlFor={id}>{label}:</label> : <label>{label}:</label> : null}
-
-			{children}
-
-			{description ? <p className="form-field-description">{description}</p> : null}
-		</div>
-	);
-};
-
-export const FormFieldWrapper = (props: FormFieldWrapperProps) => {
-	const { children, hasSelect } = props;
-
-	return (
-		<div className="form-field-wrapper pixelated">
-			{children}
-
-			{hasSelect ? (
-				<span className="form-field-arrow" aria-hidden="true">
-					^
-				</span>
-			) : null}
 		</div>
 	);
 };

@@ -4,6 +4,9 @@ import './styles/footer.scss';
 /* Packages */
 import { useCookies } from 'react-cookie';
 
+/* Components */
+import { LinkExternal } from '../../components/blocks-2/Blocks';
+
 export const Footer = () => {
 	const [cookies, _setCookie, removeCookie] = useCookies(['scoreboard']);
 	const hasScoreboard = cookies?.scoreboard;
@@ -12,10 +15,7 @@ export const Footer = () => {
 	return (
 		<footer className="footer">
 			<p>
-				&copy; {date}{' '}
-				<a href="//display.coffee" target="_blank" rel="noreferrer">
-					displaycoffee
-				</a>
+				&copy; {date} <LinkExternal href="//display.coffee">displaycoffee</LinkExternal>
 				{hasScoreboard ? (
 					<>
 						<span> - </span>

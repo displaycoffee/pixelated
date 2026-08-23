@@ -102,66 +102,6 @@
 			}
 		}
 	}
-	.form {
-		& > * {
-			margin: 0 0 theme.$spacing-x2;
-		}
-	}
-	.form-field {
-		@include mixins.gap(theme.$spacing-x2);
-		text-align: left;
-		label, .form-field-wrapper, .form-field-description {
-			@include mixins.flex(1 1 100%);
-		}
-		.form-field-description {
-			margin: 0;
-			font-size: functions.em(12px, rem);
-		}
-	}
-	.form-field-wrapper {
-		background-color: theme.$color-06;
-		border-left: $pixel-size solid theme.$color-04;
-		border-right: $pixel-size solid theme.$color-04;
-		&:has(.form-field-arrow) select {
-			padding-right: theme.$spacing-x8;
-		}
-		&:before, &:after {
-			background-color: theme.$color-04;
-		}
-		select, input {
-			width: 100%;
-			border: 0;
-			background-color: transparent;
-		}
-		input {
-			@include mixins.placeholder {
-				color: theme.$color-08;
-			}
-		}
-		.form-field-arrow {
-			display: block;
-			@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: theme.$spacing-x4);
-			@include mixins.transform(rotate(180deg));
-			font-size: functions.em(24px, rem);
-			line-height: 24px;
-			height: 24px;
-			margin: 0 auto;
-		}
-	}
-	@include mixins.respond-min(theme.$bp-01) {
-		.form-field {
-			label {
-				@include mixins.flex(0 1 auto);
-				min-width: $set-width;
-			}
-			.form-field-wrapper {
-				@include mixins.flex;
-			}
-			.form-field-description {
-				padding: 0 0 0 $set-width + theme.$spacing-x2;
-			}
-		}
-	}
 	@include mixins.respond-min(theme.$bp-02) {
 		.data {
 			text-align: left;

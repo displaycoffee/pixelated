@@ -13,7 +13,9 @@ import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
 /* Components */
-import { Block, Button, Form, FormActions, FormField, FormFieldWrapper } from '../../components/blocks/Blocks';
+import { Block, Button } from '../../components/blocks/Blocks';
+import { List } from '../../components/blocks-2/Blocks';
+import { Form, FormActions, Input, Select } from '../../components/forms/Forms';
 
 export const Play = () => {
 	const { game } = useAppContext();
@@ -225,43 +227,41 @@ export const Settings = () => {
 			<h2>Choose settings</h2>
 
 			<Form className={'settings'} onSubmit={(e) => submitSettings(e)}>
-				<FormField className={'settings-select'} id={'settings-difficulty'} label={'Difficulty'} description={descriptions.difficulty}>
-					<FormFieldWrapper hasSelect={true}>
-						<select
-							id="settings-difficulty"
-							name="difficulty"
-							defaultValue={difficulty[2].id}
-							onChange={(e) => updateDescriptions(e, 'difficulty')}
-						>
-							{difficulty.map((diff) => {
-								return (
-									<option value={diff.id} key={diff.id}>
-										{diff.name}
-									</option>
-								);
-							})}
-						</select>
-					</FormFieldWrapper>
-				</FormField>
+				<Select
+					className={'settings-select'}
+					id={'settings-difficulty'}
+					label={'Difficulty:'}
+					name={'difficulty'}
+					defaultValue={difficulty[2].id}
+					onChange={(e) => updateDescriptions(e, 'difficulty')}
+					description={descriptions.difficulty}
+				>
+					{difficulty.map((diff) => {
+						return (
+							<option value={diff.id} key={diff.id}>
+								{diff.name}
+							</option>
+						);
+					})}
+				</Select>
 
-				<FormField className={'settings-select'} id={'settings-category'} label={'Category'} description={descriptions.categories}>
-					<FormFieldWrapper hasSelect={true}>
-						<select
-							id="settings-category"
-							name="category"
-							defaultValue={categories[0].id}
-							onChange={(e) => updateDescriptions(e, 'categories')}
-						>
-							{categories.map((category) => {
-								return (
-									<option value={category.id} key={category.id}>
-										{category.name}
-									</option>
-								);
-							})}
-						</select>
-					</FormFieldWrapper>
-				</FormField>
+				<Select
+					className={'settings-select'}
+					id={'settings-category'}
+					label={'Category:'}
+					name={'category'}
+					defaultValue={categories[0].id}
+					onChange={(e) => updateDescriptions(e, 'categories')}
+					description={descriptions.categories}
+				>
+					{categories.map((category) => {
+						return (
+							<option value={category.id} key={category.id}>
+								{category.name}
+							</option>
+						);
+					})}
+				</Select>
 
 				<FormActions className={'settings-actions'}>
 					<Button>Submit</Button>
@@ -388,27 +388,28 @@ export const Guess = () => {
 			) : null}
 
 			<Form className={'guess'} onSubmit={(e) => submitGuess(e)}>
-				<FormField className={'guess-field'}>
+				<Input className={'guess-field'} hideLabel={true} id={questionId} label={'Guess'} placeholder={'Guess the pixels.'} />
+				{/* <Input className={'guess-field'} hideLabel={true} id={questionId} label={'Guess'} placeholder={'Guess the pixels.'}>
 					<label htmlFor={questionId} className="sr-only">
 						Guess
 					</label>
 
 					<FormFieldWrapper hasSelect={false}>
-						<input id={questionId} name="guess" type="text" placeholder="Guess the pixels." />
+						<input id={questionId} name="guess" type="text" placeholder="" />
 					</FormFieldWrapper>
 
 					<Button className="guess-submit">Submit</Button>
-				</FormField>
+				</Input> */}
 			</Form>
 
 			{currentRound.hints.length !== 0 ? (
 				<div className="hints">
 					<Block>
-						<ul>
+						<List>
 							{currentRound.hints.map((hint) => (
 								<li key={hint}>{hint}</li>
 							))}
-						</ul>
+						</List>
 					</Block>
 				</div>
 			) : null}

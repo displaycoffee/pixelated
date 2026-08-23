@@ -1,11 +1,17 @@
 /* Packages */
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useId, useState } from 'react';
 import { flushSync } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 /* Scripts */
 import { requests } from './requests';
+
+export const useFormattedId = () => {
+	// Updates the format of useId hook
+	const id = useId();
+	return id.slice(1, -1).replace(/^_|_$/g, '').replace(/_/g, '-');
+};
 
 export const useReactQuery = (key: string, category: CategoryType, questionId: string, content: string, guessNumber?: number) => {
 	// Note: Content is either the hintId or the user's guess
