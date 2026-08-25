@@ -5,7 +5,8 @@ import './styles/footer.scss';
 import { useCookies } from 'react-cookie';
 
 /* Components */
-import { LinkExternal } from '../../components/blocks-2/Blocks';
+import { LinkExternal } from '../../components/blocks/Blocks';
+import { Button } from '../../components/forms/Forms';
 
 export const Footer = () => {
 	const [cookies, _setCookie, removeCookie] = useCookies(['scoreboard']);
@@ -19,9 +20,7 @@ export const Footer = () => {
 				{hasScoreboard ? (
 					<>
 						<span> - </span>
-						<button className="a unstyled" aria-label="Clear Scoreboard" type="button" onClick={() => removeCookie('scoreboard')}>
-							Clear Scoreboard
-						</button>
+						<Button label={'Clear Scoreboard'} variant={'link'} onClick={() => removeCookie('scoreboard')} />
 					</>
 				) : null}
 			</p>

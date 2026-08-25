@@ -4,13 +4,13 @@ import './styles/blocks.scss';
 /* Scripts */
 import {
 	BlockProps,
-	PixelatedProps,
-	ButtonAttributesType,
-	ButtonProps,
 	DataProps,
 	DataAttributesType,
 	DataColumnProps,
 	DataRowProps,
+	LinkExternalProps,
+	ListProps,
+	PixelatedProps,
 } from './scripts/blocks-types';
 import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
@@ -20,51 +20,6 @@ export const Block = (props: BlockProps) => {
 	const blockClass = className ? `${className} ` : '';
 
 	return <div className={`${blockClass}block${columns ? ' block-columns' : ''} pixelated`}>{children}</div>;
-};
-
-export const Pixelated = (props: PixelatedProps) => {
-	const { children, className } = props;
-	const pixelatedClass = className ? `${className} ` : '';
-
-	return <div className={`${pixelatedClass}pixelated`}>{children}</div>;
-};
-
-export const Button = (props: ButtonProps) => {
-	const { ariaLabel, children, className, disabled, onClick } = props;
-	const buttonClass = className ? `${className} ` : '';
-
-	// Set up button attributes
-	// Note: only set aria-label when overriding the visible text (e.g. an abbreviated label);
-	// otherwise let the browser derive the accessible name from the button's own content
-	let buttonAttributes: ButtonAttributesType = {
-		className: `${buttonClass}button pixelated`,
-		type: `submit`,
-	};
-	if (ariaLabel) {
-		buttonAttributes = {
-			...buttonAttributes,
-			'aria-label': ariaLabel,
-		};
-	}
-	if (onClick) {
-		buttonAttributes = {
-			...buttonAttributes,
-			type: `button`,
-			onClick: (e) => onClick(e),
-		};
-	}
-	if (disabled) {
-		buttonAttributes = {
-			...buttonAttributes,
-			disabled: disabled,
-		};
-	}
-
-	return (
-		<button {...buttonAttributes}>
-			<span>{children}</span>
-		</button>
-	);
 };
 
 export const Data = (props: DataProps) => {
@@ -135,4 +90,38 @@ export const DataColumn = (props: DataColumnProps) => {
 			{value ? value : ''}
 		</div>
 	);
+};
+
+export const LinkExternal = (props: LinkExternalProps) => {
+	const { children, className, href, ...rest } = props;
+
+	return (
+		<a className={className} href={href} target="_blank" rel="noreferrer" {...rest}>
+			{children}
+			<span className="sr-only"> (opens in a new tab)</span>
+		</a>
+	);
+};
+
+export const List = (props: ListProps) => {
+	const { children, className: propClassName, reversed, start, type: listType, variant = 'ul', ...rest } = props;
+	const isOrdered = variant.includes('ol');
+	const isUnstyled = variant.includes('unstyled');
+	const Tag = isOrdered ? 'ol' : 'ul';
+	const classes = `list-${isUnstyled ? 'unstyled' : isOrdered ? 'ordered' : 'unordered'}`;
+	const className = propClassName ? `${propClassName} ${classes}` : classes;
+	const olAttributes = isOrdered ? { reversed, start, type: listType } : {};
+
+	return (
+		<Tag className={className} {...rest} {...olAttributes}>
+			{children}
+		</Tag>
+	);
+};
+
+export const Pixelated = (props: PixelatedProps) => {
+	const { children, className } = props;
+	const pixelatedClass = className ? `${className} ` : '';
+
+	return <div className={`${pixelatedClass}pixelated`}>{children}</div>;
 };

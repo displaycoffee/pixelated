@@ -30,27 +30,35 @@
 	legend {
 		display: inline;
 	}
+	.disabled {
+		opacity: 0.65;
+		cursor: not-allowed;
+	}
 
 //// FORMS - BUTTON
 //// --------------------------------------------------------------------------
 
 	// Colors
 
-	$forms-button-color-01: theme.$color-04; // primary button background
-	$forms-button-color-02: theme.$color-04; // primary button border
+	$forms-button-color-01: theme.$color-05; // primary button background
+	$forms-button-color-02: theme.$color-05; // primary button border
 	$forms-button-color-03: theme.$color-03; // primary button color	
-	$forms-button-color-04: theme.$color-05; // secondary button background
-	$forms-button-color-05: theme.$color-05; // secondary button border
+	$forms-button-color-04: theme.$color-04; // secondary button background
+	$forms-button-color-05: theme.$color-04; // secondary button border
 	$forms-button-color-06: theme.$color-03; // secondary button color	
-	$forms-button-color-07: theme.$color-03; // tertiary button background
-	$forms-button-color-08: theme.$color-04; // tertiary button border
-	$forms-button-color-09: theme.$color-04; // tertiary button color
+	$forms-button-color-07: theme.$color-02; // tertiary button background
+	$forms-button-color-08: theme.$color-02; // tertiary button border
+	$forms-button-color-09: theme.$color-03; // tertiary button color
 
 	// Configuration
 	
 	$forms-button-spacing: 0 theme.$spacing-x4; // button spacing
 	$forms-button-height: 34px; // button height
-	$forms-button-border-width: 1px; // button border width
+	$forms-button-border-width: 4px; // button border width
+
+	// Variables
+
+	$forms-button-pixel-size: if($forms-button-border-width != false, $forms-button-border-width, 4px);
 
 	// Style block
 
@@ -59,142 +67,80 @@
 		@include mixins.gap(theme.$spacing-x1);
 	}
 	.button {
+		position: relative;
 		max-width: 100%;
 		@include mixins.if-exists((
 			padding: $forms-button-spacing,
 		));
-		@if $forms-button-border-width != false {
-			border: $forms-button-border-width solid transparent;
-		}
+		border: $forms-button-pixel-size solid transparent;
+		border-top: 0;
+		border-bottom: 0;
+		margin: $forms-button-pixel-size 0;
 		height: $forms-button-height;
 		line-height: $forms-button-height;
+		&:before, &:after {
+			content: '';
+			display: block;
+			@include mixins.position($type: absolute, $left: 0, $right: 0);
+			margin: auto;
+			height: $forms-button-pixel-size;
+		}
+		&:before {
+			top: -#{$forms-button-pixel-size};
+		}
+		&:after {
+			bottom: -#{$forms-button-pixel-size};
+		}		
+		&:focus, &:focus-visible {
+			outline: 0;
+			border-left-color: theme.$color-04;
+			border-right-color: theme.$color-04;
+			&:before, &:after {
+				background-color: theme.$color-04;
+			}
+		}
 		.button-label {
 			line-height: 1.5;
 			@include mixins.ellipsis;
 		}
 	}
 	.button-primary {
-		@if $forms-button-border-width != false and $forms-button-color-02 != false {
+		@if $forms-button-color-02 != false {
 			border-color: $forms-button-color-02;
 		}
-		background-color: $forms-button-color-01;
 		color: $forms-button-color-03;
-		&:hover {
-			@include mixins.if-exists((
-				background-color: $forms-button-color-03,
-				color: $forms-button-color-01,
-			));
+		&, &:before, &:after {
+			background-color: $forms-button-color-01;
 		}
 	}
 	.button-secondary {
-		@if $forms-button-border-width != false and $forms-button-color-05 != false {
+		@if $forms-button-color-05 != false {
 			border-color: $forms-button-color-05;
 		}
 		@include mixins.if-exists((
 			background-color: $forms-button-color-04,
 			color: $forms-button-color-06,
 		));
-		&:hover {
-			@include mixins.if-exists((
-				background-color: $forms-button-color-06,
-				color: $forms-button-color-04,
-			));
+		&, &:before, &:after {
+			background-color: $forms-button-color-04;
 		}
 	}
 	.button-tertiary {
-		@if $forms-button-border-width != false and $forms-button-color-08 != false {
+		@if $forms-button-color-08 != false {
 			border-color: $forms-button-color-08;
 		}
 		@include mixins.if-exists((
 			background-color: $forms-button-color-07,
 			color: $forms-button-color-09,
 		));
-		&:hover {
-			@include mixins.if-exists((
-				background-color: $forms-button-color-09,
-				color: $forms-button-color-07,
-			));
+		&, &:before, &:after {
+			background-color: $forms-button-color-07;
 		}
 	}
 	.button-unstyled {
 		padding: 0;
 		border: 0;
 		background-color: transparent;
-	}
-
-//// FORMS - CHOICE
-//// --------------------------------------------------------------------------
-
-	// Colors
-
-	$forms-choice-color-01: theme.$color-03; // choice background
-	$forms-choice-color-02: theme.$color-04; // choice border
-	$forms-choice-color-03: theme.$color-03; // active choice background
-	$forms-choice-color-04: theme.$color-04; // active choice border
-	$forms-choice-color-05: theme.$color-04; // active choice color
-
-	// Configuration
-	
-	$forms-choice-size: 16px; // choice height
-	$forms-choice-vertical: 3px; // vertical position of choice
-	$forms-choice-horizontal: 0; // horizontal position of choice
-	$forms-choice-alignment: left; // choice aligned left or right
-	$forms-choice-spacing: theme.$spacing-x2; // spacing between checkbox and label
-	$forms-choice-border-width: 1px; // choice border width
-	$forms-choice-active-border-width: false; // active choice border width
-
-	// Variables
-
-	$forms-choice-align: if($forms-choice-alignment == left or $forms-choice-alignment == right, $forms-choice-alignment, left);
-
-	// Style block
-
-	.choice-wrapper {
-		position: relative;
-		padding: 0;
-		padding-#{$forms-choice-align}: $forms-choice-size + $forms-choice-horizontal + $forms-choice-spacing;
-		.icon-wrapper {
-			@include mixins.sizing($forms-choice-size, $forms-choice-size);
-			@include mixins.position($type: absolute, $top: $forms-choice-vertical);
-			#{$forms-choice-align}: $forms-choice-horizontal;
-			padding: 3px;
-			@include mixins.if-exists((
-				background-color: $forms-choice-color-01,
-			));
-			@if $forms-choice-border-width != false and $forms-choice-color-02 != false {
-				border: $forms-choice-border-width solid $forms-choice-color-02;
-			}
-			.icon {
-				@include mixins.sizing(100%, 100%);
-			}
-		}
-	}
-	.choice-wrapper-checkbox {
-		.icon-wrapper {}
-	}
-	.choice-wrapper-radio {
-		.icon-wrapper {
-			&, .icon {
-				@include mixins.border-radius(50%);
-			}
-		}
-	}
-	.choice-wrapper-active {
-		&.choice-wrapper-radio {
-			.icon-wrapper .icon {
-				@include mixins.if-exists((
-					background-color: $forms-choice-color-05,
-				));
-			}
-		}
-		.icon-wrapper {
-			@include mixins.if-exists((
-				background-color: $forms-choice-color-03,
-				border-color: $forms-choice-color-04,
-				border-width: $forms-choice-active-border-width,
-				color: $forms-choice-color-05,
-			));
-		}
 	}
 
 //// FORMS - DESCRIPTION
@@ -325,12 +271,7 @@
 	.form-field-wrapper {
 		.pixelated {
 			width: 100%;
-			background-color: theme.$color-06;
-			border-left: $forms-form-wrapper-pixel-size solid theme.$color-04;
-			border-right: $forms-form-wrapper-pixel-size solid theme.$color-04;
-			&:before, &:after {
-				background-color: theme.$color-04;
-			}
+			padding: 0;
 		}
 		.select, .input-freeform {
 			border: 0;
@@ -457,40 +398,5 @@
 			line-height: 1;
 			height: 12px;
 			margin: auto 0;
-		}
-	}
-
-//// FORMS - TEXTAREA
-//// --------------------------------------------------------------------------
-
-	// Colors
-
-	$forms-textarea-color-01: theme.$color-06; // textarea background
-	$forms-textarea-color-02: theme.$color-04; // textarea border
-	$forms-textarea-color-03: theme.$color-04; // textarea color
-
-	// Configuration
-	
-	$forms-textarea-spacing: theme.$spacing-x4; // textarea spacing
-	$forms-textarea-min-height: 150px; // textarea min-height
-	$forms-textarea-border-width: 1px; // textarea border width
-
-	// Style block
-
-	.textarea {
-		@include mixins.sizing(100%, auto);
-		@include mixins.if-exists((
-			min-height: $forms-textarea-min-height,
-			padding: $forms-textarea-spacing,
-			background-color: $forms-textarea-color-01,
-			color: $forms-textarea-color-03,
-		));
-		@if $forms-textarea-border-width != false and $forms-textarea-color-02 != false {
-			border: $forms-textarea-border-width solid $forms-textarea-color-02;
-		}
-		@if $forms-textarea-color-03 != false {
-			@include mixins.placeholder {
-				color: rgba($forms-textarea-color-03, 50%);
-			}
 		}
 	}

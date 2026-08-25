@@ -1,5 +1,5 @@
 /* Packages */
-import { ButtonHTMLAttributes, FormHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, FormHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
 
 /* Shared field concerns for form controls with a label / error / required state */
 type Field = {
@@ -26,15 +26,6 @@ type ButtonScroll = Omit<Button, 'onClick' | 'type' | 'variant'> & {
 	offset?: number;
 	target: string;
 };
-
-type Choice = {
-	active?: boolean;
-	className?: string;
-	hideLabel?: boolean;
-	id: string;
-	label: string;
-	type?: 'checkbox' | 'radio';
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'className' | 'required' | 'type'>;
 
 type Description = {
 	description?: string;
@@ -105,14 +96,10 @@ type Select = Field & {
 	icon?: string;
 } & Omit<SelectHTMLAttributes<HTMLSelectElement>, 'children' | 'className' | 'required'>;
 
-type Textarea = Field & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'children' | 'className' | 'required'>;
-
 /* Export prop types */
 export type ButtonProps = Button;
 
 export type ButtonScrollProps = ButtonScroll;
-
-export type ChoiceProps = Choice;
 
 export type DescriptionProps = Description;
 
@@ -133,5 +120,3 @@ export type InputProps = Input;
 export type RequiredProps = Required;
 
 export type SelectProps = Select;
-
-export type TextareaProps = Textarea;

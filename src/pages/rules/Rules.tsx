@@ -5,7 +5,7 @@ import './styles/rules.scss';
 import { difficulty } from '../play/scripts/difficulty';
 
 /* Components */
-import { List } from '../../components/blocks-2/Blocks';
+import { List } from '../../components/blocks/Blocks';
 
 export const Rules = () => {
 	return (

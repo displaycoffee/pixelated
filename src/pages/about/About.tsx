@@ -2,7 +2,7 @@
 import { NavLink } from 'react-router-dom';
 
 /* Components */
-import { LinkExternal } from '../../components/blocks-2/Blocks';
+import { LinkExternal } from '../../components/blocks/Blocks';
 
 export const About = () => {
 	return (

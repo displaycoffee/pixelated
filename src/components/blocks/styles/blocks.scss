@@ -8,36 +8,15 @@
 
 	// Configuration
 
-	$set-width: 130px;
 	$pixel-size: 4px;
+
+//// BLOCKS - BLOCK
+//// --------------------------------------------------------------------------
 
 	// Style block
 
-	.pixelated {
-		position: relative;
-		display: inline-block;
-		border: 0;
-		margin: $pixel-size 0;
-		&:before, &:after {
-			content: '';
-			display: block;
-			@include mixins.position($type: absolute, $left: 0, $right: 0);
-			margin: auto;
-			height: $pixel-size;
-		}
-		&:before {
-			top: -#{$pixel-size};
-		}
-		&:after {
-			bottom: -#{$pixel-size};
-		}
-	}
 	.block {
 		width: 100%;
-		padding: theme.$spacing-x4;
-		background-color: theme.$color-06;
-		border-left: $pixel-size solid theme.$color-04;
-		border-right: $pixel-size solid theme.$color-04;
 		&.block-columns {
 			@include mixins.flex-layout((display: inline-flex));
 			@include mixins.gap(theme.$spacing-x1 theme.$spacing-x2);
@@ -49,9 +28,6 @@
 				margin: 0;
 			}
 		}
-		&:before, &:after {
-			background-color: theme.$color-04;
-		}
 		p {
 			margin: 0 0 theme.$spacing-x1 0;
 			&:last-child {
@@ -59,31 +35,12 @@
 			}
 		}
 	}
-	.button {
-		min-width: $set-width;
-		border-left: $pixel-size solid theme.$color-05;
-		border-right: $pixel-size solid theme.$color-05;
-		color: theme.$color-03;
-		&, &:before, &:after {
-			background-color: theme.$color-05;
-		}
-		&:focus, &:focus-visible, &:focus-visible {
-			outline: 0;
-			border-left-color: theme.$color-04;
-			border-right-color: theme.$color-04;
-			&:before, &:after {
-				background-color: theme.$color-04;
-			}
-		}
-		span {
-			display: block;
-			@include mixins.ellipsis;
-		}
-		&[disabled] {
-			opacity: 0.65;
-			cursor: not-allowed;
-		}
-	}
+
+//// BLOCKS - DATA
+//// --------------------------------------------------------------------------
+
+	// Style block
+
 	.data {
 		p {
 			margin: 0;
@@ -112,3 +69,81 @@
 			}
 		}
 	}
+
+//// BLOCKS - LIST
+//// --------------------------------------------------------------------------
+
+	// Configuration
+	
+	$blocks-list-spacing: theme.$spacing-x4; // spacing for list elements
+
+	// Style block
+
+	.list-ordered, .list-unordered, .list-unstyled {
+		list-style: none;
+		padding: 0;
+	}
+	.list-ordered, .list-unordered {
+		margin: 0 0 theme.$spacing-x4 0;
+		& > li {
+			position: relative;
+			margin: 0 0 calc($blocks-list-spacing / 8) 0;
+			padding: 0 0 0 $blocks-list-spacing + 10;
+			&:before {
+				display: block;
+				@include mixins.position($type: absolute, $left: 0);
+			}
+			&:last-child, ul, ol {
+				margin-bottom: 0;
+			}
+		}
+	}
+	.list-ordered {
+		counter-reset: section;
+		& > li:before {
+			top: 0;
+			counter-increment: section;
+			content: counter(section)'.';
+		}
+	}
+	.list-unordered {
+		& > li:before {
+			top: 2px;
+			content: '\002022';
+			font-size: functions.em(20px, rem);
+			line-height: 1;
+		}
+	}
+	.list-unstyled {
+		margin: 0;
+	}	
+
+//// BLOCKS - PIXELATED
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.pixelated {
+		position: relative;
+		display: inline-block;
+		margin: $pixel-size 0;
+		padding: theme.$spacing-x4;
+		background-color: theme.$color-06;
+		border: 0;
+		border-left: $pixel-size solid theme.$color-04;
+		border-right: $pixel-size solid theme.$color-04;
+		&:before, &:after {
+			content: '';
+			display: block;
+			@include mixins.position($type: absolute, $left: 0, $right: 0);
+			margin: auto;
+			height: $pixel-size;
+			background-color: theme.$color-04;
+		}
+		&:before {
+			top: -#{$pixel-size};
+		}
+		&:after {
+			bottom: -#{$pixel-size};
+		}
+	}	

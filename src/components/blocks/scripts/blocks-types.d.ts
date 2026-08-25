@@ -1,5 +1,5 @@
 /* Packages */
-import { ButtonHTMLAttributes, HTMLAttributes, MouseEvent } from 'react';
+import { AnchorHTMLAttributes, HTMLAttributes, OlHTMLAttributes, ReactNode } from 'react';
 
 /* Type definitions */
 type BlockShared = {
@@ -10,16 +10,6 @@ type BlockShared = {
 type Block = BlockShared & {
 	columns?: boolean;
 };
-
-type Pixelated = BlockShared;
-
-type Button = BlockShared & {
-	ariaLabel?: string;
-	disabled?: boolean;
-	onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-};
-
-type ButtonAttributes = ButtonHTMLAttributes<HTMLButtonElement>;
 
 type Data = {
 	children: ReactNode;
@@ -37,20 +27,34 @@ type DataRow = {
 	children: ReactNode;
 };
 
-/* Export types */
-export type ButtonAttributesType = ButtonAttributes;
+type Pixelated = BlockShared;
 
+type LinkExternal = {
+	children: ReactNode;
+	className?: string;
+	href: string;
+} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'className' | 'href' | 'rel' | 'target'>;
+
+type List = {
+	children: ReactNode;
+	className?: string;
+	variant?: 'ol' | 'ol-unstyled' | 'ul' | 'ul-unstyled';
+} & Omit<OlHTMLAttributes<HTMLOListElement>, 'children' | 'className' | 'variant'>;
+
+/* Export types */
 export type DataAttributesType = DataAttributes;
 
 /* Export prop types */
 export type BlockProps = Block;
-
-export type PixelatedProps = Pixelated;
-
-export type ButtonProps = Button;
 
 export type DataProps = Data;
 
 export type DataColumnProps = DataColumn;
 
 export type DataRowProps = DataRow;
+
+export type LinkExternalProps = LinkExternal;
+
+export type ListProps = List;
+
+export type PixelatedProps = Pixelated;

@@ -2,13 +2,12 @@
 import './styles/forms.scss';
 
 /* Packages */
-import { Children, createContext, isValidElement, useContext } from 'react';
+import { createContext } from 'react';
 
 /* Scripts */
 import {
 	ButtonProps,
 	ButtonScrollProps,
-	ChoiceProps,
 	DescriptionProps,
 	ErrorFieldProps,
 	FormProps,
@@ -19,14 +18,12 @@ import {
 	InputProps,
 	RequiredProps,
 	SelectProps,
-	TextareaProps,
 } from './scripts/forms-types';
 import { forms } from './scripts/forms';
 import { useAppContext } from '../../context/scripts/context-hooks';
 
 /* Components */
 import { Pixelated } from '../blocks/Blocks';
-import { Icon } from '../icons/Icons';
 
 /* Shares the enclosing FormField's id so grouped radios share a name without a Choice prop */
 const ChoiceGroupContext = createContext<string | undefined>(undefined);
@@ -35,7 +32,7 @@ export const Button = (props: ButtonProps) => {
 	const { children, className: propClassName, hideLabel = false, label, type = 'button', variant = 'primary', ...rest } = props;
 	const buttonClass = variant != 'unstyled' && variant != 'link' ? 'button ' : '';
 	const variantClass = variant == 'link' ? `button-${variant} button-unstyled a` : `button-${variant}`;
-	const className = forms.build.className(`${buttonClass}${variantClass} pointer`, propClassName);
+	const className = forms.build.className(`${buttonClass}${variantClass}`, propClassName, rest?.disabled, true);
 
 	return (
 		<button className={className} type={type} aria-label={hideLabel ? label : undefined} {...rest}>
@@ -51,40 +48,6 @@ export const ButtonScroll = (props: ButtonScrollProps) => {
 
 	return <Button variant="link" onClick={(e) => utils.scrollTo(e, target, offset)} {...rest} />;
 };
-
-export const Choice = (props: ChoiceProps) => {
-	const { active = false, className: propClassName, hideLabel = false, id, label, type = 'checkbox', ...rest } = props;
-	const className = forms.build.className(`choice choice-${type} sr-only`, propClassName);
-
-	// Radios must share a name to behave as a mutually exclusive group; checkboxes stay independent
-	const groupId = useContext(ChoiceGroupContext);
-	const name = type === 'radio' ? (groupId ?? id) : id;
-
-	return (
-		<div className={`choice-wrapper choice-wrapper-${type}${active ? ' choice-wrapper-active' : ''}`}>
-			{active ? (
-				type == 'radio' ? (
-					<div className="icon-wrapper">
-						<div className="icon icon-circle"></div>
-					</div>
-				) : (
-					<Icon id={'check-thin'} />
-				)
-			) : (
-				<div className="icon-wrapper"></div>
-			)}
-
-			<input id={id} className={className} name={name} type={type} {...rest} />
-
-			<label className={`label pointer${hideLabel ? ' sr-only' : ''}`} htmlFor={id}>
-				{label}
-			</label>
-		</div>
-	);
-};
-
-/* Display name for identifying choice elements */
-Choice.displayName = 'Choice';
 
 export const Form = (props: FormProps) => {
 	const { children, className: propClassName, ...rest } = props;
@@ -107,11 +70,7 @@ export const FormActions = (props: FormActionsProps) => {
 export const FormField = (props: FormFieldProps) => {
 	const { children, hideLabel, id, label, required } = props;
 	const className = forms.build.className(`form-field`, props?.className);
-
-	// Determine if children contain choice fields (checkboxes or radios)
-	const isChoice = Children.toArray(children).some(
-		(child) => isValidElement(child) && (child.type as { displayName?: string })?.displayName === 'Choice',
-	);
+	const isChoice = false;
 
 	// Create elements for form field
 	const Tag = isChoice ? 'fieldset' : 'div';
@@ -150,7 +109,8 @@ export const FormField = (props: FormFieldProps) => {
 export const Input = (props: InputProps) => {
 	const { className: propClassName, description = '', error = '', hideLabel = false, id, label, required = false, type = 'text', ...rest } = props;
 	const freeformFields = ['email', 'number', 'password', 'search', 'tel', 'text', 'url'];
-	const className = forms.build.className(`input input-${type}${freeformFields.includes(type) ? ' input-freeform' : ''}`, propClassName);
+	const inputClass = `input input-${type}${freeformFields.includes(type) ? ' input-freeform' : ''}`;
+	const className = forms.build.className(inputClass, propClassName, rest?.disabled);
 	const { descriptionId, errorId } = forms.get.ids({ description, error, id });
 
 	// Form field attributes
@@ -171,7 +131,7 @@ export const Input = (props: InputProps) => {
 
 export const Select = (props: SelectProps) => {
 	const { children, className: propClassName, description = '', error = '', hideLabel = false, id, label, required = false, ...rest } = props;
-	const className = forms.build.className(`select pointer`, propClassName);
+	const className = forms.build.className(`select`, propClassName, rest?.disabled, true);
 	const { descriptionId, errorId } = forms.get.ids({ description, error, id });
 
 	// Form field attributes
@@ -195,27 +155,7 @@ export const Select = (props: SelectProps) => {
 	);
 };
 
-export const Textarea = (props: TextareaProps) => {
-	const { className: propClassName, description = '', error = '', hideLabel = false, id, label, required = false, ...rest } = props;
-	const className = forms.build.className(`textarea`, propClassName);
-	const { descriptionId, errorId } = forms.get.ids({ description, error, id });
-
-	// Form field attributes
-	const formFieldAttributes = forms.build.formFieldAttributes({ hideLabel, id, label, required });
-
-	// Textarea attributes
-	const textareaAttributes = forms.build.fieldAttributes(id, className, descriptionId, error, errorId, required);
-
-	return (
-		<FormField {...formFieldAttributes}>
-			<textarea {...textareaAttributes} {...rest} />
-			<FormFieldDetails description={description} descriptionId={descriptionId} error={error} errorId={errorId} />
-		</FormField>
-	);
-};
-
 /* Components for forms only; not exported */
-
 const Description = (props: DescriptionProps) => {
 	const { description, id } = props;
 

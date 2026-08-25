@@ -13,9 +13,8 @@ import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
 /* Components */
-import { Block, Button } from '../../components/blocks/Blocks';
-import { List } from '../../components/blocks-2/Blocks';
-import { Form, FormActions, Input, Select } from '../../components/forms/Forms';
+import { Block, List } from '../../components/blocks/Blocks';
+import { Button, Form, FormActions, Input, Select } from '../../components/forms/Forms';
 
 export const Play = () => {
 	const { game } = useAppContext();
@@ -77,21 +76,18 @@ export const Round = () => {
 
 			{currentRound.status == 'game end' ? (
 				<div className="game-end flex-wrap flex-align-items-center flex-justify-content-center">
-					<Button onClick={() => resetGame()}>New Game?</Button>
+					<Button label={'New Game?'} onClick={() => resetGame()} />
 
-					<Button onClick={() => setScore()} disabled={current.scoreLogged}>
-						Log Score
-					</Button>
+					<Button label={'Log Score'} onClick={() => setScore()} disabled={current.scoreLogged} />
 
 					<Button
+						label={'Why Not Both?'}
 						onClick={() => {
 							setScore();
 							resetGame();
 						}}
 						disabled={current.scoreLogged}
-					>
-						Why Not Both?
-					</Button>
+					/>
 				</div>
 			) : (
 				<>
@@ -263,8 +259,8 @@ export const Settings = () => {
 					})}
 				</Select>
 
-				<FormActions className={'settings-actions'}>
-					<Button>Submit</Button>
+				<FormActions>
+					<Button label={'Submit'} type={'submit'} />
 				</FormActions>
 			</Form>
 		</>
@@ -387,19 +383,12 @@ export const Guess = () => {
 				</div>
 			) : null}
 
-			<Form className={'guess'} onSubmit={(e) => submitGuess(e)}>
-				<Input className={'guess-field'} hideLabel={true} id={questionId} label={'Guess'} placeholder={'Guess the pixels.'} />
-				{/* <Input className={'guess-field'} hideLabel={true} id={questionId} label={'Guess'} placeholder={'Guess the pixels.'}>
-					<label htmlFor={questionId} className="sr-only">
-						Guess
-					</label>
+			<Form className={'guess flex flex-nowrap flex-align-items-center'} onSubmit={(e) => submitGuess(e)}>
+				<Input className={'guess-field'} hideLabel={true} id={questionId} label={'Guess'} name={'guess'} placeholder={'Guess the pixels.'} />
 
-					<FormFieldWrapper hasSelect={false}>
-						<input id={questionId} name="guess" type="text" placeholder="" />
-					</FormFieldWrapper>
-
-					<Button className="guess-submit">Submit</Button>
-				</Input> */}
+				<FormActions>
+					<Button label={'Submit'} className={'guess-submit'} type={'submit'} />
+				</FormActions>
 			</Form>
 
 			{currentRound.hints.length !== 0 ? (
@@ -504,6 +493,7 @@ export const Actions = (props: ActionsProps) => {
 				<div className="row row-auto row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
 					<div className="column">
 						<Button
+							label={`${isDesktop ? 'Get ' : ''}Hint`}
 							className="actions-get-hint"
 							onClick={() => {
 								if (typeof getHint == 'function') {
@@ -513,13 +503,12 @@ export const Actions = (props: ActionsProps) => {
 								}
 							}}
 							disabled={!hasHints}
-						>
-							{isDesktop ? 'Get ' : ''}Hint
-						</Button>
+						/>
 					</div>
 
 					<div className="column">
 						<Button
+							label={`${isDesktop ? 'Get ' : ''}Answer`}
 							className="actions-get-answer"
 							onClick={() => {
 								if (!showAnswer) {
@@ -529,13 +518,12 @@ export const Actions = (props: ActionsProps) => {
 								}
 							}}
 							disabled={!hasActions || showAnswer}
-						>
-							{isDesktop ? 'Get ' : ''}Answer
-						</Button>
+						/>
 					</div>
 
 					<div className="column">
 						<Button
+							label={`${isDesktop ? 'Get ' : ''}Characters`}
 							className="actions-get-characters"
 							onClick={() => {
 								if (!showCharacters) {
@@ -545,9 +533,7 @@ export const Actions = (props: ActionsProps) => {
 								}
 							}}
 							disabled={!hasActions || showCharacters}
-						>
-							{isDesktop ? 'Get ' : ''}Characters
-						</Button>
+						/>
 					</div>
 				</div>
 			</div>
@@ -616,30 +602,26 @@ export const Pagination = (props: PaginationProps) => {
 			<div className="row row-auto row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
 				<div className="column">
 					<Button
-						ariaLabel={previousAriaLabel}
+						label={previousLabel}
+						aria-label={previousAriaLabel}
 						className="pagination-previous"
 						onClick={(e) => handleTransition(e, () => goToRound('previous'))}
 						disabled={!hasPrevious}
-					>
-						{previousLabel}
-					</Button>
+					/>
 				</div>
 
 				<div className="column">
 					<Button
-						ariaLabel={nextAriaLabel}
+						label={nextLabel}
+						aria-label={nextAriaLabel}
 						className="pagination-next"
 						onClick={(e) => handleTransition(e, () => goToRound('next'))}
 						disabled={!hasNext}
-					>
-						{nextLabel}
-					</Button>
+					/>
 				</div>
 
 				<div className="column">
-					<Button className="pagination-start-over" onClick={(e) => handleTransition(e, () => resetGame())}>
-						New Game?
-					</Button>
+					<Button label={'New Game?'} className="pagination-start-over" onClick={(e) => handleTransition(e, () => resetGame())} />
 				</div>
 			</div>
 		</div>

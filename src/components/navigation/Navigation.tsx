@@ -13,7 +13,7 @@ import { navigationUtils } from './scripts/navigation-utils';
 import { navigationRoutes } from './scripts/navigation-routes';
 
 /* Components */
-import { LinkExternal, List } from '../blocks-2/Blocks';
+import { LinkExternal, List } from '../blocks/Blocks';
 
 /* Get navigation menu */
 const navigationList = navigationUtils.get.list();

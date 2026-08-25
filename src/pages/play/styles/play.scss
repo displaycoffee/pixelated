@@ -30,14 +30,18 @@
 				}
 			}
 			.guess {
-				.guess-field {
-					.form-field-wrapper {
-						@include mixins.flex;
-					}
-					.guess-submit {
-						min-width: 1px;
-						@include mixins.flex(0 1 auto);
-					}
+				@include mixins.gap(theme.$spacing-x2);
+				& > div {
+					margin: 0;
+				}
+				.form-field, .form-actions {
+					min-width: 1px;
+				}
+				.form-field {
+					@include mixins.flex;
+				}
+				.form-actions {
+					@include mixins.flex(0 1 auto);
 				}
 			}
 			.points {
