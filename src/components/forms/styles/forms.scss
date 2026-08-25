@@ -1,0 +1,402 @@
+// Use utils and theme variables
+@use '../../../_config/styles/utils/_functions';
+@use '../../../_config/styles/utils/_mixins';
+@use '../../../_config/styles/theme/_theme';
+
+//// FORMS
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$forms-color-01: theme.$color-05; // focus visible border color
+
+	// Configuration
+
+	$forms-input-transition: background-color 600000s 0s, color 600000s 0s;
+
+	// Style block
+	
+	:focus-visible {
+		outline: 1px solid $forms-color-01;
+		outline-offset: 2px;
+	}
+	fieldset, label, .label, legend {
+		margin: 0;
+	}
+	fieldset { 
+		padding: 0;
+		border: 0;
+	}
+	legend {
+		display: inline;
+	}
+	.disabled {
+		opacity: 0.65;
+		cursor: not-allowed;
+	}
+
+//// FORMS - BUTTON
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$forms-button-color-01: theme.$color-05; // primary button background
+	$forms-button-color-02: theme.$color-05; // primary button border
+	$forms-button-color-03: theme.$color-03; // primary button color	
+	$forms-button-color-04: theme.$color-04; // secondary button background
+	$forms-button-color-05: theme.$color-04; // secondary button border
+	$forms-button-color-06: theme.$color-03; // secondary button color	
+	$forms-button-color-07: theme.$color-02; // tertiary button background
+	$forms-button-color-08: theme.$color-02; // tertiary button border
+	$forms-button-color-09: theme.$color-03; // tertiary button color
+
+	// Configuration
+	
+	$forms-button-spacing: 0 theme.$spacing-x4; // button spacing
+	$forms-button-height: 34px; // button height
+	$forms-button-border-width: 4px; // button border width
+
+	// Variables
+
+	$forms-button-pixel-size: if($forms-button-border-width != false, $forms-button-border-width, 4px);
+
+	// Style block
+
+	button, .button {
+		@include mixins.flex-layout((display: inline-flex, flex-flow: row nowrap, align-items: center, justify-content: center));
+		@include mixins.gap(theme.$spacing-x1);
+	}
+	.button {
+		position: relative;
+		max-width: 100%;
+		@include mixins.if-exists((
+			padding: $forms-button-spacing,
+		));
+		border: $forms-button-pixel-size solid transparent;
+		border-top: 0;
+		border-bottom: 0;
+		margin: $forms-button-pixel-size 0;
+		height: $forms-button-height;
+		line-height: $forms-button-height;
+		&:before, &:after {
+			content: '';
+			display: block;
+			@include mixins.position($type: absolute, $left: 0, $right: 0);
+			margin: auto;
+			height: $forms-button-pixel-size;
+		}
+		&:before {
+			top: -#{$forms-button-pixel-size};
+		}
+		&:after {
+			bottom: -#{$forms-button-pixel-size};
+		}		
+		&:focus, &:focus-visible {
+			outline: 0;
+			border-left-color: theme.$color-04;
+			border-right-color: theme.$color-04;
+			&:before, &:after {
+				background-color: theme.$color-04;
+			}
+		}
+		.button-label {
+			line-height: 1.5;
+			@include mixins.ellipsis;
+		}
+	}
+	.button-primary {
+		@if $forms-button-color-02 != false {
+			border-color: $forms-button-color-02;
+		}
+		color: $forms-button-color-03;
+		&, &:before, &:after {
+			background-color: $forms-button-color-01;
+		}
+	}
+	.button-secondary {
+		@if $forms-button-color-05 != false {
+			border-color: $forms-button-color-05;
+		}
+		@include mixins.if-exists((
+			background-color: $forms-button-color-04,
+			color: $forms-button-color-06,
+		));
+		&, &:before, &:after {
+			background-color: $forms-button-color-04;
+		}
+	}
+	.button-tertiary {
+		@if $forms-button-color-08 != false {
+			border-color: $forms-button-color-08;
+		}
+		@include mixins.if-exists((
+			background-color: $forms-button-color-07,
+			color: $forms-button-color-09,
+		));
+		&, &:before, &:after {
+			background-color: $forms-button-color-07;
+		}
+	}
+	.button-unstyled {
+		padding: 0;
+		border: 0;
+		background-color: transparent;
+	}
+
+//// FORMS - DESCRIPTION
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.form-description {
+		font-size: functions.em(12px, rem);
+	}
+
+//// FORMS - ERROR
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$forms-error-color-01: theme.$color-12; // error background
+
+	// Configuration
+	
+	$forms-error-spacing: theme.$spacing-x2; // error spacing
+	$forms-error-border-width: 1px; // error border width
+
+	// Style block
+
+	.form-error {
+		@if $forms-error-border-width != false {
+			border: $forms-error-border-width solid $forms-error-color-01;
+		}
+		@include mixins.if-exists((
+			background-color: rgba($forms-error-color-01, 50%),
+			padding: $forms-error-spacing,
+		));
+	}
+
+//// FORMS - FORM
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.form {
+		& > * {
+			margin: 0 0 theme.$spacing-x2;
+		}
+		&.margin-trim > fieldset {
+			margin: 0 0 theme.$spacing-x4 0;
+		}
+	}
+
+//// FORMS - FORM ACTIONS
+//// --------------------------------------------------------------------------
+
+	// Configuration
+
+	$forms-form-actions-spacing: theme.$spacing-x2; // spacing for actions wrapper
+
+	// Style block
+
+	.form-actions {
+		@include mixins.flex-layout((flex-flow: row wrap));
+		@include mixins.gap($forms-form-actions-spacing);
+	}
+
+//// FORMS - FORM FIELD
+//// --------------------------------------------------------------------------
+
+	// Configuration
+	
+	$forms-form-field-bp: theme.$bp-01; // breakpoint
+	$forms-form-field-spacing: theme.$spacing-x4; // spacing for field wrapper
+	$forms-form-field-label-width: 130px; // width for field label
+	$forms-form-field-label-vertical: 5px; // position for label inside field wrapper
+
+	// Variables
+
+	$forms-form-field-spacing-half: calc($forms-form-field-spacing / 2);
+
+	// Style block
+
+	.form-field {
+		@include mixins.flex-layout((flex-flow: row wrap));
+		@include mixins.gap($forms-form-field-spacing-half);
+		text-align: left;
+		&:has(.choice-wrapper) {
+			.form-field-label {
+				top: 0;
+			}
+		}
+		.form-field-label, .form-field-control {
+			@include mixins.flex(1 1 100%);
+			min-width: 1px;
+		}
+		.form-field-label {
+			@include mixins.position($type: relative, $top: $forms-form-field-label-vertical);
+		}
+		.form-field-control {
+			& > * {
+				margin: 0 0 $forms-form-field-spacing-half 0;
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+	@include mixins.respond-min($forms-form-field-bp) {
+		.form-field {
+			.form-field-label {
+				@include mixins.flex(0 1 auto);
+				@include mixins.if-exists((
+					width: $forms-form-field-label-width,
+				));
+			}
+			.form-field-control {
+				@include mixins.flex;
+			}
+		}
+	}
+
+//// FORMS - FORM FIELD WRAPPER
+//// --------------------------------------------------------------------------
+
+	// Configuration
+	
+	$forms-form-wrapper-pixel-size: 4px; // pixel size for form field wrapper wrapper
+	
+	// Style blocks
+				
+	.form-field-wrapper {
+		.pixelated {
+			width: 100%;
+			padding: 0;
+		}
+		.select, .input-freeform {
+			border: 0;
+			background-color: transparent;
+			&:focus-visible {
+				outline: 0;
+			}
+		}
+	}
+
+
+//// FORMS - INPUT
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$forms-input-color-01: theme.$color-06; // input background
+	$forms-input-color-02: theme.$color-04; // input border
+	$forms-input-color-03: theme.$color-04; // input color
+
+	// Configuration
+	
+	$forms-input-spacing: 0 theme.$spacing-x4; // input spacing
+	$forms-input-height: 34px; // input height
+	$forms-input-border-width: 1px; // input border width
+	$forms-input-transition: background-color 600000s 0s, color 600000s 0s; // transition for background color
+
+	// Style block
+
+	.input-freeform {
+		@include mixins.sizing(100%, $forms-input-height);
+		@include mixins.if-exists((
+			padding: $forms-input-spacing,
+			background-color: $forms-input-color-01,
+			color: $forms-input-color-03,
+		));
+		@if $forms-input-border-width != false and $forms-input-color-02 != false {
+			border: $forms-input-border-width solid $forms-input-color-02;
+		}
+		@if $forms-input-color-03 != false {
+			@include mixins.placeholder {
+				color: rgba($forms-input-color-03, 50%);
+			}
+		}
+		&:-webkit-autofill,
+		&:-webkit-autofill:hover,
+		&:-webkit-autofill:focus,
+		&:-webkit-autofill:active {
+			@include mixins.transition($forms-input-transition);
+		}
+		@include mixins.placeholder {
+			color: theme.$color-07;
+		}
+	}
+	.input-color {
+		@include mixins.sizing(30px, 30px);
+		border: 0;
+		background-color: theme.$color-03;
+		cursor: pointer;
+	}
+
+//// FORMS - REQUIRED
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$forms-required-color-01: red; // required color
+
+	// Configuration
+	
+	$forms-required-spacing: 0 0 0 calc(theme.$spacing-x1 / 2); // required spacing
+
+	// Style block
+
+	.form-required {
+		@include mixins.if-exists((
+			color: $forms-required-color-01,
+			padding: $forms-required-spacing,
+		));
+	}
+
+//// FORMS - SELECT
+//// --------------------------------------------------------------------------
+
+	// Colors
+
+	$forms-select-color-01: theme.$color-06; // input background
+	$forms-select-color-02: theme.$color-04; // input border
+	$forms-select-color-03: theme.$color-04; // input color
+
+	// Configuration
+	
+	$forms-select-spacing: 0 theme.$spacing-x8 0 theme.$spacing-x4; // input spacing
+	$forms-select-height: 34px; // input height
+	$forms-select-border-width: 1px; // input border width
+
+	// Style block
+
+	.select, .select-wrapper .select-arrow {
+		@include mixins.if-exists((
+			color: $forms-select-color-03,
+		));
+	}
+	.select {
+		@include mixins.sizing(100%, $forms-select-height);
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		@include mixins.if-exists((
+			padding: $forms-select-spacing,
+			background-color: $forms-select-color-01,
+		));
+		@if $forms-select-border-width != false and $forms-select-color-02 != false {
+			border: $forms-select-border-width solid $forms-select-color-02;
+		}
+	}
+	.select-wrapper {
+		position: relative;
+		.select-arrow {
+			display: block;
+			@include mixins.position($type: absolute, $top: 0, $bottom: 0, $right: theme.$spacing-x4);
+			@include mixins.transform(rotate(180deg));
+			font-size: functions.em(24px, rem);
+			line-height: 1;
+			height: 12px;
+			margin: auto 0;
+		}
+	}

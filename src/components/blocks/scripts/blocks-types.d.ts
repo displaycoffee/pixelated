@@ -1,5 +1,5 @@
 /* Packages */
-import { ButtonHTMLAttributes, HTMLAttributes, MouseEvent, SubmitEventHandler } from 'react';
+import { AnchorHTMLAttributes, HTMLAttributes, OlHTMLAttributes, ReactNode } from 'react';
 
 /* Type definitions */
 type BlockShared = {
@@ -10,14 +10,6 @@ type BlockShared = {
 type Block = BlockShared & {
 	columns?: boolean;
 };
-
-type Button = BlockShared & {
-	ariaLabel?: string;
-	disabled?: boolean;
-	onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-};
-
-type ButtonAttributes = ButtonHTMLAttributes<HTMLButtonElement>;
 
 type Data = {
 	children: ReactNode;
@@ -35,32 +27,25 @@ type DataRow = {
 	children: ReactNode;
 };
 
-type Form = BlockShared & {
-	onSubmit: SubmitEventHandler<HTMLFormElement>;
-};
+type Pixelated = BlockShared;
 
-type FormActions = BlockShared;
-
-type FormField = BlockShared & {
-	description?: string;
-	id?: string;
-	label?: string;
-};
-
-type FormFieldWrapper = {
+type LinkExternal = {
 	children: ReactNode;
-	hasSelect?: boolean;
-};
+	className?: string;
+	href: string;
+} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'className' | 'href' | 'rel' | 'target'>;
+
+type List = {
+	children: ReactNode;
+	className?: string;
+	variant?: 'ol' | 'ol-unstyled' | 'ul' | 'ul-unstyled';
+} & Omit<OlHTMLAttributes<HTMLOListElement>, 'children' | 'className' | 'variant'>;
 
 /* Export types */
-export type ButtonAttributesType = ButtonAttributes;
-
 export type DataAttributesType = DataAttributes;
 
 /* Export prop types */
 export type BlockProps = Block;
-
-export type ButtonProps = Button;
 
 export type DataProps = Data;
 
@@ -68,10 +53,8 @@ export type DataColumnProps = DataColumn;
 
 export type DataRowProps = DataRow;
 
-export type FormProps = Form;
+export type LinkExternalProps = LinkExternal;
 
-export type FormActionsProps = FormActions;
+export type ListProps = List;
 
-export type FormFieldProps = FormField;
-
-export type FormFieldWrapperProps = FormFieldWrapper;
+export type PixelatedProps = Pixelated;

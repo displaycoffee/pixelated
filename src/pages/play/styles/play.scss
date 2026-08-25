@@ -10,11 +10,6 @@
 
 	.play {
 		margin: 0 auto;
-		.settings {			
-			.form-actions {
-				text-align: left;
-			}
-		}
 		.round {
 			& > * {
 				margin: 0 0 theme.$spacing-x4 0;
@@ -35,14 +30,18 @@
 				}
 			}
 			.guess {
-				.guess-field {
-					.form-field-wrapper {
-						@include mixins.flex;
-					}
-					.guess-submit {
-						min-width: 1px;
-						@include mixins.flex(0 1 auto);
-					}
+				@include mixins.gap(theme.$spacing-x2);
+				& > div {
+					margin: 0;
+				}
+				.form-field, .form-actions {
+					min-width: 1px;
+				}
+				.form-field {
+					@include mixins.flex;
+				}
+				.form-actions {
+					@include mixins.flex(0 1 auto);
 				}
 			}
 			.points {
@@ -119,7 +118,7 @@
 		.play {
 			.settings {
 				.form-actions {
-					text-align: right;
+					@include mixins.flex-parent(justify-content, flex-end)
 				}
 			}
 			.round .actions, .pagination {

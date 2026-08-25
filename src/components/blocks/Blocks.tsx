@@ -4,16 +4,13 @@ import './styles/blocks.scss';
 /* Scripts */
 import {
 	BlockProps,
-	ButtonAttributesType,
-	ButtonProps,
 	DataProps,
 	DataAttributesType,
 	DataColumnProps,
 	DataRowProps,
-	FormProps,
-	FormActionsProps,
-	FormFieldProps,
-	FormFieldWrapperProps,
+	LinkExternalProps,
+	ListProps,
+	PixelatedProps,
 } from './scripts/blocks-types';
 import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
@@ -23,44 +20,6 @@ export const Block = (props: BlockProps) => {
 	const blockClass = className ? `${className} ` : '';
 
 	return <div className={`${blockClass}block${columns ? ' block-columns' : ''} pixelated`}>{children}</div>;
-};
-
-export const Button = (props: ButtonProps) => {
-	const { ariaLabel, children, className, disabled, onClick } = props;
-	const buttonClass = className ? `${className} ` : '';
-
-	// Set up button attributes
-	// Note: only set aria-label when overriding the visible text (e.g. an abbreviated label);
-	// otherwise let the browser derive the accessible name from the button's own content
-	let buttonAttributes: ButtonAttributesType = {
-		className: `${buttonClass}button pixelated`,
-		type: `submit`,
-	};
-	if (ariaLabel) {
-		buttonAttributes = {
-			...buttonAttributes,
-			'aria-label': ariaLabel,
-		};
-	}
-	if (onClick) {
-		buttonAttributes = {
-			...buttonAttributes,
-			type: `button`,
-			onClick: (e) => onClick(e),
-		};
-	}
-	if (disabled) {
-		buttonAttributes = {
-			...buttonAttributes,
-			disabled: disabled,
-		};
-	}
-
-	return (
-		<button {...buttonAttributes}>
-			<span>{children}</span>
-		</button>
-	);
 };
 
 export const Data = (props: DataProps) => {
@@ -133,51 +92,36 @@ export const DataColumn = (props: DataColumnProps) => {
 	);
 };
 
-export const Form = (props: FormProps) => {
-	const { children, className, onSubmit } = props;
-	const formClass = className ? `${className} ` : '';
+export const LinkExternal = (props: LinkExternalProps) => {
+	const { children, className, href, ...rest } = props;
 
 	return (
-		<form className={`${formClass}form margin-trim`} onSubmit={(e) => onSubmit(e)}>
+		<a className={className} href={href} target="_blank" rel="noreferrer" {...rest}>
 			{children}
-		</form>
+			<span className="sr-only"> (opens in a new tab)</span>
+		</a>
 	);
 };
 
-export const FormActions = (props: FormActionsProps) => {
+export const List = (props: ListProps) => {
+	const { children, className: propClassName, reversed, start, type: listType, variant = 'ul', ...rest } = props;
+	const isOrdered = variant.includes('ol');
+	const isUnstyled = variant.includes('unstyled');
+	const Tag = isOrdered ? 'ol' : 'ul';
+	const classes = `list-${isUnstyled ? 'unstyled' : isOrdered ? 'ordered' : 'unordered'}`;
+	const className = propClassName ? `${propClassName} ${classes}` : classes;
+	const olAttributes = isOrdered ? { reversed, start, type: listType } : {};
+
+	return (
+		<Tag className={className} {...rest} {...olAttributes}>
+			{children}
+		</Tag>
+	);
+};
+
+export const Pixelated = (props: PixelatedProps) => {
 	const { children, className } = props;
-	const formActionsClass = className ? `${className} ` : '';
+	const pixelatedClass = className ? `${className} ` : '';
 
-	return <div className={`${formActionsClass}form-actions`}>{children}</div>;
-};
-
-export const FormField = (props: FormFieldProps) => {
-	const { children, className, description, id, label } = props;
-	const formFieldClass = className ? `${className} ` : '';
-
-	return (
-		<div className={`${formFieldClass}form-field flex-wrap flex-align-items-center flex-justify-content-center`}>
-			{label ? id ? <label htmlFor={id}>{label}:</label> : <label>{label}:</label> : null}
-
-			{children}
-
-			{description ? <p className="form-field-description">{description}</p> : null}
-		</div>
-	);
-};
-
-export const FormFieldWrapper = (props: FormFieldWrapperProps) => {
-	const { children, hasSelect } = props;
-
-	return (
-		<div className="form-field-wrapper pixelated">
-			{children}
-
-			{hasSelect ? (
-				<span className="form-field-arrow" aria-hidden="true">
-					^
-				</span>
-			) : null}
-		</div>
-	);
+	return <div className={`${pixelatedClass}pixelated`}>{children}</div>;
 };

@@ -4,6 +4,9 @@ import './styles/rules.scss';
 /* Scripts */
 import { difficulty } from '../play/scripts/difficulty';
 
+/* Components */
+import { List } from '../../components/blocks/Blocks';
+
 export const Rules = () => {
 	return (
 		<div className="rules margin-trim">
@@ -11,10 +14,10 @@ export const Rules = () => {
 
 			<h3>How to Play</h3>
 
-			<ol>
+			<List variant="ol">
 				<li>
 					Start by choosing a "Difficulty" and "Category". "Difficulty" values are as follows:
-					<ul>
+					<List>
 						{difficulty.map((diff) => {
 							return (
 								<li key={diff.id}>
@@ -22,22 +25,22 @@ export const Rules = () => {
 								</li>
 							);
 						})}
-					</ul>
+					</List>
 				</li>
 				<li>There are five rounds and each round is randomly generated.</li>
 				<li>In each round, you will have three guesses and three hints to complete the round.</li>
 				<li>You can log your score once "Round 5" is complete.</li>
-			</ol>
+			</List>
 
 			<h3>Scoring</h3>
 
-			<ol>
+			<List variant="ol">
 				<li>
 					Each incorrect guess is <strong>minus 10 points</strong>.
 				</li>
 				<li>
 					Each hint is <strong>minus 10 points</strong>. You'll get the same type of hint for each round:
-					<ul>
+					<List>
 						<li>
 							<strong>Hint 1:</strong> The first letter of each character's name.
 						</li>
@@ -47,7 +50,7 @@ export const Rules = () => {
 						<li>
 							<strong>Hint 3:</strong> Emoji clues.
 						</li>
-					</ul>
+					</List>
 				</li>
 				<li>
 					Therefore, if you use three hints and two guesses and complete the round on the third guess, you have <strong>50 points</strong>{' '}
@@ -56,11 +59,11 @@ export const Rules = () => {
 				<li>
 					If you aren't able to guess correctly, it's <strong>0 points</strong> for that round.
 				</li>
-			</ol>
+			</List>
 
 			<h3>Hints and tips</h3>
 
-			<ol>
+			<List variant="ol">
 				<li>
 					Each round you will have five characters generated. The pixel blocks rendered are not to the scale of a character's height.
 					Meaning, all characters will be rendered the same height. The topmost block can be thought of as the character's hat or hair,
@@ -71,7 +74,7 @@ export const Rules = () => {
 					Casing (lowercase or uppercase) doesn't matter when submitting your guess. Special characters have also been stripped out in the
 					final answer, so don't worry about those.
 				</li>
-			</ol>
+			</List>
 		</div>
 	);
 };
