@@ -34,12 +34,20 @@
 	a, .a {
 		color: theme.$color-05;
 		@include mixins.transition(color 0.3s ease-in-out);
-		@include mixins.text-decoration($thickness: 1px, $offset: 5px, $color: inherit);
+		@include mixins.text-decoration(1px, 5px, inherit);
 		&:active, &:hover {
 			color: theme.$color-04;
 			-webkit-text-decoration-color: theme.$color-04;
 			-moz-text-decoration-color: theme.$color-04;
 			text-decoration-color: theme.$color-04;
+		}		
+		&:has(.button-label) {
+			&:active, &:hover {
+				text-decoration: none;
+				.button-label {
+					@include mixins.text-decoration(1px, 5px, theme.$color-04);
+				}
+			}
 		}
 	}
 	mark {

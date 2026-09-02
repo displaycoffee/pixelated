@@ -42,29 +42,36 @@
 
 	$forms-button-color-01: theme.$color-05; // primary button background
 	$forms-button-color-02: theme.$color-05; // primary button border
-	$forms-button-color-03: theme.$color-03; // primary button color	
-	$forms-button-color-04: theme.$color-04; // secondary button background
-	$forms-button-color-05: theme.$color-04; // secondary button border
-	$forms-button-color-06: theme.$color-03; // secondary button color	
-	$forms-button-color-07: theme.$color-02; // tertiary button background
-	$forms-button-color-08: theme.$color-02; // tertiary button border
-	$forms-button-color-09: theme.$color-03; // tertiary button color
+	$forms-button-color-03: theme.$color-03; // primary button color
+	$forms-button-color-04: false; // primary hover button background
+	$forms-button-color-05: false; // primary hover button border
+	$forms-button-color-06: false; // primary hover button color
+	$forms-button-color-07: theme.$color-04; // secondary button background
+	$forms-button-color-08: theme.$color-04; // secondary button border
+	$forms-button-color-09: theme.$color-03; // secondary button color
+	$forms-button-color-10: false; // secondary hover button background
+	$forms-button-color-11: false; // secondary hover button border
+	$forms-button-color-12: false; // secondary hover button color
+	$forms-button-color-13: theme.$color-02; // tertiary button background
+	$forms-button-color-14: theme.$color-02; // tertiary button border
+	$forms-button-color-15: theme.$color-03; // tertiary button color
+	$forms-button-color-16: false; // tertiary hover button background
+	$forms-button-color-17: false; // tertiary hover button border
+	$forms-button-color-18: false; // tertiary hover button color
 
 	// Configuration
 	
 	$forms-button-spacing: 0 theme.$spacing-x4; // button spacing
 	$forms-button-height: 34px; // button height
 	$forms-button-border-width: 4px; // button border width
-
-	// Variables
-
-	$forms-button-pixel-size: if($forms-button-border-width != false, $forms-button-border-width, 4px);
+	$forms-button-pixel-size: 4px; // button pixel size
 
 	// Style block
 
 	button, .button {
 		@include mixins.flex-layout((display: inline-flex, flex-flow: row nowrap, align-items: center, justify-content: center));
 		@include mixins.gap(theme.$spacing-x1);
+		border: 0;
 	}
 	.button {
 		position: relative;
@@ -105,41 +112,73 @@
 		}
 	}
 	.button-primary {
-		@if $forms-button-color-02 != false {
-			border-color: $forms-button-color-02;
-		}
-		color: $forms-button-color-03;
+		@include mixins.if-exists((
+			border-color: $forms-button-color-02,
+			color: $forms-button-color-03,
+		));
 		&, &:before, &:after {
-			background-color: $forms-button-color-01;
+			@include mixins.if-exists((
+				background-color: $forms-button-color-01,
+			));
+		}
+		&:hover {
+			@include mixins.if-exists((
+				border-color: $forms-button-color-05,
+				color: $forms-button-color-06,
+			));
+			&, &:before, &:after {
+				@include mixins.if-exists((
+					background-color: $forms-button-color-04,
+				));
+			}
 		}
 	}
 	.button-secondary {
-		@if $forms-button-color-05 != false {
-			border-color: $forms-button-color-05;
-		}
 		@include mixins.if-exists((
-			background-color: $forms-button-color-04,
-			color: $forms-button-color-06,
-		));
-		&, &:before, &:after {
-			background-color: $forms-button-color-04;
-		}
-	}
-	.button-tertiary {
-		@if $forms-button-color-08 != false {
-			border-color: $forms-button-color-08;
-		}
-		@include mixins.if-exists((
-			background-color: $forms-button-color-07,
+			border-color: $forms-button-color-08,
 			color: $forms-button-color-09,
 		));
 		&, &:before, &:after {
-			background-color: $forms-button-color-07;
+			@include mixins.if-exists((
+				background-color: $forms-button-color-07,
+			));
+		}
+		&:hover {
+			@include mixins.if-exists((
+				border-color: $forms-button-color-11,
+				color: $forms-button-color-12,
+			));
+			&, &:before, &:after {
+				@include mixins.if-exists((
+					background-color: $forms-button-color-10,
+				));
+			}
+		}
+	}
+	.button-tertiary {
+		@include mixins.if-exists((
+			border-color: $forms-button-color-14,
+			color: $forms-button-color-15,
+		));
+		&, &:before, &:after {
+			@include mixins.if-exists((
+				background-color: $forms-button-color-13,
+			));
+		}
+		&:hover {
+			@include mixins.if-exists((
+				border-color: $forms-button-color-17,
+				color: $forms-button-color-18,
+			));
+			&, &:before, &:after {
+				@include mixins.if-exists((
+					background-color: $forms-button-color-16,
+				));
+			}
 		}
 	}
 	.button-unstyled {
 		padding: 0;
-		border: 0;
 		background-color: transparent;
 	}
 
