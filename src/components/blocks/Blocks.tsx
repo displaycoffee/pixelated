@@ -2,7 +2,7 @@
 import './styles/blocks.scss';
 
 /* Scripts */
-import {
+import type {
 	BlockProps,
 	DataProps,
 	DataAttributesType,

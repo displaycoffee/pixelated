@@ -1,5 +1,5 @@
 /* Packages */
-import { ButtonHTMLAttributes, FormHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes, FormHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
 
 /* Shared field concerns for form controls with a label / error / required state */
 type Field = {

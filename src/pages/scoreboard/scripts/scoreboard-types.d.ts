@@ -4,7 +4,7 @@ type Scoreboard = {
 	date: string;
 	difficulty: string;
 	key: string;
-	points: number;
+	points: string;
 };
 
 /* Export types */

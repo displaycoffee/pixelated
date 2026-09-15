@@ -1,5 +1,5 @@
 /* Packages */
-import { QueryFunctionContext } from '@tanstack/react-query';
+import type { QueryFunctionContext } from '@tanstack/react-query';
 
 /* Scripts */
 import { variables } from './variables';
@@ -40,14 +40,14 @@ export const requests: RequestsType = {
 
 		// Fetch answers
 		const response = await fetch(`${variables.paths.api}/answers`, options);
-		const json = await response.json();
+		const json = (await response.json()) as ResponseErrorType & Partial<AnswersType>;
 
 		// Check for API errors
 		throwError(json);
 
 		// Set answer
 		if (typeof json?.success == 'boolean' && typeof json?.message == 'string') {
-			answers = json;
+			answers = json as AnswersType;
 		}
 
 		return answers;
@@ -69,14 +69,14 @@ export const requests: RequestsType = {
 
 		// Fetch answers
 		const response = await fetch(`${variables.paths.api}/hints`, options);
-		const json = await response.json();
+		const json = (await response.json()) as ResponseErrorType & Partial<HintsType>;
 
 		// Check for API errors
 		throwError(json);
 
 		// Set answer
 		if (typeof json?.message == 'string') {
-			hints = json;
+			hints = json as HintsType;
 		}
 
 		return hints;

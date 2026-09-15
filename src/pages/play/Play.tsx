@@ -2,9 +2,11 @@
 import './styles/play.scss';
 
 /* Packages */
-import { ChangeEvent, useEffect, useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { produce, Draft } from 'immer';
+import type { Draft } from 'immer';
+import { produce } from 'immer';
 
 /* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
@@ -31,7 +33,7 @@ export const Round = () => {
 	const currentRound = rounds[`${current.round}`];
 	const title = currentRound.status == 'game end' ? `Game Over` : `Round ${current.round.replace('round', '')}`;
 	const pixels = currentRound.values[currentRound.values.length - settingsDifficulty.id];
-	const [cookies, setCookie] = useCookies(['scoreboard']);
+	const [cookies, setCookie] = useCookies<'scoreboard', { scoreboard?: string }>(['scoreboard']);
 
 	// Reset game
 	const resetGame = () => {
@@ -97,7 +99,7 @@ export const Round = () => {
 								<div className="row row-fit row-nowrap row-align-items-center row-justify-content-center row-spacing-10">
 									{pixels.map((pixel, index) => {
 										return (
-											<div className="column" key={`${currentRound}-${index}`}>
+											<div className="column" key={`${currentRound.id}-${index}`}>
 												{pixel.map((color, colorIndex) => {
 													return (
 														<div
@@ -152,11 +154,11 @@ export const Settings = () => {
 	};
 
 	// Submit guess and update state to trigger request
-	const submitSettings = async (e: EventsType) => {
+	const submitSettings = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		// Get form data
-		const formData = new FormData(e.target);
+		const formData = new FormData(e.currentTarget);
 		const difficultyValue = formData.get('difficulty') as string;
 		const categoryValue = formData.get('category') as string;
 
@@ -311,11 +313,11 @@ export const Guess = () => {
 	) as AnswersRequestType;
 
 	// Submit guess
-	const submitGuess = (e: EventsType) => {
+	const submitGuess = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		// Get form data
-		const formData = new FormData(e.target);
+		const formData = new FormData(e.currentTarget);
 		const guessData = formData.get('guess') as string;
 
 		// Update game (only if there is a guess and it's not the same as previous guess)

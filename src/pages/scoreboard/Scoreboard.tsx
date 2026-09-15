@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie';
 /* Scripts */
 import { useRespond } from '../../_config/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { ScoreboardType } from './scripts/scoreboard-types';
+import type { ScoreboardType } from './scripts/scoreboard-types';
 
 /* Components */
 import { Data, DataColumn, DataRow } from '../../components/blocks/Blocks';
@@ -15,7 +15,7 @@ import { Data, DataColumn, DataRow } from '../../components/blocks/Blocks';
 export const Scoreboard = () => {
 	const { theme } = useAppContext();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
-	const [cookies] = useCookies(['scoreboard']);
+	const [cookies] = useCookies<'scoreboard', { scoreboard?: string }>(['scoreboard']);
 	const scoreboardCookie = cookies?.scoreboard?.split('|') ?? [];
 
 	// Format scoreboard cookie

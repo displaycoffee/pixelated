@@ -4,7 +4,7 @@ import { lazy } from 'react';
 /* Scripts */
 import { variables } from '../../../_config/scripts/variables';
 import { categories } from '../../../pages/play/scripts/categories';
-import { NavigationType } from './navigation-types';
+import type { NavigationType } from './navigation-types';
 
 /* Components */
 const Play = lazy(() => import('../../../pages/play/Play').then((m) => ({ default: m.Play })));

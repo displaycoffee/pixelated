@@ -9,7 +9,7 @@ import { LinkExternal } from '../../components/blocks/Blocks';
 import { Button } from '../../components/forms/Forms';
 
 export const Footer = () => {
-	const [cookies, _setCookie, removeCookie] = useCookies(['scoreboard']);
+	const [cookies, _setCookie, removeCookie] = useCookies<'scoreboard', { scoreboard?: string }>(['scoreboard']);
 	const hasScoreboard = cookies?.scoreboard;
 	const date = new Date().getFullYear();
 

@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 
 /* Packages */
-import { QueryFunctionContext } from '@tanstack/react-query';
+import type { QueryFunctionContext } from '@tanstack/react-query';
+import type { SyntheticEvent } from 'react';
 
 /* Generic type definitions */
 type Events = SyntheticEvent | Event;
