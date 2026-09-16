@@ -2,7 +2,7 @@
 import { lazy } from 'react';
 
 /* Scripts */
-import { variables } from '../../../_config/scripts/variables';
+import { variables } from '../../../_core/scripts/variables';
 import { categories } from '../../../pages/play/scripts/categories';
 import type { NavigationType } from './navigation-types';
 

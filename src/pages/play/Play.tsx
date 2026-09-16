@@ -10,7 +10,7 @@ import { produce } from 'immer';
 
 /* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { useReactQuery, useRespond, useViewTransition } from '../../_config/scripts/hooks';
+import { useReactQuery, useRespond, useViewTransition } from '../../_core/scripts/hooks';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
