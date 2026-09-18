@@ -2,7 +2,6 @@
 
 /* Packages */
 import type { QueryFunctionContext } from '@tanstack/react-query';
-/* Packages */
 import type { SyntheticEvent } from 'react';
 
 /* Generic type definitions */
@@ -181,7 +180,7 @@ type Statuses = {
 };
 
 declare global {
-	/* Declare global generic types */
+	// Declare global generic types
 	type EventsType = Events;
 
 	type ObjectPrimitiveType = ObjectPrimitive;
@@ -192,7 +191,7 @@ declare global {
 
 	type VariablesType = Variables;
 
-	/* Declare global content types */
+	// Declare global content types
 	type AnswersType = Answers;
 
 	type AnswersRequestType = AnswersRequest;
@@ -225,7 +224,7 @@ declare global {
 
 	type RoundType = Round;
 
-	/* Declare global request types */
+	// Declare global request types
 	type QueryKeyType = QueryKey;
 
 	type RequestErrorType = RequestError;
@@ -234,10 +233,10 @@ declare global {
 
 	type ResponseErrorType = ResponseError;
 
-	/* Declare global prop types */
+	// Declare global prop types
 	type ObjectPrimitiveProps = ObjectPrimitive;
 
-	/* Declare global content prop types */
+	// Declare global content prop types
 	type ActionsProps = Actions;
 
 	type CategoriesObjectProps = CategoriesObject;
