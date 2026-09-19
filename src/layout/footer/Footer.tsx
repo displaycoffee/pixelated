@@ -16,7 +16,7 @@ export const Footer = () => {
 	return (
 		<footer className="footer">
 			<p>
-				&copy; {date} <LinkExternal href="//display.coffee">displaycoffee</LinkExternal>
+				&copy; {date} <LinkExternal href={'//display.coffee'}>displaycoffee</LinkExternal>
 				{hasScoreboard ? (
 					<>
 						<span> - </span>

@@ -1,8 +1,8 @@
 /* Packages */
-import { createContext, useState } from 'react';
-import { CookiesProvider } from 'react-cookie';
 import type { DefaultOptions } from '@tanstack/react-query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createContext, useState } from 'react';
+import { CookiesProvider } from 'react-cookie';
 
 /* Scripts */
 import type { ContextProps, ContextValuesType } from './scripts/context-types';

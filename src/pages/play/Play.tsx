@@ -2,11 +2,11 @@
 import './styles/play.scss';
 
 /* Packages */
-import type { ChangeEvent, FormEvent } from 'react';
+import type { Draft } from 'immer';
+import type { ChangeEvent, SubmitEvent } from 'react';
+import { produce } from 'immer';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import type { Draft } from 'immer';
-import { produce } from 'immer';
 
 /* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
@@ -154,7 +154,7 @@ export const Settings = () => {
 	};
 
 	// Submit guess and update state to trigger request
-	const submitSettings = async (e: FormEvent<HTMLFormElement>) => {
+	const submitSettings = async (e: SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		// Get form data
@@ -313,7 +313,7 @@ export const Guess = () => {
 	) as AnswersRequestType;
 
 	// Submit guess
-	const submitGuess = (e: FormEvent<HTMLFormElement>) => {
+	const submitGuess = (e: SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		// Get form data
@@ -341,9 +341,7 @@ export const Guess = () => {
 
 					// Set status
 					let status = answersData.success ? 'correct' : 'incorrect';
-					if (answersData.close) {
-						status = 'close';
-					}
+					if (answersData.close) status = 'close';
 
 					// Update round status
 					let roundStatus: RoundType['status'] = 'pending';
@@ -496,7 +494,7 @@ export const Actions = (props: ActionsProps) => {
 					<div className="column">
 						<Button
 							label={`${isDesktop ? 'Get ' : ''}Hint`}
-							className="actions-get-hint"
+							className={'actions-get-hint'}
 							onClick={() => {
 								if (typeof getHint == 'function') {
 									getHint();
@@ -511,7 +509,7 @@ export const Actions = (props: ActionsProps) => {
 					<div className="column">
 						<Button
 							label={`${isDesktop ? 'Get ' : ''}Answer`}
-							className="actions-get-answer"
+							className={'actions-get-answer'}
 							onClick={() => {
 								if (!showAnswer) {
 									setShowAnswer(true);
@@ -526,7 +524,7 @@ export const Actions = (props: ActionsProps) => {
 					<div className="column">
 						<Button
 							label={`${isDesktop ? 'Get ' : ''}Characters`}
-							className="actions-get-characters"
+							className={'actions-get-characters'}
 							onClick={() => {
 								if (!showCharacters) {
 									setShowCharacters(true);
@@ -606,7 +604,7 @@ export const Pagination = (props: PaginationProps) => {
 					<Button
 						label={previousLabel}
 						aria-label={previousAriaLabel}
-						className="pagination-previous"
+						className={'pagination-previous'}
 						onClick={(e) => handleTransition(e, () => goToRound('previous'))}
 						disabled={!hasPrevious}
 					/>
@@ -616,14 +614,14 @@ export const Pagination = (props: PaginationProps) => {
 					<Button
 						label={nextLabel}
 						aria-label={nextAriaLabel}
-						className="pagination-next"
+						className={'pagination-next'}
 						onClick={(e) => handleTransition(e, () => goToRound('next'))}
 						disabled={!hasNext}
 					/>
 				</div>
 
 				<div className="column">
-					<Button label={'New Game?'} className="pagination-start-over" onClick={(e) => handleTransition(e, () => resetGame())} />
+					<Button label={'New Game?'} className={'pagination-start-over'} onClick={(e) => handleTransition(e, () => resetGame())} />
 				</div>
 			</div>
 		</div>
@@ -648,7 +646,7 @@ export const PixelsGallery = (props: CategoriesObjectProps) => {
 
 								return (
 									<div className="round-question" key={categoryId}>
-										<Block className="round-header">
+										<Block className={'round-header'}>
 											<h3>{value.id}</h3>
 										</Block>
 

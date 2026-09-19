@@ -8,7 +8,7 @@ export const Header = () => {
 	return (
 		<header className="header">
 			<h1>
-				<Link to="/">Pixelated.</Link>
+				<Link to={'/'}>Pixelated.</Link>
 			</h1>
 		</header>
 	);

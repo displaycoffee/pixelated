@@ -14,7 +14,7 @@ export const Rules = () => {
 
 			<h3>How to Play</h3>
 
-			<List variant="ol">
+			<List variant={'ol'}>
 				<li>
 					Start by choosing a "Difficulty" and "Category". "Difficulty" values are as follows:
 					<List>
@@ -34,7 +34,7 @@ export const Rules = () => {
 
 			<h3>Scoring</h3>
 
-			<List variant="ol">
+			<List variant={'ol'}>
 				<li>
 					Each incorrect guess is <strong>minus 10 points</strong>.
 				</li>
@@ -63,7 +63,7 @@ export const Rules = () => {
 
 			<h3>Hints and tips</h3>
 
-			<List variant="ol">
+			<List variant={'ol'}>
 				<li>
 					Each round you will have five characters generated. The pixel blocks rendered are not to the scale of a character's height.
 					Meaning, all characters will be rendered the same height. The topmost block can be thought of as the character's hat or hair,
