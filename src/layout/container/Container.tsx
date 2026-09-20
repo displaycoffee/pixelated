@@ -2,10 +2,11 @@
 import './styles/container.scss';
 
 /* Packages */
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 /* Scripts */
-import { useBodyClass } from './scripts/container-hooks';
+import { useAvailableMinHeight, useBodyClass } from './scripts/container-hooks';
 
 /* Components */
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';
@@ -15,6 +16,9 @@ import { Content } from '../content/Content';
 import { Footer } from '../footer/Footer';
 
 export const Container = () => {
+	const mainRef = useRef<HTMLElement>(null);
+	useAvailableMinHeight(mainRef);
+
 	// Set body class using custom hook
 	useBodyClass('play');
 
@@ -29,7 +33,7 @@ export const Container = () => {
 
 				<Navigation label={'Header Navigation'} />
 
-				<main id="main-content" className="main">
+				<main id="main-content" className="main" ref={mainRef}>
 					<div className="main-layout flex-wrap">
 						<Content />
 					</div>
