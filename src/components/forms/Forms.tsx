@@ -1,9 +1,6 @@
 /* Styles */
 import './styles/forms.scss';
 
-/* Packages */
-import { createContext } from 'react';
-
 /* Scripts */
 import type {
 	ButtonProps,
@@ -24,9 +21,6 @@ import { useAppContext } from '../../context/scripts/context-hooks';
 
 /* Components */
 import { Pixelated } from '../blocks/Blocks';
-
-/* Shares the enclosing FormField's id so grouped radios share a name without a Choice prop */
-const ChoiceGroupContext = createContext<string | undefined>(undefined);
 
 export const Button = (props: ButtonProps) => {
 	const { children, className: propClassName, hideLabel = false, label, type = 'button', variant = 'primary', ...rest } = props;
@@ -68,9 +62,8 @@ export const FormActions = (props: FormActionsProps) => {
 };
 
 export const FormField = (props: FormFieldProps) => {
-	const { children, hideLabel, id, label, required } = props;
+	const { children, hideLabel, id, isChoice = false, label, required } = props;
 	const className = forms.build.className(`form-field`, props?.className);
-	const isChoice = false;
 
 	// Create elements for form field
 	const Tag = isChoice ? 'fieldset' : 'div';
@@ -99,8 +92,8 @@ export const FormField = (props: FormFieldProps) => {
 				</div>
 			)}
 
-			<div className="form-field-control">
-				{isChoice ? <ChoiceGroupContext.Provider value={id}>{children}</ChoiceGroupContext.Provider> : children}
+			<div className="form-field-control" data-group-id={isChoice ? id : null}>
+				{children}
 			</div>
 		</Tag>
 	);
