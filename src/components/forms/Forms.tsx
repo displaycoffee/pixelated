@@ -20,6 +20,7 @@ import { forms } from './scripts/forms';
 import { useAppContext } from '../../context/scripts/context-hooks';
 
 /* Components */
+import { Alert } from '../alert/Alert';
 import { Pixelated } from '../blocks/Blocks';
 
 export const Button = (props: ButtonProps) => {
@@ -163,9 +164,9 @@ const ErrorField = (props: ErrorFieldProps) => {
 	const { error, id } = props;
 
 	return error ? (
-		<div id={id} className="form-error" role="alert">
+		<Alert id={id} type={'warning'}>
 			{error}
-		</div>
+		</Alert>
 	) : null;
 };
 
