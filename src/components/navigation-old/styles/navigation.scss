@@ -1,0 +1,21 @@
+// Local Sass modules
+@use '../../../_core/styles/utils/_functions';
+@use '../../../_core/styles/utils/_mixins';
+@use '../../../_core/styles/theme/_theme';
+
+//// NAVIGATION
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	.navigation {
+		.navigation-list {
+			@include mixins.flex-layout((align-items: center, justify-content: center));
+			@include mixins.gap(theme.$spacing-x4);
+			.navigation-list-item {
+				.navigation-link:not(.navigation-link-active) {
+					text-decoration: none;
+				}
+			}
+		}
+	}

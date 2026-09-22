@@ -3,10 +3,11 @@ import './styles/container.scss';
 
 /* Packages */
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from '@tanstack/react-router';
 
 /* Scripts */
 import { useAvailableMinHeight, useBodyClass } from './scripts/container-hooks';
+import { navigationHeader } from '../../components/navigation/scripts/navigation';
 
 /* Components */
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';
@@ -31,7 +32,7 @@ export const Container = () => {
 
 				<Header />
 
-				<Navigation label={'Header Navigation'} />
+				<Navigation data={navigationHeader} label={'Header Navigation'} />
 
 				<main id="main-content" className="main" ref={mainRef}>
 					<div className="main-layout flex-wrap">

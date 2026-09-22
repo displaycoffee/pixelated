@@ -1,9 +1,9 @@
 /* Packages */
 import type { MouseEvent } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useLocation, useNavigate } from '@tanstack/react-router';
 import { useEffect, useId, useState } from 'react';
 import { flushSync } from 'react-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 
 /* Scripts */
 import { requests } from './requests';
@@ -77,7 +77,7 @@ export const useViewTransition = () => {
 				.startViewTransition(() => {
 					flushSync(() => {
 						if (isUrl) {
-							void navigate(target);
+							void navigate({ href: target });
 						} else {
 							target();
 						}

@@ -1,0 +1,100 @@
+/* Styles */
+import './styles/navigation.scss';
+
+/* Packages */
+import { Fragment, Suspense, useEffect } from 'react';
+import { NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+
+/* Scripts */
+import type { NavigationComponentProps, NavigationListItemProps, NavigationRoutesProps } from './scripts/navigation-types';
+import { useViewTransition } from '../../_core/scripts/hooks';
+import { useAppContext } from '../../context/scripts/context-hooks';
+import { navigationUtils } from './scripts/navigation-utils';
+import { navigationRoutes } from './scripts/navigation-routes';
+
+/* Components */
+import { LinkExternal, List } from '../blocks/Blocks';
+
+/* Get navigation menu */
+const navigationList = navigationUtils.get.list();
+
+export const Navigation = (props: NavigationComponentProps) => {
+	const { label } = props;
+	const { pathname } = useLocation();
+	const { utils } = useAppContext();
+	const navigationLinkClass = 'navigation-link';
+
+	// Scroll to top when navigation link is clicked on
+	useEffect(() => {
+		utils.scrollTo();
+	}, [pathname, utils]);
+
+	return navigationList.length != 0 ? (
+		<nav className="navigation" aria-label={label}>
+			<List className={'navigation-list'} variant={'ul-unstyled'}>
+				{navigationList.map((nav) => {
+					return (
+						<Fragment key={nav.id}>
+							<NavigationListItem navigationLinkClass={navigationLinkClass} nav={nav} />
+						</Fragment>
+					);
+				})}
+			</List>
+		</nav>
+	) : null;
+};
+
+export const NavigationListItem = (props: NavigationListItemProps) => {
+	const { children, nav, navigationLinkClass } = props;
+	const handleTransition = useViewTransition();
+	const navigationActiveClass = `${navigationLinkClass} ${navigationLinkClass}-active`;
+
+	return (
+		<li className="navigation-list-item">
+			{nav.isRoute ? (
+				<NavLink
+					to={nav.url}
+					onClick={(e) => handleTransition(e, nav.url)}
+					className={({ isActive }) => (isActive ? navigationActiveClass : navigationLinkClass)}
+				>
+					{nav.label}
+				</NavLink>
+			) : (
+				<LinkExternal href={nav.url}>{nav.label}</LinkExternal>
+			)}
+
+			{children}
+		</li>
+	);
+};
+
+export const NavigationRoutes = () => {
+	return navigationRoutes.length != 0 ? (
+		<Suspense fallback={null}>
+			<Routes>
+				{navigationRoutes.map((nav: NavigationRoutesProps) => {
+					const navProps = nav?.props ?? {};
+
+					return (
+						<Fragment key={nav.id}>
+							{nav?.children && nav.children.length !== 0 ? (
+								<>
+									<Route path={`${nav.path}/*`} element={<nav.element {...navProps} />} />
+
+									{nav.children.map((child: NavigationRoutesProps) => {
+										const childProps = child?.props ?? {};
+										return <Route path={child.path} element={<child.element {...childProps} />} key={child.id} />;
+									})}
+								</>
+							) : (
+								<Route path={nav.path} element={<nav.element {...navProps} />} />
+							)}
+						</Fragment>
+					);
+				})}
+
+				<Route path={'*'} element={<Navigate to={'/'} />} />
+			</Routes>
+		</Suspense>
+	) : null;
+};
