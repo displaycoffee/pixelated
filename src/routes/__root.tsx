@@ -1,6 +1,7 @@
 /* Packages */
 import { createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 /* Components */
 import { ContextProvider } from '../context/Context';
@@ -12,6 +13,7 @@ export const Route = createRootRoute({
 			<ContextProvider>
 				<Container />
 				<TanStackRouterDevtools />
+				<ReactQueryDevtools />
 			</ContextProvider>
 		</>
 	),

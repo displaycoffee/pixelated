@@ -2,6 +2,7 @@
 import './styles/scoreboard.scss';
 
 /* Packages */
+import { createLazyFileRoute } from '@tanstack/react-router';
 import { useCookies } from 'react-cookie';
 
 /* Scripts */
@@ -12,7 +13,11 @@ import { useAppContext } from '../../context/scripts/context-hooks';
 /* Components */
 import { Data, DataColumn, DataRow } from '../../components/blocks/Blocks';
 
-export const Scoreboard = () => {
+export const Route = createLazyFileRoute('/scoreboard/')({
+	component: RouteComponent,
+});
+
+function RouteComponent() {
 	const { theme } = useAppContext();
 	const isDesktop = useRespond(theme.bps.bp02 as number);
 	const [cookies] = useCookies<'scoreboard', { scoreboard?: string }>(['scoreboard']);
@@ -75,4 +80,4 @@ export const Scoreboard = () => {
 			)}
 		</div>
 	);
-};
+}

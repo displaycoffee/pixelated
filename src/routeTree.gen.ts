@@ -11,35 +11,85 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PixelsGalleryIndexRouteImport } from './routes/pixels-gallery/index'
 
 const IndexLazyRouteImport = createFileRoute('/')()
+const AboutIndexLazyRouteImport = createFileRoute('/about/')()
+const RulesIndexLazyRouteImport = createFileRoute('/rules/')()
+const ScoreboardIndexLazyRouteImport = createFileRoute('/scoreboard/')()
 
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+const AboutIndexLazyRoute = AboutIndexLazyRouteImport.update({
+  id: '/about/',
+  path: '/about/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/about/index.lazy').then((d) => d.Route))
+const PixelsGalleryIndexRoute = PixelsGalleryIndexRouteImport.update({
+  id: '/pixels-gallery/',
+  path: '/pixels-gallery/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/pixels-gallery/index.lazy').then((d) => d.Route),
+)
+const RulesIndexLazyRoute = RulesIndexLazyRouteImport.update({
+  id: '/rules/',
+  path: '/rules/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/rules/index.lazy').then((d) => d.Route))
+const ScoreboardIndexLazyRoute = ScoreboardIndexLazyRouteImport.update({
+  id: '/scoreboard/',
+  path: '/scoreboard/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/scoreboard/index.lazy').then((d) => d.Route),
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/pixels-gallery/': typeof PixelsGalleryIndexRoute
+  '/about/': typeof AboutIndexLazyRoute
+  '/rules/': typeof RulesIndexLazyRoute
+  '/scoreboard/': typeof ScoreboardIndexLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/pixels-gallery': typeof PixelsGalleryIndexRoute
+  '/about': typeof AboutIndexLazyRoute
+  '/rules': typeof RulesIndexLazyRoute
+  '/scoreboard': typeof ScoreboardIndexLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
+  '/pixels-gallery/': typeof PixelsGalleryIndexRoute
+  '/about/': typeof AboutIndexLazyRoute
+  '/rules/': typeof RulesIndexLazyRoute
+  '/scoreboard/': typeof ScoreboardIndexLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/pixels-gallery/' | '/about/' | '/rules/' | '/scoreboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/pixels-gallery' | '/about' | '/rules' | '/scoreboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/pixels-gallery/'
+    | '/about/'
+    | '/rules/'
+    | '/scoreboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  PixelsGalleryIndexRoute: typeof PixelsGalleryIndexRoute
+  AboutIndexLazyRoute: typeof AboutIndexLazyRoute
+  RulesIndexLazyRoute: typeof RulesIndexLazyRoute
+  ScoreboardIndexLazyRoute: typeof ScoreboardIndexLazyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -51,11 +101,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/': {
+      id: '/about/'
+      path: '/about'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pixels-gallery/': {
+      id: '/pixels-gallery/'
+      path: '/pixels-gallery'
+      fullPath: '/pixels-gallery/'
+      preLoaderRoute: typeof PixelsGalleryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rules/': {
+      id: '/rules/'
+      path: '/rules'
+      fullPath: '/rules/'
+      preLoaderRoute: typeof RulesIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/scoreboard/': {
+      id: '/scoreboard/'
+      path: '/scoreboard'
+      fullPath: '/scoreboard/'
+      preLoaderRoute: typeof ScoreboardIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  PixelsGalleryIndexRoute: PixelsGalleryIndexRoute,
+  AboutIndexLazyRoute: AboutIndexLazyRoute,
+  RulesIndexLazyRoute: RulesIndexLazyRoute,
+  ScoreboardIndexLazyRoute: ScoreboardIndexLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

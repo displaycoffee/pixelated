@@ -3,7 +3,7 @@ import './styles/container.scss';
 
 /* Packages */
 import { useRef } from 'react';
-import { Link, useLocation } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 
 /* Scripts */
 import { useAvailableMinHeight, useBodyClass } from './scripts/container-hooks';

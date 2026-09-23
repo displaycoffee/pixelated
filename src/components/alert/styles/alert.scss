@@ -50,6 +50,7 @@
 			@include mixins.if-exists((
 				color: $alert-color-01,
 			));
+			text-align: left;
 		}
 	}
 	.alert-warning {

@@ -54,6 +54,8 @@ export default tseslint.config(
 			'@typescript-eslint/no-require-await': 'off',
 			'@typescript-eslint/no-explicit-any': 'error',
 			'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+			// TanStack Router's redirect() returns a Response (not an Error) that is meant to be thrown
+			'@typescript-eslint/only-throw-error': ['error', { allow: [{ from: 'package', package: '@tanstack/router-core', name: 'Redirect' }] }],
 			'@typescript-eslint/require-await': 'off',
 			'import/no-unresolved': 'off',
 			'react/no-unescaped-entities': 'off',

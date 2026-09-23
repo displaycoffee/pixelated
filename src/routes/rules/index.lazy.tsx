@@ -1,13 +1,20 @@
 /* Styles */
 import './styles/rules.scss';
 
+/* Packages */
+import { createLazyFileRoute } from '@tanstack/react-router';
+
 /* Scripts */
-import { difficulty } from '../play/scripts/difficulty';
+import { difficulty } from '../index/scripts/difficulty';
 
 /* Components */
 import { List } from '../../components/blocks/Blocks';
 
-export const Rules = () => {
+export const Route = createLazyFileRoute('/rules/')({
+	component: RouteComponent,
+});
+
+function RouteComponent() {
 	return (
 		<div className="rules margin-trim">
 			<h2>Rules</h2>
@@ -77,4 +84,4 @@ export const Rules = () => {
 			</List>
 		</div>
 	);
-};
+}

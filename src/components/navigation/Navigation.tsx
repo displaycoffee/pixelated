@@ -13,7 +13,6 @@ import { useAppContext } from '../../context/scripts/context-hooks';
 
 /* Components */
 import { LinkExternal, List } from '../blocks/Blocks';
-import { Dropdown } from '../dropdown/Dropdown';
 
 export const Navigation = (props: NavigationComponentProps) => {
 	const { data, disableTransition, label } = props;
@@ -33,34 +32,7 @@ export const Navigation = (props: NavigationComponentProps) => {
 				{navigationList.map((nav) => {
 					return (
 						<Fragment key={nav.id}>
-							{nav?.children && nav.children.length !== 0 ? (
-								<NavigationListItem
-									disableTransition={disableTransition ?? false}
-									navigationLinkClass={navigationLinkClass}
-									nav={nav}
-								>
-									<Dropdown buttonLabel={`${nav.label} Menu`} closeOnClick={true} hideLabel={true}>
-										<List className={'navigation-list-submenu'} variant={'ul-unstyled'}>
-											{nav.children.map((child) => {
-												return (
-													<NavigationListItem
-														disableTransition={disableTransition ?? false}
-														nav={child}
-														navigationLinkClass={navigationLinkClass}
-														key={child.id}
-													/>
-												);
-											})}
-										</List>
-									</Dropdown>
-								</NavigationListItem>
-							) : (
-								<NavigationListItem
-									disableTransition={disableTransition ?? false}
-									navigationLinkClass={navigationLinkClass}
-									nav={nav}
-								/>
-							)}
+							<NavigationListItem disableTransition={disableTransition ?? false} navigationLinkClass={navigationLinkClass} nav={nav} />
 						</Fragment>
 					);
 				})}
