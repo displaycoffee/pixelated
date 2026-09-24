@@ -2,10 +2,8 @@
 import './index/styles/index.scss';
 
 /* Packages */
-import type { Draft } from 'immer';
 import type { ChangeEvent, SubmitEvent } from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
-import { produce } from 'immer';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
@@ -32,7 +30,7 @@ function RouteComponent() {
 }
 
 function Round() {
-	const { game, gameDefault, setGame, queryClient } = useAppContext();
+	const { game, dispatch, queryClient } = useAppContext();
 	const { current, rounds, settings } = game;
 	const settingsDifficulty = settings.difficulty as DifficultyType;
 	const currentRound = rounds[`${current.round}`];
@@ -44,7 +42,7 @@ function Round() {
 	const resetGame = () => {
 		void queryClient.resetQueries({ queryKey: ['hints'] });
 		void queryClient.resetQueries({ queryKey: ['answers'] });
-		setGame(gameDefault);
+		dispatch({ type: 'game_reset' });
 	};
 
 	// Set score
@@ -67,11 +65,7 @@ function Round() {
 			setCookie('scoreboard', updatedScoreboard, { path: '/', maxAge: 60 * 60 * 24 * 365 });
 
 			// Update score logged
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.current.scoreLogged = true;
-				}),
-			);
+			dispatch({ type: 'score_logged' });
 		}
 	};
 
@@ -135,7 +129,7 @@ function Round() {
 }
 
 function Settings() {
-	const { setGame } = useAppContext();
+	const { dispatch } = useAppContext();
 	const [descriptions, setDescriptions] = useState({
 		difficulty: difficulty[2].description,
 		categories: categories[0].description,
@@ -201,27 +195,8 @@ function Settings() {
 			// Select five questions
 			const selectedQuestions = shuffledQuestions.slice(0, 5);
 
-			// Update round
-			const updateRound = (draft: Draft<GameType>, round: number) => {
-				const roundKey = `round${round}` as keyof GameType['rounds'];
-				draft.rounds[roundKey] = {
-					...draft.rounds[roundKey],
-					...selectedQuestions[round - 1],
-				};
-			};
-
 			// Update game
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.settings.category = categoryDetails;
-					draft.settings.difficulty = difficultyDetails;
-					updateRound(draft, 1);
-					updateRound(draft, 2);
-					updateRound(draft, 3);
-					updateRound(draft, 4);
-					updateRound(draft, 5);
-				}),
-			);
+			dispatch({ type: 'settings_submitted', category: categoryDetails, difficulty: difficultyDetails, questions: selectedQuestions });
 		}
 	};
 
@@ -275,7 +250,7 @@ function Settings() {
 }
 
 function Guess() {
-	const { game, setGame } = useAppContext();
+	const { game, dispatch } = useAppContext();
 	const { current, rounds, settings } = game;
 	const currentRound = rounds[`${current.round}`];
 	const settingsCategory = settings.category as CategoryType;
@@ -289,15 +264,9 @@ function Guess() {
 	useEffect(() => {
 		if (hintsData) {
 			// Update game when hints are fetched
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					const round = draft.current.round;
-					draft.rounds[round].hints = draft.rounds[round].hints.concat([hintsData.message]);
-					draft.rounds[round].points = draft.rounds[round].points - 10;
-				}),
-			);
+			dispatch({ type: 'hint_received', message: hintsData.message });
 		}
-	}, [hintsData, setGame]);
+	}, [hintsData, dispatch]);
 
 	// Get hint by using refetch
 	const getHint = () => {
@@ -327,56 +296,16 @@ function Guess() {
 
 		// Update game (only if there is a guess and it's not the same as previous guess)
 		if (guessData && guessData != current.guess) {
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.current.guess = guessData;
-					draft.rounds[`${current.round}`].guesses = currentRound.guesses + 1;
-				}),
-			);
+			dispatch({ type: 'guess_submitted', guess: guessData });
 		}
 	};
 
 	useEffect(() => {
 		if (answersData) {
 			// Update game settings when guess is submitted
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					const round = draft.current.round;
-					const draftRound = draft.rounds[round];
-
-					// Set status
-					let status = answersData.success ? 'correct' : 'incorrect';
-					if (answersData.close) status = 'close';
-
-					// Update round status
-					let roundStatus: RoundType['status'] = 'pending';
-					if (status == 'incorrect' && draftRound.guesses > 2) {
-						roundStatus = 'failed';
-					} else if (status == 'correct') {
-						roundStatus = 'complete';
-					}
-
-					// Deduct 10 for each wrong guess; 0 if failed; no deduction for correct
-					let points = draftRound.points;
-					if (roundStatus == 'failed') {
-						points = 0;
-					} else if (status == 'incorrect' || status == 'close') {
-						points = draftRound.points - 10;
-					}
-
-					draft.current.status = status as GameType['current']['status'];
-					draft.current.points = roundStatus != 'pending' ? draft.current.points + points : draft.current.points;
-					draftRound.points = points;
-					draftRound.status = roundStatus;
-
-					if (answersData.title) {
-						draftRound.title = answersData.title;
-						draftRound.characters = answersData.characters || '';
-					}
-				}),
-			);
+			dispatch({ type: 'answer_received', answer: answersData });
 		}
-	}, [answersData, setGame]);
+	}, [answersData, dispatch]);
 
 	return (
 		<>
@@ -548,10 +477,9 @@ function Actions(props: ActionsProps) {
 
 function Pagination(props: PaginationProps) {
 	const resetGame = props.resetGame;
-	const { game, setGame, theme } = useAppContext();
+	const { game, dispatch, theme } = useAppContext();
 	const { current, rounds } = game;
 	const currentRound = rounds[`${current.round}`];
-	const roundNumber: number = parseInt(current.round.replace('round', ''));
 	const hasPrevious = current.round != 'round1';
 	const hasNext = currentRound.status != 'pending' && current.round != 'round6';
 	const isDesktop = useRespond(theme.bps.bp01 as number);
@@ -572,34 +500,8 @@ function Pagination(props: PaginationProps) {
 	}
 
 	// Navigation to round
-	const goToRound = (direction: string) => {
-		if (hasPrevious && direction == 'previous') {
-			const previousRound = `round${roundNumber - 1}` as keyof GameType['rounds'];
-			const previousRoundData = game.rounds[previousRound];
-			const status = previousRoundData.status == 'complete' ? 'correct' : 'incorrect';
-
-			// Update game
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.current.guess = status;
-					draft.current.round = previousRound;
-					draft.current.status = status;
-				}),
-			);
-		} else if (hasNext && direction == 'next') {
-			const nextRound = `round${roundNumber + 1}` as keyof GameType['rounds'];
-
-			// Update game
-			setGame(
-				produce((draft: Draft<GameType>) => {
-					draft.current.guess = false;
-					draft.current.round = nextRound;
-					draft.current.status = 'pending';
-				}),
-			);
-		} else {
-			return false;
-		}
+	const goToRound = (direction: 'previous' | 'next') => {
+		dispatch({ type: 'round_changed', direction });
 	};
 
 	return (

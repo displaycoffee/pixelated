@@ -133,6 +133,15 @@ type Game = {
 	};
 };
 
+type GameAction =
+	| { type: 'game_reset' }
+	| { type: 'settings_submitted'; category: Category; difficulty: Difficulty; questions: CategoryQuestions }
+	| { type: 'guess_submitted'; guess: string }
+	| { type: 'hint_received'; message: string }
+	| { type: 'answer_received'; answer: Answers }
+	| { type: 'round_changed'; direction: 'previous' | 'next' }
+	| { type: 'score_logged' };
+
 type Hints = {
 	message: string;
 };
@@ -215,6 +224,8 @@ declare global {
 	type DifficultyListType = DifficultyList;
 
 	type GameType = Game;
+
+	type GameActionType = GameAction;
 
 	type HintsType = Hints;
 

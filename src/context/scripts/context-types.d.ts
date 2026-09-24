@@ -1,6 +1,6 @@
 /* Packages */
 import type { QueryClient } from '@tanstack/react-query';
-import type { Dispatch, ReactNode, SetStateAction } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 
 /* Type definitions */
 type Context = {
@@ -8,9 +8,8 @@ type Context = {
 };
 
 type ContextValues = {
-	gameDefault: GameType;
 	game: GameType;
-	setGame: Dispatch<SetStateAction<GameType>>;
+	dispatch: Dispatch<GameActionType>;
 	queryClient: QueryClient;
 	theme: ThemeType;
 	utils: UtilsType;

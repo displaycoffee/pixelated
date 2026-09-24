@@ -1,11 +1,12 @@
 /* Packages */
 import type { DefaultOptions } from '@tanstack/react-query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createContext, useState } from 'react';
+import { createContext, useReducer } from 'react';
 import { CookiesProvider } from 'react-cookie';
 
 /* Scripts */
 import type { ContextProps, ContextValuesType } from './scripts/context-types';
+import { game as gameUtils } from './scripts/game';
 import { theme } from '../_core/scripts/theme';
 import { utils } from '../_core/scripts/utils';
 import { variables } from '../_core/scripts/variables';
@@ -39,51 +40,12 @@ export const Context = createContext({} as ContextValuesType);
 
 /* Create Context wrapper */
 export const ContextProvider = ({ children }: ContextProps) => {
-	// Create config for each round
-	const round: RoundType = {
-		id: false,
-		status: 'pending',
-		guesses: 0,
-		hints: [],
-		points: 100,
-		values: [],
-		title: '',
-		characters: '',
-	};
-
-	// Create game config
-	const gameConfig: GameType = {
-		current: {
-			guess: false,
-			points: 0,
-			round: 'round1',
-			status: 'pending',
-			scoreLogged: false,
-		},
-		settings: {
-			category: false,
-			difficulty: false,
-		},
-		rounds: {
-			round1: { ...round },
-			round2: { ...round },
-			round3: { ...round },
-			round4: { ...round },
-			round5: { ...round },
-			round6: {
-				...round,
-				status: 'game end',
-			},
-		},
-	};
-
 	// Set game state
-	const [game, setGame] = useState(gameConfig);
+	const [game, dispatch] = useReducer(gameUtils.reducer, gameUtils.initialState);
 
 	const values: ContextValuesType = {
-		gameDefault: gameConfig,
 		game,
-		setGame,
+		dispatch,
 		queryClient,
 		theme,
 		utils,
