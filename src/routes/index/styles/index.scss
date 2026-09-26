@@ -114,7 +114,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min(theme.$bp-01) {
+	@include mixins.respond(theme.$bp-01) {
 		.play {
 			.settings {
 				.form-actions {
@@ -135,7 +135,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min(theme.$bp-02) {
+	@include mixins.respond(theme.$bp-02) {
 		.play {
 			.round .actions, .pagination {
 				.row {
