@@ -25,7 +25,7 @@ export const Block = (props: BlockProps) => {
 export const Data = (props: DataProps) => {
 	const { children, label } = props;
 	const { theme } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	// Set data attributes
 	let dataAttributes: DataAttributesType = {
@@ -45,7 +45,7 @@ export const Data = (props: DataProps) => {
 export const DataRow = (props: DataRowProps) => {
 	const { children } = props;
 	const { theme } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	// Set row attributes
 	let rowAttributes: DataAttributesType = {
@@ -64,7 +64,7 @@ export const DataRow = (props: DataRowProps) => {
 export const DataColumn = (props: DataColumnProps) => {
 	const { label, value } = props;
 	const { theme, utils } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 	const isHeader = value === undefined;
 
 	// Set column attributes

@@ -59,7 +59,7 @@
 			}
 		}
 	}
-	@include mixins.respond(theme.$bp-02) {
+	@include mixins.respond(theme.$breakpoint-md) {
 		.data {
 			text-align: left;
 			.row {

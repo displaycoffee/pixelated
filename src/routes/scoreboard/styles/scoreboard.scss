@@ -8,7 +8,7 @@
 
 	// Style block
 
-	@include mixins.respond(theme.$bp-02) {
+	@include mixins.respond(theme.$breakpoint-md) {
 		.scoreboard .data {
 			.row {
 				.points {

@@ -401,7 +401,7 @@ function Actions(props: ActionsProps) {
 	const currentRound = rounds[`${current.round}`];
 	const [showAnswer, setShowAnswer] = useState(false);
 	const [showCharacters, setShowCharacters] = useState(false);
-	const isDesktop = useRespond(theme.bps.bp01 as number);
+	const isDesktop = useRespond(theme.breakpoints.sm);
 
 	return (
 		<>
@@ -482,7 +482,7 @@ function Pagination(props: PaginationProps) {
 	const currentRound = rounds[`${current.round}`];
 	const hasPrevious = current.round != 'round1';
 	const hasNext = currentRound.status != 'pending' && current.round != 'round6';
-	const isDesktop = useRespond(theme.bps.bp01 as number);
+	const isDesktop = useRespond(theme.breakpoints.sm);
 	const handleTransition = useViewTransition();
 	const isFinal = current.round == 'round5';
 

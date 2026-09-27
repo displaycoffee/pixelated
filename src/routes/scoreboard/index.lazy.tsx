@@ -19,7 +19,7 @@ export const Route = createLazyFileRoute('/scoreboard/')({
 
 function RouteComponent() {
 	const { theme } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 	const [cookies] = useCookies<'scoreboard', { scoreboard?: string }>(['scoreboard']);
 	const scoreboardCookie = cookies?.scoreboard?.split('|') ?? [];
 
