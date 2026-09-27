@@ -1,9 +1,43 @@
 /* Packages */
 import type { QueryFunctionContext } from '@tanstack/react-query';
 import type { SyntheticEvent } from 'react';
+import type themeJson from '../tokens/theme.json';
 
 /* Generic type definitions */
 type Events = SyntheticEvent | Event;
+
+type Fallback = {
+	family: string;
+	size: string;
+	src: string;
+};
+
+type FallbacksJson = typeof themeJson.fallback;
+
+type Favicon = {
+	isHead: boolean;
+	isManifest: boolean;
+	purpose: string;
+	rel: string;
+	src: string;
+	size: string;
+	sizes: string;
+	type: string;
+};
+
+type FaviconsJson = typeof themeJson.favicon;
+
+type Font = {
+	display: string;
+	ext: string;
+	family: string;
+	isPreload: boolean;
+	src: string;
+	style: string;
+	weight: string | number;
+};
+
+type FontsJson = typeof themeJson.font;
 
 type ObjectPrimitive = {
 	[key: string]: Primitive;
@@ -11,27 +45,22 @@ type ObjectPrimitive = {
 
 type Primitive = string | number | boolean;
 
+type Site = {
+	name: string;
+	description: string;
+	url: string;
+};
+
+type Target = {
+	name: string;
+	src: string;
+	hasTabindex: boolean;
+	isScript: boolean;
+};
+
 type Theme = {
-	bps: {
-		bp01: Primitive;
-		bp02: Primitive;
-		bp03: Primitive;
-		bp04: Primitive;
-	};
-	colors: {
-		color01: Primitive;
-		color02: Primitive;
-		color03: Primitive;
-		color04: Primitive;
-		color05: Primitive;
-		color06: Primitive;
-		color07: Primitive;
-		color08: Primitive;
-		color09: Primitive;
-		color10: Primitive;
-		color11: Primitive;
-		color12: Primitive;
-	};
+	breakpoints: (typeof themeJson)['breakpoint'];
+	colors: (typeof themeJson)['color'];
 };
 
 type Utils = {
@@ -45,6 +74,7 @@ type Variables = {
 		api: string;
 		basename: string;
 	};
+	site: Site;
 };
 
 /* Content type definitions */
@@ -190,7 +220,23 @@ declare global {
 	// Declare global generic types
 	type EventsType = Events;
 
+	type FallbackType = Fallback;
+
+	type FallbacksJsonType = FallbacksJson;
+
+	type FaviconType = Favicon;
+
+	type FaviconsJsonType = FaviconsJson;
+
+	type FontType = Font;
+
+	type FontsJsonType = FontsJson;
+
 	type ObjectPrimitiveType = ObjectPrimitive;
+
+	type SiteType = Site;
+
+	type TargetType = Target;
 
 	type ThemeType = Theme;
 
