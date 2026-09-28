@@ -46,7 +46,7 @@
 			margin: 0;
 		}
 		.row {
-			border-bottom: 1px solid theme.$color-04;
+			border-bottom: 1px solid theme.$color-border;
 			padding: 0 0 theme.$spacing-x2 0;
 			margin: 0 0 theme.$spacing-x2 0;
 			&:last-child {
@@ -107,7 +107,7 @@
 	}
 	.list-unordered {
 		& > li:before {
-			top: 0;
+			top: 3.5px;
 			content: '\002022';
 			font-size: 22px;
 			line-height: 1;
@@ -127,22 +127,29 @@
 		display: inline-block;
 		margin: $pixel-size 0;
 		padding: theme.$spacing-x4;
-		background-color: theme.$color-06;
+		background-color: theme.$color-bg-x2;
 		border: 0;
-		border-left: $pixel-size solid theme.$color-04;
-		border-right: $pixel-size solid theme.$color-04;
+		border-left: $pixel-size solid theme.$color-border;
+		border-right: $pixel-size solid theme.$color-border;
 		&:before, &:after {
 			content: '';
 			display: block;
 			@include mixins.position($type: absolute, $left: 0, $right: 0);
 			margin: auto;
 			height: $pixel-size;
-			background-color: theme.$color-04;
+			background-color: theme.$color-border;
 		}
 		&:before {
 			top: -#{$pixel-size};
 		}
 		&:after {
 			bottom: -#{$pixel-size};
+		}
+		&:has(.input:focus), &:has(.input:focus-visible), &:has(.select:focus), &:has(.select:focus-visible) {
+			border-left-color: color-mix(in srgb, #{theme.$color-border} 70%, black);
+			border-right-color: color-mix(in srgb, #{theme.$color-border} 70%, black);
+			&:before, &:after {
+				background-color: color-mix(in srgb, #{theme.$color-border} 70%, black);
+			}
 		}
 	}	

@@ -13,7 +13,9 @@ export const Header = () => {
 	return (
 		<header className="header">
 			<h1 className="header-title">
-				<Link to={'/'}>{variables.site.name}.</Link>
+				<Link className={'no-decoration'} to={'/'}>
+					{variables.site.name}.
+				</Link>
 			</h1>
 		</header>
 	);

@@ -46,7 +46,7 @@
 			}
 			.points {
 				.flawless-victory {
-					font-weight: theme.$font-weight-01;
+					font-weight: theme.$font-weight-body;
 					text-transform: uppercase;
 					@include mixins.flex(1 1 100%);
 				}
