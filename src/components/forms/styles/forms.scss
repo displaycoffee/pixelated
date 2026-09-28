@@ -10,10 +10,6 @@
 
 	$forms-color-01: theme.$color-05; // focus visible border color
 
-	// Configuration
-
-	$forms-input-transition: background-color 600000s 0s, color 600000s 0s;
-
 	// Style block
 	
 	:focus-visible, .choice:has(input:focus-visible), .toggle:has(input:focus-visible) .toggle-slider {
@@ -42,24 +38,24 @@
 
 	// Colors
 
-	$forms-button-color-01: theme.$color-05; // primary button background
-	$forms-button-color-02: theme.$color-05; // primary button border
-	$forms-button-color-03: theme.$color-03; // primary button color
-	$forms-button-color-04: false; // primary hover button background
-	$forms-button-color-05: false; // primary hover button border
-	$forms-button-color-06: false; // primary hover button color
-	$forms-button-color-07: theme.$color-04; // secondary button background
-	$forms-button-color-08: theme.$color-04; // secondary button border
-	$forms-button-color-09: theme.$color-03; // secondary button color
-	$forms-button-color-10: false; // secondary hover button background
-	$forms-button-color-11: false; // secondary hover button border
-	$forms-button-color-12: false; // secondary hover button color
-	$forms-button-color-13: theme.$color-02; // tertiary button background
-	$forms-button-color-14: theme.$color-02; // tertiary button border
-	$forms-button-color-15: theme.$color-03; // tertiary button color
-	$forms-button-color-16: false; // tertiary hover button background
-	$forms-button-color-17: false; // tertiary hover button border
-	$forms-button-color-18: false; // tertiary hover button color
+	$forms-button-color-01: theme.$color-button-primary-bg; // primary button background
+	$forms-button-color-02: theme.$color-button-primary-border; // primary button border
+	$forms-button-color-03: theme.$color-button-primary-body; // primary button color
+	$forms-button-color-04: theme.$color-button-primary-bg-hover; // primary hover button background
+	$forms-button-color-05: theme.$color-button-primary-border-hover; // primary hover button border
+	$forms-button-color-06: theme.$color-button-primary-body-hover; // primary hover button color
+	$forms-button-color-07: theme.$color-button-secondary-bg; // secondary button background
+	$forms-button-color-08: theme.$color-button-secondary-border; // secondary button border
+	$forms-button-color-09: theme.$color-button-secondary-body; // secondary button color
+	$forms-button-color-10: theme.$color-button-secondary-bg-hover; // secondary hover button background
+	$forms-button-color-11: theme.$color-button-secondary-border-hover; // secondary hover button border
+	$forms-button-color-12: theme.$color-button-secondary-body-hover; // secondary hover button color
+	$forms-button-color-13: theme.$color-button-tertiary-bg; // tertiary button background
+	$forms-button-color-14: theme.$color-button-tertiary-border; // tertiary button border
+	$forms-button-color-15: theme.$color-button-tertiary-body; // tertiary button color
+	$forms-button-color-16: theme.$color-button-tertiary-bg-hover; // tertiary hover button background
+	$forms-button-color-17: theme.$color-button-tertiary-border-hover; // tertiary hover button border
+	$forms-button-color-18: theme.$color-button-tertiary-body-hover; // tertiary hover button color
 
 	// Configuration
 	
@@ -305,15 +301,17 @@
 
 	// Colors
 
-	$forms-input-color-01: theme.$color-06; // input background
-	$forms-input-color-02: theme.$color-04; // input border
-	$forms-input-color-03: theme.$color-04; // input color
+	$forms-input-color-01: theme.$color-bg; // input background
+	$forms-input-color-02: theme.$color-border; // input border
+	$forms-input-color-03: theme.$color-body; // input color
+	$forms-input-color-04: theme.$color-border; // input color type background
 
 	// Configuration
 	
 	$forms-input-spacing: 0 theme.$spacing-x4; // input spacing
 	$forms-input-height: 34px; // input height
 	$forms-input-border-width: 1px; // input border width
+	$forms-input-color-type-size: 30px; // size of color input
 	$forms-input-transition: background-color 600000s 0s, color 600000s 0s; // transition for background color
 
 	// Style block
@@ -344,9 +342,11 @@
 		}
 	}
 	.input-color {
-		@include mixins.sizing(30px, 30px);
+		@if $forms-input-color-type-size != false {
+			@include mixins.sizing($forms-input-color-type-size, $forms-input-color-type-size);
+		}
 		border: 0;
-		background-color: theme.$color-03;
+		@include mixins.if-exists((background-color: $forms-input-color-04));
 		cursor: pointer;
 	}
 
@@ -375,9 +375,9 @@
 
 	// Colors
 
-	$forms-select-color-01: theme.$color-06; // input background
-	$forms-select-color-02: theme.$color-04; // input border
-	$forms-select-color-03: theme.$color-04; // input color
+	$forms-select-color-01: theme.$color-bg; // input background
+	$forms-select-color-02: theme.$color-border; // input border
+	$forms-select-color-03: theme.$color-body; // input color
 
 	// Configuration
 	
