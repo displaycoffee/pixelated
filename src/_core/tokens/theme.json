@@ -101,6 +101,10 @@
 		"x10": "50px",
 		"x12": "60px"
 	},
+	"setting": {
+		"theme-default": "light",
+		"theme-system": true
+	},
 	"font": {
 		"family-body": "'Pixelated', monospace",
 		"family-header": "'Pixelated Bold', monospace",

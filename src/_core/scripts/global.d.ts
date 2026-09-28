@@ -40,6 +40,14 @@ type ObjectPrimitive = {
 
 type Primitive = string | number | boolean;
 
+type Settings = {
+	theme: {
+		default: ThemeMode;
+		alternate: ThemeMode;
+		system: boolean;
+	};
+};
+
 type Site = {
 	name: string;
 	description: string;
@@ -57,6 +65,8 @@ type Theme = {
 	breakpoints: (typeof themeJson)['breakpoint'];
 	colors: (typeof themeJson)['color'];
 };
+
+type ThemeMode = 'light' | 'dark';
 
 type Utils = {
 	getLast: (value: string | string[], delimeter?: string) => string | number;
@@ -223,11 +233,15 @@ declare global {
 
 	type ObjectPrimitiveType = ObjectPrimitive;
 
+	type SettingsType = Settings;
+
 	type SiteType = Site;
 
 	type TargetType = Target;
 
 	type ThemeType = Theme;
+
+	type ThemeModeType = ThemeMode;
 
 	type UtilsType = Utils;
 
