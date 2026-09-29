@@ -1,13 +1,15 @@
 /* Packages */
-import { createContext, useState } from 'react';
+import type { DefaultOptions } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createContext, useReducer } from 'react';
 import { CookiesProvider } from 'react-cookie';
-import { DefaultOptions, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 /* Scripts */
-import { ContextProps, ContextValuesType } from './scripts/context-types';
-import { theme } from '../_config/scripts/theme';
-import { utils } from '../_config/scripts/utils';
-import { variables } from '../_config/scripts/variables';
+import type { ContextProps, ContextValuesType } from './scripts/context-types';
+import { game as gameUtils } from './scripts/game';
+import { theme } from '../_core/scripts/theme';
+import { utils } from '../_core/scripts/utils';
+import { variables } from '../_core/scripts/variables';
 
 /* Query client for api */
 const queryConfig: DefaultOptions = {
@@ -36,53 +38,14 @@ const queryClient = new QueryClient({
 /* Create context */
 export const Context = createContext({} as ContextValuesType);
 
-/* Create Context.Provider wrapper */
+/* Create Context wrapper */
 export const ContextProvider = ({ children }: ContextProps) => {
-	// Create config for each round
-	const round: RoundType = {
-		id: false,
-		status: 'pending',
-		guesses: 0,
-		hints: [],
-		points: 100,
-		values: [],
-		title: '',
-		characters: '',
-	};
-
-	// Create game config
-	const gameConfig: GameType = {
-		current: {
-			guess: false,
-			points: 0,
-			round: 'round1',
-			status: 'pending',
-			scoreLogged: false,
-		},
-		settings: {
-			category: false,
-			difficulty: false,
-		},
-		rounds: {
-			round1: { ...round },
-			round2: { ...round },
-			round3: { ...round },
-			round4: { ...round },
-			round5: { ...round },
-			round6: {
-				...round,
-				status: 'game end',
-			},
-		},
-	};
-
 	// Set game state
-	const [game, setGame] = useState(gameConfig);
+	const [game, dispatch] = useReducer(gameUtils.reducer, gameUtils.initialState);
 
 	const values: ContextValuesType = {
-		gameDefault: gameConfig,
 		game,
-		setGame,
+		dispatch,
 		queryClient,
 		theme,
 		utils,
@@ -92,7 +55,7 @@ export const ContextProvider = ({ children }: ContextProps) => {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<CookiesProvider>
-				<Context.Provider value={values}>{children}</Context.Provider>
+				<Context value={values}>{children}</Context>
 			</CookiesProvider>
 		</QueryClientProvider>
 	);

@@ -1,0 +1,26 @@
+// Local Sass modules
+@use '@displaycoffee/styles/functions';
+@use '@displaycoffee/styles/mixins';
+@use '../../../_core/styles/_theme';
+
+//// SCOREBOARD
+//// --------------------------------------------------------------------------
+
+	// Style block
+
+	@include mixins.respond(theme.$breakpoint-md) {
+		.scoreboard .data {
+			.row {
+				.points {
+					width: 80px;
+				}
+				.date, .difficulty {
+					width: 120px;
+				}
+				.category {
+					@include mixins.flex;
+					@include mixins.ellipsis;
+				}
+			}
+		}
+	}

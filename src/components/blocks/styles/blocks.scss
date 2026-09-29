@@ -1,7 +1,7 @@
-// Use utils and theme variables
-@use '../../../_config/styles/utils/_functions';
-@use '../../../_config/styles/utils/_mixins';
-@use '../../../_config/styles/theme/_theme';
+// Local Sass modules
+@use '@displaycoffee/styles/functions';
+@use '@displaycoffee/styles/mixins';
+@use '../../../_core/styles/_theme';
 
 //// BLOCKS
 //// --------------------------------------------------------------------------
@@ -46,7 +46,7 @@
 			margin: 0;
 		}
 		.row {
-			border-bottom: 1px solid theme.$color-04;
+			border-bottom: 1px solid theme.$color-border;
 			padding: 0 0 theme.$spacing-x2 0;
 			margin: 0 0 theme.$spacing-x2 0;
 			&:last-child {
@@ -59,7 +59,7 @@
 			}
 		}
 	}
-	@include mixins.respond-min(theme.$bp-02) {
+	@include mixins.respond(theme.$breakpoint-md) {
 		.data {
 			text-align: left;
 			.row {
@@ -80,7 +80,6 @@
 	// Style block
 
 	.list-ordered, .list-unordered, .list-unstyled {
-		list-style: none;
 		padding: 0;
 	}
 	.list-ordered, .list-unordered {
@@ -108,9 +107,9 @@
 	}
 	.list-unordered {
 		& > li:before {
-			top: 2px;
+			top: 3.5px;
 			content: '\002022';
-			font-size: functions.em(20px, rem);
+			font-size: 22px;
 			line-height: 1;
 		}
 	}
@@ -128,22 +127,29 @@
 		display: inline-block;
 		margin: $pixel-size 0;
 		padding: theme.$spacing-x4;
-		background-color: theme.$color-06;
+		background-color: theme.$color-bg-x2;
 		border: 0;
-		border-left: $pixel-size solid theme.$color-04;
-		border-right: $pixel-size solid theme.$color-04;
+		border-left: $pixel-size solid theme.$color-border;
+		border-right: $pixel-size solid theme.$color-border;
 		&:before, &:after {
 			content: '';
 			display: block;
 			@include mixins.position($type: absolute, $left: 0, $right: 0);
 			margin: auto;
 			height: $pixel-size;
-			background-color: theme.$color-04;
+			background-color: theme.$color-border;
 		}
 		&:before {
 			top: -#{$pixel-size};
 		}
 		&:after {
 			bottom: -#{$pixel-size};
+		}
+		&:has(.input:focus), &:has(.input:focus-visible), &:has(.select:focus), &:has(.select:focus-visible) {
+			border-left-color: color-mix(in srgb, #{theme.$color-border} 70%, black);
+			border-right-color: color-mix(in srgb, #{theme.$color-border} 70%, black);
+			&:before, &:after {
+				background-color: color-mix(in srgb, #{theme.$color-border} 70%, black);
+			}
 		}
 	}	

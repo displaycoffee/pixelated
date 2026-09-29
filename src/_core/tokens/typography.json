@@ -1,0 +1,35 @@
+{
+	"font": {
+		"family": {
+			"$type": "fontFamily",
+			"body": { "$value": "'{font.name.body}', monospace" },
+			"header": { "$value": "'{font.name.header}', monospace" }
+		},
+		"name": {
+			"body": { "$value": "Pixelated", "$extensions": { "sass": false } },
+			"header": { "$value": "Pixelated Bold", "$extensions": { "sass": false } }
+		},
+		"size": {
+			"$type": "dimension",
+			"base": { "$value": "16px" },
+			"global": { "$value": "16px" }
+		},
+		"src": {
+			"body": { "$value": "local('Courier New')", "$extensions": { "sass": false } },
+			"header-bold": { "$value": "local('Courier New Bold'), local('Courier New')", "$extensions": { "sass": false } }
+		},
+		"style": {
+			"body": { "$value": "italic" },
+			"header": { "$value": false }
+		},
+		"transform": {
+			"body": { "$value": false },
+			"header": { "$value": false }
+		},
+		"weight": {
+			"$type": "fontWeight",
+			"body": { "$value": 700 },
+			"header": { "$value": 700 }
+		}
+	}
+}

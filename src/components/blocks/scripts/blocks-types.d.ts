@@ -1,5 +1,5 @@
 /* Packages */
-import { AnchorHTMLAttributes, HTMLAttributes, OlHTMLAttributes, ReactNode } from 'react';
+import type { AnchorHTMLAttributes, HTMLAttributes, OlHTMLAttributes, ReactNode } from 'react';
 
 /* Type definitions */
 type BlockShared = {

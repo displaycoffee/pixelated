@@ -2,10 +2,12 @@
 import './styles/container.scss';
 
 /* Packages */
-import { Link } from 'react-router-dom';
+import { useRef } from 'react';
+import { Link } from '@tanstack/react-router';
 
 /* Scripts */
-import { useBodyClass } from './scripts/container-hooks';
+import { useAvailableMinHeight, useBodyClass } from './scripts/container-hooks';
+import { navigationHeader } from '../../components/navigation/scripts/navigation';
 
 /* Components */
 import { ErrorBoundary } from '../../components/error-boundary/ErrorBoundary';
@@ -15,21 +17,24 @@ import { Content } from '../content/Content';
 import { Footer } from '../footer/Footer';
 
 export const Container = () => {
+	const mainRef = useRef<HTMLElement>(null);
+	useAvailableMinHeight(mainRef);
+
 	// Set body class using custom hook
 	useBodyClass('play');
 
 	return (
 		<div className="container">
 			<ErrorBoundary message={<ContainerError />}>
-				<a href="#main-content" className="skip-link sr-only">
+				<a href="#main-content" className="skip-link sr-only no-decoration">
 					Skip to main content
 				</a>
 
 				<Header />
 
-				<Navigation label={'Header Navigation'} />
+				<Navigation data={navigationHeader} label={'Header Navigation'} />
 
-				<main id="main-content" className="main">
+				<main id="main-content" className="main" ref={mainRef}>
 					<div className="main-layout flex-wrap">
 						<Content />
 					</div>
@@ -44,7 +49,7 @@ export const Container = () => {
 const ContainerError = () => {
 	return (
 		<p>
-			Something went wrong. <Link to={'/'}>Go back.</Link>
+			Something went wrong. <Link to={'/'}>Go back</Link>.
 		</p>
 	);
 };

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 	<head>
 		<title>Pixelated</title>
@@ -13,11 +13,11 @@
 		<meta property="og:description" content="Pixelated - A pixel 'art' guessing game." />
 		<meta property="og:type" content="website" />
 		<meta name="theme-color" content="#b99976" media="(prefers-color-scheme: light)" />
-		<meta name="theme-color" content="#333333" media="(prefers-color-scheme: dark)" />
+		<meta name="theme-color" content="#b99976" media="(prefers-color-scheme: dark)" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-		<link rel="icon" href="/favicon-92x92.png" type="image/png" sizes="92x92" />
-		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link href="/favicon.svg" rel="icon" sizes="32x32" type="image/svg+xml" />
+		<link href="/favicon-92x92.png" rel="icon" sizes="92x92" type="image/png" />
+		<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" type="image/png" />
 		<link rel="manifest" href="/manifest.json" />
 		<script type="module" src="./targets/index/Index.tsx"></script>
 		<style id="preloaded-styles">
@@ -31,7 +31,7 @@
 			@font-face {
 				font-family: 'Pixelated Bold';
 				src: local('Courier New Bold'), local('Courier New');
-				font-weight: bold;
+				font-weight: 700;
 				font-style: normal;
 				font-display: swap;
 			}
@@ -51,7 +51,6 @@
 			}
 		</style>
 	</head>
-
 	<body class="scrollbar">
 		<div id="index" tabindex="-1"></div>
 	</body>

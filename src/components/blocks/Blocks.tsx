@@ -2,7 +2,7 @@
 import './styles/blocks.scss';
 
 /* Scripts */
-import {
+import type {
 	BlockProps,
 	DataProps,
 	DataAttributesType,
@@ -12,7 +12,7 @@ import {
 	ListProps,
 	PixelatedProps,
 } from './scripts/blocks-types';
-import { useRespond } from '../../_config/scripts/hooks';
+import { useRespond } from '../../_core/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 
 export const Block = (props: BlockProps) => {
@@ -25,7 +25,7 @@ export const Block = (props: BlockProps) => {
 export const Data = (props: DataProps) => {
 	const { children, label } = props;
 	const { theme } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	// Set data attributes
 	let dataAttributes: DataAttributesType = {
@@ -45,7 +45,7 @@ export const Data = (props: DataProps) => {
 export const DataRow = (props: DataRowProps) => {
 	const { children } = props;
 	const { theme } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 
 	// Set row attributes
 	let rowAttributes: DataAttributesType = {
@@ -64,7 +64,7 @@ export const DataRow = (props: DataRowProps) => {
 export const DataColumn = (props: DataColumnProps) => {
 	const { label, value } = props;
 	const { theme, utils } = useAppContext();
-	const isDesktop = useRespond(theme.bps.bp02 as number);
+	const isDesktop = useRespond(theme.breakpoints.md);
 	const isHeader = value === undefined;
 
 	// Set column attributes
@@ -113,7 +113,7 @@ export const List = (props: ListProps) => {
 	const olAttributes = isOrdered ? { reversed, start, type: listType } : {};
 
 	return (
-		<Tag className={className} {...rest} {...olAttributes}>
+		<Tag className={className} role={'list'} {...rest} {...olAttributes}>
 			{children}
 		</Tag>
 	);
