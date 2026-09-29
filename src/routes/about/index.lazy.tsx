@@ -2,7 +2,11 @@
 import { createLazyFileRoute, Link } from '@tanstack/react-router';
 
 /* Components */
+import { PageTitle } from '../../components/page-title/PageTitle';
 import { LinkExternal } from '../../components/blocks/Blocks';
+
+/* Page title */
+const title = 'About';
 
 export const Route = createLazyFileRoute('/about/')({
 	component: RouteComponent,
@@ -11,7 +15,9 @@ export const Route = createLazyFileRoute('/about/')({
 function RouteComponent() {
 	return (
 		<div className="about margin-trim">
-			<h2>About</h2>
+			<PageTitle title={title} />
+
+			<h2>{title}</h2>
 
 			<p>
 				"Pixelated" is a simple guessing game created by <LinkExternal href={'//display.coffee'}>displaycoffee</LinkExternal>. It is inspired

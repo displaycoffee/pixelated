@@ -11,7 +11,11 @@ import { useRespond } from '../../_core/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 
 /* Components */
+import { PageTitle } from '../../components/page-title/PageTitle';
 import { Data, DataColumn, DataRow } from '../../components/blocks/Blocks';
+
+/* Page title */
+const title = 'Scoreboard';
 
 export const Route = createLazyFileRoute('/scoreboard/')({
 	component: RouteComponent,
@@ -37,7 +41,9 @@ function RouteComponent() {
 
 	return (
 		<div className="scoreboard margin-trim">
-			<h2>Scoreboard</h2>
+			<PageTitle title={title} />
+
+			<h2>{title}</h2>
 
 			{scoreboard.length !== 0 ? (
 				<>

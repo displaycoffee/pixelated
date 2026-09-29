@@ -2,10 +2,10 @@
 import { createLazyFileRoute } from '@tanstack/react-router';
 
 /* Scripts */
-import { categories } from '../index/scripts/categories';
+import { categories } from '../../components/play/scripts/categories';
 
 /* Components */
-import { PixelsGallery } from '../index.lazy';
+import { PixelsGallery } from '../../components/play/Play';
 
 export const Route = createLazyFileRoute('/pixels-gallery/')({
 	component: RouteComponent,
