@@ -3,9 +3,12 @@ import type { QueryFunctionContext } from '@tanstack/react-query';
 import type { SyntheticEvent } from 'react';
 import type { UtilsType as UtilsSharedType, UtilsBrowserType as UtilsSharedBrowserType } from '@displaycoffee/scripts/utils-types';
 import type themeJson from '../tokens/theme.json';
+import type { icons } from '../data/icons';
 
 /* Generic type definitions */
 type Events = SyntheticEvent | Event;
+
+type IconName = keyof typeof icons;
 
 type ObjectPrimitive = {
 	[key: string]: Primitive;
@@ -185,6 +188,8 @@ type Statuses = {
 declare global {
 	// Declare global generic types
 	type EventsType = Events;
+
+	type IconNameType = IconName;
 
 	type ObjectPrimitiveType = ObjectPrimitive;
 
