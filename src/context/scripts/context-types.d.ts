@@ -13,6 +13,7 @@ type ContextValues = {
 	queryClient: QueryClient;
 	theme: ThemeType;
 	utils: UtilsType;
+	utilsBrowser: UtilsBrowserType;
 	variables: VariablesType;
 };
 

@@ -8,7 +8,9 @@ import { useCookies } from 'react-cookie';
 
 /* Scripts */
 import { useAppContext } from '../../context/scripts/context-hooks';
-import { useReactQuery, useRespond, useViewTransition } from '../../_core/scripts/hooks';
+import { useRespond } from '@displaycoffee/scripts/hooks';
+import { useViewTransition } from '@displaycoffee/scripts/hooks-tanstack';
+import { useReactQuery } from '../../_core/scripts/hooks';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 

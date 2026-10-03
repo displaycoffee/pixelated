@@ -12,7 +12,7 @@ import type {
 	ListProps,
 	PixelatedProps,
 } from './scripts/blocks-types';
-import { useRespond } from '../../_core/scripts/hooks';
+import { useRespond } from '@displaycoffee/scripts/hooks';
 import { useAppContext } from '../../context/scripts/context-hooks';
 
 export const Block = (props: BlockProps) => {

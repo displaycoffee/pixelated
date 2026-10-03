@@ -1,6 +1,7 @@
 /* Packages */
 import type { QueryFunctionContext } from '@tanstack/react-query';
 import type { SyntheticEvent } from 'react';
+import type { UtilsType as UtilsSharedType, UtilsBrowserType as UtilsSharedBrowserType } from '@displaycoffee/scripts/utils-types';
 import type themeJson from '../tokens/theme.json';
 
 /* Generic type definitions */
@@ -30,11 +31,9 @@ type Theme = {
 	colors: (typeof themeJson)['color'];
 };
 
-type Utils = {
-	getLast: (value: string | string[], delimeter?: string) => string | number;
-	handleize: (value: string) => string;
-	scrollTo: (e?: Events, selector?: string, offset?: number) => void;
-};
+type Utils = UtilsSharedType;
+
+type UtilsBrowser = UtilsSharedBrowserType;
 
 type Variables = {
 	paths: {
@@ -196,6 +195,8 @@ declare global {
 	type ThemeType = Theme;
 
 	type UtilsType = Utils;
+
+	type UtilsBrowserType = UtilsBrowser;
 
 	type VariablesType = Variables;
 

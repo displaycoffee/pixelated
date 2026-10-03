@@ -8,7 +8,7 @@ import { CookiesProvider } from 'react-cookie';
 import type { ContextProps, ContextValuesType } from './scripts/context-types';
 import { game as gameUtils } from './scripts/game';
 import { theme } from '../_core/scripts/theme';
-import { utils } from '../_core/scripts/utils';
+import { utils, utilsBrowser } from '../_core/scripts/utils';
 import { variables } from '../_core/scripts/variables';
 
 /* Query client for api */
@@ -49,6 +49,7 @@ export const ContextProvider = ({ children }: ContextProps) => {
 		queryClient,
 		theme,
 		utils,
+		utilsBrowser,
 		variables,
 	};
 
