@@ -6,7 +6,7 @@ import { useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 
 /* Scripts */
-import { useAvailableMinHeight, useBodyClass } from './scripts/container-hooks';
+import { useAvailableMinHeight, useBodyClass } from '@displaycoffee/scripts/hooks-tanstack';
 import { navigationHeader } from '../../components/navigation/scripts/navigation';
 
 /* Components */
@@ -21,7 +21,7 @@ export const Container = () => {
 	useAvailableMinHeight(mainRef);
 
 	// Set body class using custom hook
-	useBodyClass('play');
+	useBodyClass('index');
 
 	return (
 		<div className="container">
