@@ -5,8 +5,8 @@ import './styles/footer.scss';
 import { useCookies } from 'react-cookie';
 
 /* Components */
-import { LinkExternal } from '../../components/blocks/Blocks';
-import { Button } from '../../components/forms/Forms';
+import { LinkExternal } from '@/components/blocks/Blocks';
+import { Button } from '@/components/forms/Forms';
 
 export const Footer = () => {
 	const [cookies, _setCookie, removeCookie] = useCookies<'scoreboard', { scoreboard?: string }>(['scoreboard']);

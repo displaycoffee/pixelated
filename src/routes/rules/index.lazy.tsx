@@ -5,11 +5,11 @@ import './styles/rules.scss';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
 /* Scripts */
-import { difficulty } from '../../components/play/scripts/difficulty';
+import { difficulty } from '@/components/play/scripts/difficulty';
 
 /* Components */
-import { PageTitle } from '../../components/page-title/PageTitle';
-import { List } from '../../components/blocks/Blocks';
+import { PageTitle } from '@/components/page-title/PageTitle';
+import { List } from '@/components/blocks/Blocks';
 
 /* Page title */
 const title = 'Rules';

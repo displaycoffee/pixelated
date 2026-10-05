@@ -7,16 +7,16 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
 /* Scripts */
-import { useAppContext } from '../../context/scripts/context-hooks';
+import { useAppContext } from '@/context/scripts/context-hooks';
 import { useRespond } from '@displaycoffee/scripts/hooks';
 import { useViewTransition } from '@displaycoffee/scripts/hooks-tanstack';
-import { useReactQuery } from '../../_core/scripts/hooks';
+import { useReactQuery } from '@/_core/scripts/hooks';
 import { difficulty } from './scripts/difficulty';
 import { categories } from './scripts/categories';
 
 /* Components */
-import { Block, List } from '../blocks/Blocks';
-import { Button, Form, FormActions, Input, Select } from '../forms/Forms';
+import { Block, List } from '@/components/blocks/Blocks';
+import { Button, Form, FormActions, Input, Select } from '@/components/forms/Forms';
 
 export const Play = () => {
 	const { game } = useAppContext();

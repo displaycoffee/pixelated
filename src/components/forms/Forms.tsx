@@ -17,11 +17,11 @@ import type {
 	SelectProps,
 } from './scripts/forms-types';
 import { forms } from './scripts/forms';
-import { useAppContext } from '../../context/scripts/context-hooks';
+import { useAppContext } from '@/context/scripts/context-hooks';
 
 /* Components */
-import { Alert } from '../alert/Alert';
-import { Pixelated } from '../blocks/Blocks';
+import { Alert } from '@/components/alert/Alert';
+import { Pixelated } from '@/components/blocks/Blocks';
 
 export const Button = (props: ButtonProps) => {
 	const { children, className: propClassName, hideLabel = false, label, type = 'button', variant = 'primary', ...rest } = props;

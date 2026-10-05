@@ -7,9 +7,9 @@ import { CookiesProvider } from 'react-cookie';
 /* Scripts */
 import type { ContextProps, ContextValuesType } from './scripts/context-types';
 import { game as gameUtils } from './scripts/game';
-import { theme } from '../_core/scripts/theme';
-import { utils, utilsBrowser } from '../_core/scripts/utils';
-import { variables } from '../_core/scripts/variables';
+import { theme } from '@/_core/scripts/theme';
+import { utils, utilsBrowser } from '@/_core/scripts/utils';
+import { variables } from '@/_core/scripts/variables';
 
 /* Query client for api */
 const queryConfig: DefaultOptions = {

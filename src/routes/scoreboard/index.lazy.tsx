@@ -8,11 +8,11 @@ import { useCookies } from 'react-cookie';
 /* Scripts */
 import type { ScoreboardType } from './scripts/scoreboard-types';
 import { useRespond } from '@displaycoffee/scripts/hooks';
-import { useAppContext } from '../../context/scripts/context-hooks';
+import { useAppContext } from '@/context/scripts/context-hooks';
 
 /* Components */
-import { PageTitle } from '../../components/page-title/PageTitle';
-import { Data, DataColumn, DataRow } from '../../components/blocks/Blocks';
+import { PageTitle } from '@/components/page-title/PageTitle';
+import { Data, DataColumn, DataRow } from '@/components/blocks/Blocks';
 
 /* Page title */
 const title = 'Scoreboard';

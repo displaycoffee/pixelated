@@ -2,7 +2,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
 /* Scripts */
-import { variables } from '../../_core/scripts/variables';
+import { variables } from '@/_core/scripts/variables';
 
 export const Route = createFileRoute('/pixels-gallery/')({
 	beforeLoad: () => {
