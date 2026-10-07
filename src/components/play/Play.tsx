@@ -315,7 +315,15 @@ function Guess() {
 			) : null}
 
 			<Form className={'guess flex flex-nowrap flex-align-items-center'} onSubmit={(e) => submitGuess(e)}>
-				<Input className={'guess-field'} hideLabel={true} id={questionId} label={'Guess'} name={'guess'} placeholder={'Guess the pixels.'} />
+				<Input
+					className={'guess-field'}
+					hasClose={true}
+					hideLabel={true}
+					id={questionId}
+					label={'Guess'}
+					name={'guess'}
+					placeholder={'Guess the pixels.'}
+				/>
 
 				<FormActions>
 					<Button label={'Submit'} className={'guess-submit'} type={'submit'} />

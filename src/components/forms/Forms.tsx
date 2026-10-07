@@ -1,12 +1,17 @@
 /* Styles */
 import './styles/forms.scss';
 
+/* Packages */
+import { useRef, useState } from 'react';
+import type { InputEvent } from 'react';
+
 /* Scripts */
 import type {
 	ButtonProps,
 	ButtonScrollProps,
 	DescriptionProps,
 	ErrorFieldProps,
+	FieldCloseProps,
 	FormProps,
 	FormActionsProps,
 	FormFieldProps,
@@ -45,8 +50,9 @@ export const ButtonScroll = (props: ButtonScrollProps) => {
 };
 
 export const Form = (props: FormProps) => {
-	const { children, className: propClassName, ...rest } = props;
-	const className = forms.build.className(`form margin-trim`, propClassName);
+	const { children, className: propClassName, hasMarginTrim = true, ...rest } = props;
+	const formClass = hasMarginTrim ? `form margin-trim` : `form`;
+	const className = forms.build.className(formClass, propClassName);
 
 	return (
 		<form className={className} {...rest}>
@@ -101,7 +107,18 @@ export const FormField = (props: FormFieldProps) => {
 };
 
 export const Input = (props: InputProps) => {
-	const { className: propClassName, description = '', error = '', hideLabel = false, id, label, required = false, type = 'text', ...rest } = props;
+	const {
+		className: propClassName,
+		description = '',
+		error = '',
+		hasClose = false,
+		hideLabel = false,
+		id,
+		label,
+		required = false,
+		type = 'text',
+		...rest
+	} = props;
 	const freeformFields = ['email', 'number', 'password', 'search', 'tel', 'text', 'url'];
 	const inputClass = `input input-${type}${freeformFields.includes(type) ? ' input-freeform' : ''}`;
 	const className = forms.build.className(inputClass, propClassName, rest?.disabled);
@@ -116,7 +133,9 @@ export const Input = (props: InputProps) => {
 	return (
 		<FormField {...formFieldAttributes}>
 			<FormFieldWrapper className="input-wrapper">
-				<input {...inputAttributes} type={type} {...rest} />
+				<FieldClose defaultValue={rest.defaultValue} hasClose={hasClose} value={rest.value}>
+					<input {...inputAttributes} type={type} {...rest} />
+				</FieldClose>
 			</FormFieldWrapper>
 			<FormFieldDetails description={description} descriptionId={descriptionId} error={error} errorId={errorId} />
 		</FormField>
@@ -168,6 +187,51 @@ const ErrorField = (props: ErrorFieldProps) => {
 			{error}
 		</Alert>
 	) : null;
+};
+
+const FieldClose = (props: FieldCloseProps) => {
+	const { children, defaultValue, hasClose, value } = props;
+	const fieldRef = useRef<HTMLDivElement>(null);
+	const [hasInput, setHasInput] = useState(forms.clearable.hasValue(defaultValue));
+
+	// Show the clear button while the field has a value
+	// Note: controlled fields follow their value prop, so changes made outside the field (e.g. a reset) update the button too
+	const isActive = value !== undefined ? forms.clearable.hasValue(value) : hasInput;
+
+	// Track the value of uncontrolled fields as the user types
+	const handleInput = (e: InputEvent<HTMLDivElement>) => {
+		const field = e.target as HTMLInputElement | HTMLTextAreaElement;
+		setHasInput(forms.clearable.hasValue(field.value));
+	};
+
+	// Clear the field and return focus to it
+	const clearField = () => {
+		const field = fieldRef.current?.querySelector<HTMLInputElement | HTMLTextAreaElement>('.input, .textarea');
+		if (!field) return;
+
+		forms.clearable.clear(field);
+		field.focus();
+	};
+
+	// Wrap the field with a clear button
+	// Note: only the field and button are wrapped, so a description or error below can't push the button out of place
+	return hasClose ? (
+		<div className="form-field-close" ref={fieldRef} onInput={handleInput}>
+			{children}
+			<Button
+				className={`button-close${isActive ? ' button-active' : ''}`}
+				hideLabel={true}
+				label={'Clear'}
+				onClick={clearField}
+				type={'button'}
+				variant={'unstyled'}
+			>
+				x
+			</Button>
+		</div>
+	) : (
+		children
+	);
 };
 
 const FormFieldDetails = (props: FormFieldDetailsProps) => {
