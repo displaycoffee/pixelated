@@ -2,7 +2,7 @@
 import { createLazyFileRoute, Link } from '@tanstack/react-router';
 
 /* Components */
-import { PageTitle } from '@/components/page-title/PageTitle';
+import { Title } from '@/components/title/Title';
 import { LinkExternal } from '@/components/blocks/Blocks';
 
 /* Page title */
@@ -15,7 +15,7 @@ export const Route = createLazyFileRoute('/about/')({
 function RouteComponent() {
 	return (
 		<div className="about margin-trim">
-			<PageTitle title={title} />
+			<Title title={title} />
 
 			<h2>{title}</h2>
 

@@ -8,7 +8,7 @@ import { createLazyFileRoute } from '@tanstack/react-router';
 import { difficulty } from '@/components/play/scripts/difficulty';
 
 /* Components */
-import { PageTitle } from '@/components/page-title/PageTitle';
+import { Title } from '@/components/title/Title';
 import { List } from '@/components/blocks/Blocks';
 
 /* Page title */
@@ -21,7 +21,7 @@ export const Route = createLazyFileRoute('/rules/')({
 function RouteComponent() {
 	return (
 		<div className="rules margin-trim">
-			<PageTitle title={title} />
+			<Title title={title} />
 
 			<h2>{title}</h2>
 

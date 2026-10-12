@@ -11,7 +11,7 @@ import { useRespond } from '@displaycoffee/scripts/hooks';
 import { useAppContext } from '@/context/scripts/context-hooks';
 
 /* Components */
-import { PageTitle } from '@/components/page-title/PageTitle';
+import { Title } from '@/components/title/Title';
 import { Data, DataColumn, DataRow } from '@/components/blocks/Blocks';
 
 /* Page title */
@@ -41,7 +41,7 @@ function RouteComponent() {
 
 	return (
 		<div className="scoreboard margin-trim">
-			<PageTitle title={title} />
+			<Title title={title} />
 
 			<h2>{title}</h2>
 
